@@ -13,3 +13,6 @@ Running `grunt test` will run the unit tests with karma.
 
 ## 在Mac上愉快地用Atom写Markdown
 Ubuntu下字体问题比较麻烦，Mac下不需要定制即刻拥有;)
+
+## git-flow is awsome!
+## teamwork is nicely support!
