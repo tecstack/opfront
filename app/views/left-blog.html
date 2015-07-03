@@ -1,0 +1,16 @@
+<div ng-controller="blogCtrl">
+
+	<div class="header">
+	  <h2>Blog展台</h2>
+	  <a href="">刷新blog</a>
+	  <p>检索blog：</p>
+	  <p><input type="text" ng-model="index"></p>
+	</div>
+
+	<div ng-repeat="b in blogs | filter:index | orderBy:'date'" class="header">
+	  <h3>{{ b.author }}</h2>
+	  <h4>{{ b.date }}</h4>
+	  <p>{{ b.content }}</p>
+	</div>
+
+</div>

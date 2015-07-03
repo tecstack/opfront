@@ -1,0 +1,84 @@
+<!--angularjs测试代码 -->
+
+<div class="header" ng-app="">
+  <h2>控制器实验区</h2>
+  <input type="checkbox" ng-model="mySwitch">无名之辈？<br>
+  名： <input type="text" ng-model="person.firstName" ng-disabled="mySwitch"><br>
+  姓： <input type="text" ng-model="person.lastName"><br>
+  <br>
+  姓名： {{person.firstName + " " + person.lastName}}
+</div>
+
+
+<div class="header" ng-app="" ng-init="quantity=1;price=5">
+  <h2>变量绑定实验区</h2>
+  <h4>价格计算器</h4>
+  数量： <input type="number" ng-model="quantity">
+  价格： <input type="number" ng-model="price">
+  <p><b>总价：</b> {{ (quantity * price) | currency  }}</p>
+</div>
+
+<div class="header" ng-app="">
+  <h2>过滤器+循环实验区</h2>
+  <p>输入过滤关键字：</p>
+  <p><input type="text" ng-model="name"></p>
+
+  <table class="table table-striped table-hover">
+    <tr ng-repeat="x in names | filter:name | orderBy:'country'" class="info">
+      <td>{{ x.name | lowercase }}</td>
+      <td>{{ x.country | uppercase }}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="header" ng-app="">
+  <h2>事件实验区</h2>
+  <button class="btn btn-warning" ng-click="toggle()">隐藏/显示</button>
+  <p ng-hide="myVar">
+  名: <input type="text" ng-model="person.firstName"><br>
+  姓: <input type="text" ng-model="person.lastName"><br>
+  <br>
+  姓名: {{person.firstName + " " + person.lastName}}
+  </p>
+</div>
+
+<div class="header" ng-app="">
+  <h2>表单实验区</h2>
+  <form novalidate>
+    First Name:<br>
+    <input type="text" ng-model="user.firstName"><br>
+    Last Name:<br>
+    <input type="text" ng-model="user.lastName">
+    <br><br>
+    <button class="btn btn-warning" ng-click="reset()">RESET</button>
+  </form>
+  <p>form = {{user}}</p>
+  <p>master = {{master}}</p>
+</div>
+
+<!--angularjs测试代码 -->
+
+
+<div class="jumbotron">
+  <h1>'Allo, 'Allo!</h1>
+  <p class="lead">
+    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
+    Always a pleasure scaffolding your apps.
+  </p>
+  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+</div>
+
+<div class="row marketing">
+  <h4>HTML5 Boilerplate</h4>
+  <p>
+    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
+  </p>
+
+  <h4>Angular</h4>
+  <p>
+    AngularJS is a toolset for building the framework most suited to your application development.
+  </p>
+
+  <h4>Karma</h4>
+  <p>Spectacular Test Runner for JavaScript.</p>
+</div>

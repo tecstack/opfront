@@ -1,0 +1,114 @@
+<div ng-controller="nglabCtrl">
+
+  <div class="header">
+    <h2>服务Service Factory 实验区</h2>
+    <table class="table table-striped table-hover">
+      <tr class='danger'>
+        <td>虚机名称</td>
+        <td>虚机ID</td>
+        <td>虚机IP</td>
+        <td>虚机状态</td>
+        <td>网段ID</td> 
+        <td>节点ID</td>
+        <td>创建时间</td>
+
+      </tr>
+      <tr ng-repeat="x in vminfos" class="info">
+        <td>{{ x.vm_name }}</td>
+        <td>{{ x.vm_id }}</td>
+        <td>{{ x.ip }}</td>
+        <td>{{ x.vm_status }}</td>
+        <td>{{ x.vn_id }}</td>
+        <td>{{ x.pm_id }}</td>
+        <td>{{ x.creater_time }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="header">
+    <h2>控制器实验区</h2>
+    <input type="checkbox" ng-model="mySwitch">无名之辈？<br>
+    名： <input type="text" ng-model="person.firstName" ng-disabled="mySwitch"><br>
+    姓： <input type="text" ng-model="person.lastName"><br>
+    <br>
+    姓名： {{person.firstName + " " + person.lastName}}
+  </div>
+
+
+  <div class="header" ng-init="quantity=1;price=5">
+    <h2>变量绑定实验区</h2>
+    <h4>价格计算器</h4>
+    数量： <input type="number" ng-model="quantity">
+    价格： <input type="number" ng-model="price">
+    <p><b>总价：</b> {{ (quantity * price) | currency  }}</p>
+  </div>
+
+  <div class="header">
+    <h2>过滤器+循环实验区</h2>
+    <p>输入过滤关键字：</p>
+    <p><input type="text" ng-model="name"></p>
+
+    <table class="table table-striped table-hover">
+      <tr ng-repeat="x in names | filter:name | orderBy:'country'" class="info">
+        <td>{{ x.name | lowercase }}</td>
+        <td>{{ x.country | uppercase }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="header">
+    <h2>事件实验区</h2>
+    <button class="btn btn-warning" ng-click="toggle()">隐藏/显示</button>
+    <p ng-hide="myVar">
+    名: <input type="text" ng-model="person.firstName"><br>
+    姓: <input type="text" ng-model="person.lastName"><br>
+    <br>
+    姓名: {{person.firstName + " " + person.lastName}}
+    </p>
+  </div>
+
+  <div class="header">
+    <h2>表单实验区</h2>
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="panel-title">表单实验区</div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <form role="form" class="form-horizontal">
+              <div class="form-group">
+                <label class="col-md-2 control-label">
+                  邮箱：
+                </label>
+                <div class="col-md-10">
+                  <input type="email" class="form-control" placeholder="填邮箱啊你">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">
+                  密码：
+                </label>
+                <div class="col-md-10">
+                  <input type="password" class="form-control" placeholder="这里填密码，懂不懂？">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form novalidate>
+      First Name:<br>
+      <input type="text" ng-model="user.firstName"><br>
+      Last Name:<br>
+      <input type="text" ng-model="user.lastName">
+      <br><br>
+      <button class="btn btn-warning" ng-click="reset()">RESET</button>
+    </form>
+    <p>form = {{user}}</p>
+    <p>master = {{master}}</p>
+  </div>
+
+</div>
