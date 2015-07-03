@@ -5,6 +5,12 @@ version 0.11.1.
 
 ## Build & development
 
+Install 'nvm'(for linux) or 'nvmw'(for windows) to manage nodejs version.
+Run 'nvm use 0.12.4' for use nodejs version 0.12.4.
+
+Run 'npm install' to install required nodejs module.
+Run 'bower install' to install required packages.
+
 Run `grunt` for building and `grunt serve` for preview.
 
 ## Testing

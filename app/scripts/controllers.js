@@ -87,16 +87,6 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
       });
     }
 
-    $scope.refreshPP = function(){
-      $scope.loadPage(1);
-      // var pp = $scope.pp;
-      // var page = 1;
-      // vmInfos.get({page:page,pp:pp},function(callbackdata){
-      //   $scope.vminfos = callbackdata.vm_infos;
-      //   $scope.total_page = callbackdata.total_page;
-      // });
-    }
-
     $scope.loadPage = function(current_page){
       $scope.pages = []
 
@@ -130,6 +120,10 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
 
     }
 
+    $scope.refreshPP = function(){
+      $scope.loadPage(1);
+    }
+
     $scope.switchPage = function(page){
       $scope.loadPage(page);
     }
@@ -145,14 +139,5 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
     $scope.pp = 20;
     $scope.total_page = 1;
     $scope.firstPage();
-
-    // $scope.dockers = [
-    //     {id:'001', name:'Docker-001', ipPri:'10.11.101.4', ipPub:'112.33.1.12', server:'172.16.100.4'},
-    //     {id:'002', name:'Docker-002', ipPri:'10.11.102.4', ipPub:'112.33.2.22', server:'172.16.100.5'},
-    //     {id:'003', name:'Docker-003', ipPri:'10.11.101.7', ipPub:'112.33.3.19', server:'172.16.100.4'},
-    //     {id:'004', name:'Docker-004', ipPri:'10.11.103.13', ipPub:'112.33.4.101', server:'172.16.100.16'},
-    //     {id:'005', name:'Docker-005', ipPri:'10.11.105.101', ipPub:'112.33.5.10', server:'172.16.101.22'},
-    //     {id:'006', name:'Docker-006', ipPri:'10.11.101.11', ipPub:'112.33.6.6', server:'172.16.102.7'},        
-    // ];
 
   });
