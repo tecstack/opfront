@@ -28,25 +28,59 @@ helloworldApp.controller('aboutCtrl', function ($scope) {
   });
 
 //Lab angularjs实验区控制器
-helloworldApp.controller('nglabCtrl', function ($scope,vmInfos) {               
+helloworldApp.controller('nglabCtrl', function ($scope,vmInfos) {
 
-    $scope.employees =[{id:101, name:'John', phone:'555-1276'},
-                       {id:102, name:'Mary', phone:'800-1233'},
-                       {id:103,name:'Mike', phone:'555-4321'},
-                       {id:104,name:'Adam', phone:'555-5678'},
-                       {id:105,name:'Julie', phone:'555-8765'},
-                       {id:106,name:'Juliette', phone:'555-5678'}];
+    $scope.showHelper = false;
+
+    $scope.vminfos =[
+      {
+        vm_name:'CIDC-VM-TEST-001',
+        vm_id:'CIDC-VM-ID-001', 
+        ip:'10.11.191.10', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-001',
+        pm_id:'CIDC-PM-ID-001',
+        creater_time:'2011-02-14 19:22:32'
+      },
+      {
+        vm_name:'CIDC-VM-TEST-002',
+        vm_id:'CIDC-VM-ID-002', 
+        ip:'10.11.191.12', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-002',
+        pm_id:'CIDC-PM-ID-002',
+        creater_time:'2011-02-14 19:22:32'
+      },
+      {
+        vm_name:'CIDC-VM-TEST-003',
+        vm_id:'CIDC-VM-ID-003', 
+        ip:'10.11.191.13', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-003',
+        pm_id:'CIDC-PM-ID-003',
+        creater_time:'2011-02-14 19:22:32'
+      },
+      {
+        vm_name:'CIDC-VM-TEST-004',
+        vm_id:'CIDC-VM-ID-004', 
+        ip:'10.11.191.14', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-004',
+        pm_id:'CIDC-PM-ID-004',
+        creater_time:'2011-02-14 19:22:32'
+      }
+    ];
     $scope.showEdit = true;
     $scope.master = {};
 
-    $scope.queryVmInfos = function(){
-      $scope.vminfos = vmInfos.query().vm_infos;
-    };
+    // $scope.queryVmInfos = function(){
+    //   $scope.vminfos = vmInfos.query().vm_infos;
+    // };
 
-    $scope.queryVmInfos();
+    // $scope.queryVmInfos();
   	$scope.person = {
-  	  firstName: "John",
-  	  lastName: "Doe"
+        firstName: "John",
+        lastName: "Doe"
   	};
 
     $scope.names = [
@@ -148,6 +182,6 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
 
     $scope.pp = 20;
     $scope.total_page = 1;
-    $scope.firstPage();
+    // $scope.firstPage();
 
   });

@@ -4,7 +4,7 @@
   </div>
   <div class="row">
     <div class="col-md-2 col-lg-2 sidebar navbar-inverse" ui-view="sidebar"></div>
-    <div class="col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2" ui-view="dashboard-left"></div>
-    <div class="col-md-2 col-lg-2 wrapper bg-snow b-l font-dark dashboard-right" ui-view="dashboard-right"></div>
+    <div class="col-md-10 col-lg-10 col-md-offset-2 col-lg-offset-2" ui-view="dashboard-left"></div>
+    <div class="col-md-2 col-lg-2 wrapper bg-snow b-l font-dark dashboard-right" ng-show="showHelper" ui-view="dashboard-right"></div>
   </div>
 </div>

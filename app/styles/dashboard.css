@@ -308,27 +308,3 @@ forward 定制样式
 .r {
   border-radius: 2px 2px 2px 2px;
 }
-
-.r-2x {
-  border-radius: 4px;
-}
-
-.r-3x {
-  border-radius: 6px;
-}
-
-.r-l {
-  border-radius: 2px 0 0 2px;
-}
-
-.r-r {
-  border-radius: 0 2px 2px 0;
-}
-
-.r-t {
-  border-radius: 2px 2px 0 0;
-}
-
-.r-b {
-  border-radius: 0 0 2px 2px;
-}

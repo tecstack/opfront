@@ -1,9 +1,7 @@
 {
   "name": "helloworld",
   "version": "0.0.0",
-  "dependencies": {
-    "kissy": "^5.0.2"
-  },
+  "dependencies": {},
   "repository": {},
   "devDependencies": {
     "grunt": "^0.4.5",
