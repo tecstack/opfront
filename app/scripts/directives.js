@@ -8,10 +8,10 @@ helloworldApp.directive('edit',function(){
 			element.bind("click",function(){
 				var id = ngModel.$modelValue.vm_id;
 				scope.$apply(function(){
-					angular.copy(ngModel.$modelValue,scope.master);
+					angular.copy(ngModel.$modelValue,scope.rowBak);
 
-					console.log("master:");
-					console.log(scope.master);
+					console.log("rowBak:");
+					console.log(scope.rowBak);
 
 				});
 				var obj = $("#"+id);
@@ -34,17 +34,30 @@ helloworldApp.directive('update',function(){
 			element.bind("click",function(){
 				var id = ngModel.$modelValue.vm_id;
 				scope.$apply(function(){
-					angular.copy(ngModel.$modelValue,scope.master);
-
-					console.log("master:");
-					console.log(scope.master);
+					angular.copy(ngModel.$modelValue,scope.rowBak);
+					angular.copy(ngModel.$modelValue,scope.rowEdited);
 					console.log("ngmodel:");
 					console.log(ngModel.$modelValue);
+					console.log("rowBak:");
+					console.log(scope.rowBak);
+					console.log("rowEdited:");
+					console.log(scope.rowEdited);
 
 				});				
 				var obj = $("#"+id);
-				obj.prevAll().removeAttr("contentEditable").removeClass("b-a");
-				obj.nextAll().removeAttr("contentEditable").removeClass("b-a");
+
+				var testText = new Array();
+
+				obj.prevAll().each(function(){
+					testText.push($(this).removeAttr("contentEditable").removeClass("b-a").text());
+				});
+				testText.push(id);
+				obj.nextAll().each(function(){
+					testText.push($(this).removeAttr("contentEditable").removeClass("b-a").text());
+				});
+				console.log(testText);
+				
+
 				scope.$apply(function(){
 					scope.showEdit = true;
 				})
@@ -60,7 +73,7 @@ helloworldApp.directive('cancel',function(){
 		link: function(scope,element,attrs,ngModel){
 			element.bind("click",function(){
 				scope.$apply(function(){
-					angular.copy(scope.master,ngModel.$modelValue);
+					angular.copy(scope.rowBak,ngModel.$modelValue);
 				});
 				var id = ngModel.$modelValue.vm_id;
 				var obj = $("#"+id);

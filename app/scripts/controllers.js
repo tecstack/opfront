@@ -71,7 +71,8 @@ helloworldApp.controller('nglabCtrl', function ($scope,vmInfos) {
       }
     ];
     $scope.showEdit = true;
-    $scope.master = {};
+    $scope.rowBak = {};
+    $scope.rowEdited = {};
 
     // $scope.queryVmInfos = function(){
     //   $scope.vminfos = vmInfos.query().vm_infos;

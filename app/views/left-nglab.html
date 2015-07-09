@@ -14,35 +14,16 @@
         <th></th>
       </tr>
       <tr ng-repeat="x in vminfos">
-        <td>
-          {{x.vm_name}}
-          <!-- <div ng-model="x.vm_name"></div> -->
-          <!-- <input type="text" ng-model="x.vm_name" class="inactive" readonly /> -->
-        </td>
-        <td ng-model="x.vm_id" id='{{x.vm_id}}'>
-          {{x.vm_id}}
-          <!-- <input type="text" ng-model="x.vm_id" class="inactive" readonly id='{{x.vm_id}}' /> -->
-        </td>
-        <td ng-model="x.ip">
-          {{x.ip}}
-          <!-- <input type="text" ng-model="x.ip" class="inactive" readonly /> -->
-        </td>
-        <td ng-model="x.vm_status">
-          {{x.vm_status}}
-          <!-- <input type="text" ng-model="x.vm_status" class="inactive" readonly /> -->
-        </td>
-        <td ng-model="x.vn_id">
-          {{x.vn_id}}
-          <!-- <input type="text" ng-model="x.vn_id" class="inactive" readonly /> -->
-        </td>
-        <td ng-model="x.pm_id">
-          {{x.pm_id}}
-          <!-- <input type="text" ng-model="x.pm_id" class="inactive" readonly /> -->
-        </td>
-        <td ng-model="x.creater_time">
-          {{x.creater_time}}
-          <!-- <input type="text" ng-model="x.creater_time" class="inactive" readonly /> -->
-        </td>
+<!--         <td>
+          <input type="text" ng-model="x.vm_name" class="inactive" readonly />
+        </td> -->
+        <td ng-model="x.vm_name">{{x.vm_name}}</td>
+        <td ng-model="x.vm_id" id='{{x.vm_id}}'>{{x.vm_id}}</td>
+        <td ng-model="x.ip">{{x.ip}}</td>
+        <td ng-model="x.vm_status">{{x.vm_status}}</td>
+        <td ng-model="x.vn_id">{{x.vn_id}}</td>
+        <td ng-model="x.pm_id">{{x.pm_id}}</td>
+        <td ng-model="x.creater_time">{{x.creater_time}}</td>
         <td>
           <edit ng-model="x" ng-show="showEdit"><a>Edit</a></edit>
           <update ng-model="x" ng-show="!showEdit"><a>Update</a></update> 
