@@ -7,20 +7,21 @@ helloworldApp.directive('edit',function(){
 		link: function(scope,element,attrs,ngModel){
 			element.bind("click",function(){
 				var id = ngModel.$modelValue.vm_id;
+				var obj = $("#"+id);
+    			var tdsize = [];
+
 				scope.$apply(function(){
 					angular.copy(ngModel.$modelValue,scope.rowBak);
-
-					console.log("rowBak:");
-					console.log(scope.rowBak);
-
-				});
-				var obj = $("#"+id);
-				obj.prevAll().prop("contentEditable",true).addClass("b-a");
-				obj.nextAll().prop("contentEditable",true).addClass("b-a");
-				obj.prev().focus();
-				scope.$apply(function(){
+					obj.children("td").each(function(){
+						var size = { width:$(this).children("clevertd").width(), height:$(this).height() }
+						tdsize.push(size);
+					});
+					obj.find("td input").each(function(i){
+						$(this).width(tdsize[i].width);
+						$(this).height(tdsize[i].height);
+					});
 					scope.showEdit = false;
-				})
+				});
 			})
 		}
 	}
@@ -33,30 +34,11 @@ helloworldApp.directive('update',function(){
 		link: function(scope,element,attrs,ngModel){
 			element.bind("click",function(){
 				var id = ngModel.$modelValue.vm_id;
-				scope.$apply(function(){
-					angular.copy(ngModel.$modelValue,scope.rowBak);
-					angular.copy(ngModel.$modelValue,scope.rowEdited);
-					console.log("ngmodel:");
-					console.log(ngModel.$modelValue);
-					console.log("rowBak:");
-					console.log(scope.rowBak);
-					console.log("rowEdited:");
-					console.log(scope.rowEdited);
-
-				});				
 				var obj = $("#"+id);
 
-				var testText = new Array();
-
-				obj.prevAll().each(function(){
-					testText.push($(this).removeAttr("contentEditable").removeClass("b-a").text());
-				});
-				testText.push(id);
-				obj.nextAll().each(function(){
-					testText.push($(this).removeAttr("contentEditable").removeClass("b-a").text());
-				});
-				console.log(testText);
-				
+				scope.$apply(function(){
+					angular.copy(ngModel.$modelValue,scope.rowBak);
+				});				
 
 				scope.$apply(function(){
 					scope.showEdit = true;
@@ -72,13 +54,13 @@ helloworldApp.directive('cancel',function(){
 		require: 'ngModel',
 		link: function(scope,element,attrs,ngModel){
 			element.bind("click",function(){
+				var id = ngModel.$modelValue.vm_id;
+				var obj = $("#"+id);
+
 				scope.$apply(function(){
 					angular.copy(scope.rowBak,ngModel.$modelValue);
 				});
-				var id = ngModel.$modelValue.vm_id;
-				var obj = $("#"+id);
-				obj.prevAll().removeAttr("contentEditable").removeClass("b-a");
-				obj.nextAll().removeAttr("contentEditable").removeClass("b-a");
+
 				scope.$apply(function(){
 					scope.showEdit = true;
 				})				
@@ -95,8 +77,7 @@ helloworldApp.directive("delete",function(){
 			element.bind("click",function(){
 				var id = ngModel.$modelValue.vm_id;
 
-				console.log("delete item where vm_id:");
-				console.log(id);
+				console.log("delete item where vm_id:"+id);
 
 				scope.$apply(function(){
 					for(var i=0; i<scope.vminfos.length; i++){
@@ -105,7 +86,6 @@ helloworldApp.directive("delete",function(){
 							scope.vminfos.splice(i,1);
 						}
 					}
-					console.log(scope.vminfos);
 				})
 			})
 		}
@@ -122,3 +102,5 @@ helloworldApp.directive("delete",function(){
 // 		}
 // 	}
 // });
+				// obj.prevAll().removeAttr("contentEditable").removeClass("b-a");
+				// obj.nextAll().removeAttr("contentEditable").removeClass("b-a");

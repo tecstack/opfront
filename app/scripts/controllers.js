@@ -72,7 +72,6 @@ helloworldApp.controller('nglabCtrl', function ($scope,vmInfos) {
     ];
     $scope.showEdit = true;
     $scope.rowBak = {};
-    $scope.rowEdited = {};
 
     // $scope.queryVmInfos = function(){
     //   $scope.vminfos = vmInfos.query().vm_infos;
@@ -183,6 +182,6 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
 
     $scope.pp = 20;
     $scope.total_page = 1;
-    // $scope.firstPage();
+    $scope.firstPage();
 
   });

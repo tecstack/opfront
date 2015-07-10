@@ -13,17 +13,35 @@
         <th>创建时间</th>
         <th></th>
       </tr>
-      <tr ng-repeat="x in vminfos">
-<!--         <td>
-          <input type="text" ng-model="x.vm_name" class="inactive" readonly />
-        </td> -->
-        <td ng-model="x.vm_name">{{x.vm_name}}</td>
-        <td ng-model="x.vm_id" id='{{x.vm_id}}'>{{x.vm_id}}</td>
-        <td ng-model="x.ip">{{x.ip}}</td>
-        <td ng-model="x.vm_status">{{x.vm_status}}</td>
-        <td ng-model="x.vn_id">{{x.vn_id}}</td>
-        <td ng-model="x.pm_id">{{x.pm_id}}</td>
-        <td ng-model="x.creater_time">{{x.creater_time}}</td>
+      <tr ng-repeat="x in vminfos" id="{{x.vm_id}}">
+        <td>
+          <clevertd ng-model="x" ng-show="showEdit">{{x.vm_name}}</clevertd>
+          <input type="text" ng-model="x.vm_name" ng-show="!showEdit" />
+        </td>
+        <td>
+          <clevertd ng-model="x" ng-show="showEdit">{{x.vm_id}}</clevertd>
+          <input type="text" ng-model="x.vm_id" ng-show="!showEdit" />
+        </td>
+        <td>
+          <clevertd ng-model="x" ng-show="showEdit">{{x.ip}}</clevertd>
+          <input type="text" ng-model="x.ip" ng-show="!showEdit" />
+        </td>
+        <td>
+          <clevertd ng-model="x" ng-show="showEdit">{{x.vm_status}}</clevertd>
+          <input type="text" ng-model="x.vm_status" ng-show="!showEdit" />
+        </td>
+        <td>
+          <clevertd ng-model="x" ng-show="showEdit">{{x.vn_id}}</clevertd>
+          <input type="text" ng-model="x.vn_id" ng-show="!showEdit" />
+        </td>
+        <td>
+          <clevertd ng-model="x" ng-show="showEdit">{{x.pm_id}}</clevertd>
+          <input type="text" ng-model="x.pm_id" ng-show="!showEdit" />
+        </td>
+        <td>
+          <clevertd ng-model="x" ng-show="showEdit">{{x.creater_time}}</clevertd>
+          <input type="text" ng-model="x.creater_time" ng-show="!showEdit" />
+        </td>
         <td>
           <edit ng-model="x" ng-show="showEdit"><a>Edit</a></edit>
           <update ng-model="x" ng-show="!showEdit"><a>Update</a></update> 
