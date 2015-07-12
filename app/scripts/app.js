@@ -61,7 +61,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                     templateUrl: 'views/left-nglab.html'
                 },
                 'dashboard-right@nglab': {
-                    templateUrl: 'views/left-about.html'
+                    templateUrl: 'views/right-docker.html'
                 }
             }
         })

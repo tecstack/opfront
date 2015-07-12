@@ -28,9 +28,7 @@ helloworldApp.controller('aboutCtrl', function ($scope) {
   });
 
 //Lab angularjs实验区控制器
-helloworldApp.controller('nglabCtrl', function ($scope,vmInfos) {
-
-    $scope.showHelper = false;
+helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
 
     $scope.vminfos =[
       {
@@ -72,6 +70,10 @@ helloworldApp.controller('nglabCtrl', function ($scope,vmInfos) {
     ];
     $scope.showEdit = true;
     $scope.rowBak = {};
+    $scope.showHelp = function(){
+        $rootScope.showHelper = true;
+    };
+
 
     // $scope.queryVmInfos = function(){
     //   $scope.vminfos = vmInfos.query().vm_infos;
@@ -115,7 +117,24 @@ helloworldApp.controller('blogCtrl', function ($scope) {
   });
 
 //云主机检视区控制器
-helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
+helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos) {
+
+    $scope.showEdit = true;
+    $scope.showAdd = true;
+
+    $scope.rowBak = {};
+    $scope.vminfoToAdd = {
+        vm_name:'',
+        vm_id:'', 
+        ip:'', 
+        vm_status:'',
+        vn_id:'',
+        pm_id:'',
+        creater_time:''
+    };
+    $scope.pp = 20;
+    $scope.total_page = 1;
+
 
     $scope.queryVmInfos = function(){
       vmInfos.get(function(callbackdata){
@@ -132,15 +151,13 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
     }
 
     $scope.loadPage = function(current_page){
-      $scope.pages = []
-
+      $scope.vminfos =[];
+      $scope.pages = [];
       vmInfos.get({page:current_page,pp:$scope.pp},function(callbackdata){
         $scope.vminfos = callbackdata.vm_infos;
         $scope.total_page = callbackdata.total_page;
-
         var startpage = 1;
         var endpage = $scope.total_page;
-
         if ($scope.total_page > 1 && $scope.total_page <=7) {
             startpage = 1;
             endpage = $scope.total_page;
@@ -156,7 +173,6 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
               endpage = $scope.total_page;
             };
         };
-
         for (var i = startpage; i <= endpage; i++) {
           $scope.pages.push(i);
         }; 
@@ -180,8 +196,37 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
       $scope.loadPage($scope.total_page);
     }
 
-    $scope.pp = 20;
-    $scope.total_page = 1;
+    $scope.addVm = function(vminfo){
+      vmInfos.save({},vminfo,function(callbackdata){
+        console.log(callbackdata.vminfo);
+      });      
+    };
+
+    $scope.updateVm = function(vminfo){
+      vmInfos.update({},vminfo,function(callbackdata){
+        console.log(callbackdata.vminfo);
+      });
+    };
+
+    $scope.deleteById = function(id){
+      vmInfos.delete({vmid:id},function(callbackdata){
+        console.log(callbackdata);
+        // $scope.vminfos = callbackdata.vm_infos;
+      });
+    };
+
+    $scope.showHelp = function(){
+        $rootScope.showHelper = true;
+    };
+
     $scope.firstPage();
 
+  });
+
+//dockerright 检视关联区控制器
+helloworldApp.controller('dockerrightCtrl', function ($scope,$rootScope) {
+    $rootScope.showHelper = false;
+    $scope.close = function(){
+      $rootScope.showHelper = false;
+    };
   });

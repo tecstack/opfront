@@ -13,7 +13,7 @@
         <th>创建时间</th>
         <th></th>
       </tr>
-      <tr ng-repeat="x in vminfos" id="{{x.vm_id}}">
+      <tr ng-repeat="x in vminfos" id="{{x.vm_id}}" ng-click="showHelp()">
         <td>
           <clevertd ng-model="x" ng-show="showEdit">{{x.vm_name}}</clevertd>
           <input type="text" ng-model="x.vm_name" ng-show="!showEdit" />

@@ -1,5 +1,18 @@
 var helloworldApp = angular.module('helloworldApp');
 
+helloworldApp.directive('add',function(){
+	return{
+		restrict: 'E',
+		link: function(scope,element,attrs,ngModel){
+			element.bind("click",function(){
+				scope.$apply(function(){
+					scope.showAdd = false;
+				});
+			});
+		}
+	}
+});
+
 helloworldApp.directive('edit',function(){
 	return{
 		restrict: 'E',
@@ -73,19 +86,20 @@ helloworldApp.directive("delete",function(){
 	return{
 		restrict:'E',
 		require: 'ngModel',
-		link:function(scope, element, attrs,ngModel){
+		link:function(scope,element,attrs,ngModel,vmInfos){
 			element.bind("click",function(){
 				var id = ngModel.$modelValue.vm_id;
 
 				console.log("delete item where vm_id:"+id);
 
 				scope.$apply(function(){
-					for(var i=0; i<scope.vminfos.length; i++){
-						if(scope.vminfos[i].vm_id==id){
-							console.log(scope.vminfos[i])
-							scope.vminfos.splice(i,1);
-						}
-					}
+
+					// for(var i=0; i<scope.vminfos.length; i++){
+					// 	if(scope.vminfos[i].vm_id==id){
+					// 		console.log(scope.vminfos[i])
+					// 		scope.vminfos.splice(i,1);
+					// 	}
+					// }
 				})
 			})
 		}

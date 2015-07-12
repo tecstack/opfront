@@ -127,7 +127,6 @@ forward 定制样式
   right: 0;
   top: 50px;
   bottom: 0;
-  
   vertical-align:top;
 }
 
@@ -165,6 +164,16 @@ td input {
   min-width: 50px;
   padding: 0;
   border: 1px solid #d8d8d8;
+}
+
+.top-right {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+}
+
+.opacity {
+  opacity: 0.8;
 }
 
 .bg-dark {
@@ -314,3 +323,5 @@ td input {
 .r {
   border-radius: 2px 2px 2px 2px;
 }
+
+/*CSS3 动画*/
