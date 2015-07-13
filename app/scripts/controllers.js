@@ -30,7 +30,7 @@ helloworldApp.controller('aboutCtrl', function ($scope) {
 //Lab angularjs实验区控制器
 helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
 
-    $scope.vminfos =[
+    $scope.vm_infos =[
       {
         vm_name:'CIDC-VM-TEST-001',
         vm_id:'CIDC-VM-ID-001', 
@@ -69,14 +69,14 @@ helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
       }
     ];
     $scope.showEdit = true;
-    $scope.rowBak = {};
+    $scope.vm_infos_bak = {};
     $scope.showHelp = function(){
         $rootScope.showHelper = true;
     };
 
 
     // $scope.queryVmInfos = function(){
-    //   $scope.vminfos = vmInfos.query().vm_infos;
+    //   $scope.vm_infos = vmInfos.query().vm_infos;
     // };
 
     // $scope.queryVmInfos();
@@ -117,13 +117,17 @@ helloworldApp.controller('blogCtrl', function ($scope) {
   });
 
 //云主机检视区控制器
-helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos) {
+helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos,vmHelpInfo) {
+    $rootScope.vm_infos_help = {};
 
     $scope.showEdit = true;
-    $scope.showAdd = true;
+    $scope.showAdd = false;
 
-    $scope.rowBak = {};
-    $scope.vminfoToAdd = {
+    $scope.vm_infos =[];
+    $scope.vm_infos_bak = {};
+    $scope.pp = 20;
+    $scope.total_page = 1;
+    $scope.vm_infos_add = {
         vm_name:'',
         vm_id:'', 
         ip:'', 
@@ -132,29 +136,26 @@ helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos) {
         pm_id:'',
         creater_time:''
     };
-    $scope.pp = 20;
-    $scope.total_page = 1;
-
 
     $scope.queryVmInfos = function(){
       vmInfos.get(function(callbackdata){
-        $scope.vminfos = callbackdata.vm_infos;
+        $scope.vm_infos = callbackdata.vm_infos;
       });
     };
 
     $scope.searchId = function(event){
       if (event.keyCode !== 13) return;
-      var vmid = $scope.vmid;
+      var vmid = $scope.vm_id;
       vmInfos.get({vmid:vmid},function(callbackdata){
-        $scope.vminfos = callbackdata.vm_infos;
+        $scope.vm_infos = callbackdata.vm_infos;
       });
     }
 
     $scope.loadPage = function(current_page){
-      $scope.vminfos =[];
+      $scope.vm_infos =[];
       $scope.pages = [];
       vmInfos.get({page:current_page,pp:$scope.pp},function(callbackdata){
-        $scope.vminfos = callbackdata.vm_infos;
+        $scope.vm_infos = callbackdata.vm_infos;
         $scope.total_page = callbackdata.total_page;
         var startpage = 1;
         var endpage = $scope.total_page;
@@ -198,24 +199,26 @@ helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos) {
 
     $scope.addVm = function(vminfo){
       vmInfos.save({},vminfo,function(callbackdata){
-        console.log(callbackdata.vminfo);
+        console.log(callbackdata.vm_infos);
       });      
     };
 
     $scope.updateVm = function(vminfo){
-      vmInfos.update({},vminfo,function(callbackdata){
-        console.log(callbackdata.vminfo);
+      vmInfos.update({vmid:vminfo.vm_id},vminfo,function(callbackdata){
+        console.log(callbackdata.vm_infos);
       });
     };
 
     $scope.deleteById = function(id){
       vmInfos.delete({vmid:id},function(callbackdata){
-        console.log(callbackdata);
-        // $scope.vminfos = callbackdata.vm_infos;
+        console.log(callbackdata.vm_infos);
       });
     };
 
-    $scope.showHelp = function(){
+    $scope.showHelp = function(vminfo){
+        vmHelpInfo.get({vmid:vminfo.vm_id},function(callbackdata){
+          $rootScope.vm_infos_help = callbackdata.help_info;
+        });
         $rootScope.showHelper = true;
     };
 

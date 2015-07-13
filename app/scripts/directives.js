@@ -24,7 +24,7 @@ helloworldApp.directive('edit',function(){
     			var tdsize = [];
 
 				scope.$apply(function(){
-					angular.copy(ngModel.$modelValue,scope.rowBak);
+					angular.copy(ngModel.$modelValue,scope.vm_infos_bak);
 					obj.children("td").each(function(){
 						var size = { width:$(this).children("clevertd").width(), height:$(this).height() }
 						tdsize.push(size);
@@ -50,7 +50,7 @@ helloworldApp.directive('update',function(){
 				var obj = $("#"+id);
 
 				scope.$apply(function(){
-					angular.copy(ngModel.$modelValue,scope.rowBak);
+					angular.copy(ngModel.$modelValue,scope.vm_infos_bak);
 				});				
 
 				scope.$apply(function(){
@@ -71,7 +71,7 @@ helloworldApp.directive('cancel',function(){
 				var obj = $("#"+id);
 
 				scope.$apply(function(){
-					angular.copy(scope.rowBak,ngModel.$modelValue);
+					angular.copy(scope.vm_infos_bak,ngModel.$modelValue);
 				});
 
 				scope.$apply(function(){

@@ -12,7 +12,7 @@
         	检索：
         </label>
         <div class="col-md-5">
-          <input type="text" class="form-control" placeholder="输入你想要检索的虚机ID" ng-model="vmid" ng-keypress="searchId($event)">
+          <input type="text" class="form-control" placeholder="输入你想要检索的虚机ID" ng-model="vm_id" ng-keypress="searchId($event)">
         </div>
 
         <label class="col-md-2 control-label">
@@ -41,16 +41,16 @@
         <th></th>
       </tr>
       <tr ng-show="showAdd">
-        <td><input type="text" ng-model="vminfoToAdd.vm_name"></td>
-        <td><input type="text" ng-model="vminfoToAdd.vm_id"></td>
-        <td><input type="text" ng-model="vminfoToAdd.ip"></td>
-        <td><input type="text" ng-model="vminfoToAdd.vm_status"></td>
-        <td><input type="text" ng-model="vminfoToAdd.vn_id"></td>
-        <td><input type="text" ng-model="vminfoToAdd.pm_id"></td>
-        <td><input type="text" ng-model="vminfoToAdd.creater_time"></td>
-        <td><add ng-model="vminfoToAdd" ng-click="addVm(vminfoToAdd)"><a>Add</a></add></td>
+        <td><input type="text" ng-model="vm_infos_add.vm_name"></td>
+        <td><input type="text" ng-model="vm_infos_add.vm_id"></td>
+        <td><input type="text" ng-model="vm_infos_add.ip"></td>
+        <td><input type="text" ng-model="vm_infos_add.vm_status"></td>
+        <td><input type="text" ng-model="vm_infos_add.vn_id"></td>
+        <td><input type="text" ng-model="vm_infos_add.pm_id"></td>
+        <td><input type="text" ng-model="vm_infos_add.creater_time"></td>
+        <td><add ng-model="vm_infos_add" ng-click="addVm(vm_infos_add)"><a>Add</a></add></td>
       </tr>
-      <tr ng-repeat="x in vminfos" id="{{x.vm_id}}" ng-dblclick="showHelp()">
+      <tr ng-repeat="x in vm_infos" id="{{x.vm_id}}" ng-dblclick="showHelp(x)">
         <td>
           <clevertd ng-model="x" ng-show="showEdit">{{x.vm_name}}</clevertd>
           <input type="text" ng-model="x.vm_name" ng-show="!showEdit" />
@@ -101,7 +101,7 @@
         <td>创建时间</td>
 
       </tr>
-      <tr ng-repeat="x in vminfos" class="info">
+      <tr ng-repeat="x in vm_infos" class="info">
         <td>{{ x.vm_name }}</td>
         <td>{{ x.vm_id }}</td>
         <td>{{ x.ip }}</td>
