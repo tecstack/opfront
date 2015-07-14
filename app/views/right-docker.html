@@ -2,6 +2,28 @@
 	<h4>虚机详情</h4>
 	<div class="panel b-a">
 		<ul class="list-group">
+			<li class="panel-li">
+				<small>计算节点ID</small>
+				<p ng-bind="vm_infos_help.pm_id"></p>				
+			</li>
+			<li class="panel-li">
+				<small>计算节点IP</small>
+				<p ng-bind="vm_infos_help.pm_local_ip"></p>	
+			</li>
+			<li class="panel-li">
+				<small>计算节点名称</small>
+				<p ng-bind="vm_infos_help.pm_name"></p>				
+			</li>
+			<li class="panel-li">
+				<small>虚机公网IP</small>
+				<p ng-bind="vm_infos_help.vm_public_ip"></p>	
+			</li>
+		</ul>
+
+	</div>
+
+	<div class="panel b-a">
+		<ul class="list-group">
 			<li class="list-group-item">
 				<small>计算节点ID</small>
 				<p ng-bind="vm_infos_help.pm_id"></p>
@@ -19,13 +41,6 @@
 				<p ng-bind="vm_infos_help.vm_public_ip"></p>
 			</li>
 		</ul>
-<!--     // "help_info": {
-    //     "pm_id": "CIDC-R-01-046-SRV-00002381", 
-    //     "pm_local_ip": "172.16.1.126", 
-    //     "pm_name": "NFJD-PSC-IBMH-SV123", 
-    //     "pm_public_ip": "", 
-    //     "vm_public_ip": "1.2.4.147"
-    // } -->
 
 <!-- 		<h4 class="font-thin padder">Latest Tweets</h4>
 		<ul class="list-group">
