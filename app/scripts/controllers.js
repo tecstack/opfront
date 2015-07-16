@@ -18,6 +18,16 @@ helloworldApp.controller('mainCtrl', function ($scope) {
     ];
   });
 
+//ui 展示页控制器
+helloworldApp.controller('uiCtrl', function ($scope) {
+
+  });
+
+//ui-right 展示帮助页控制器
+helloworldApp.controller('uirightCtrl', function ($scope,$rootScope) {
+    $rootScope.showHelper = true;
+  });
+
 //About 介绍页控制器
 helloworldApp.controller('aboutCtrl', function ($scope) {
     $scope.awesomeThings = [
@@ -226,7 +236,7 @@ helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos,vmHel
 
   });
 
-//dockerright 检视关联区控制器
+//docker-right 检视关联区控制器
 helloworldApp.controller('dockerrightCtrl', function ($scope,$rootScope) {
     $rootScope.showHelper = false;
     $scope.close = function(){

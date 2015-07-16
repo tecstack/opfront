@@ -44,6 +44,27 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        // UI展示页路由加载配置
+        .state('ui', {
+            url: '/ui',
+            views: {
+                '': {
+                    templateUrl: 'views/floor.html'
+                },
+                'navbar@ui': {
+                    templateUrl: 'views/navbar.html'
+                },
+                'sidebar@ui': {
+                    templateUrl: 'views/sidebar.html'
+                },
+                'dashboard-left@ui': {
+                    templateUrl: 'views/left-ui.html'
+                },
+                'dashboard-right@ui': {
+                    templateUrl: 'views/right-ui.html'
+                }
+            }
+        })
         // angularjs实验区路由加载配置
         .state('nglab', {
             url: '/nglab',

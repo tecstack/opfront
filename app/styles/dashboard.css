@@ -35,19 +35,15 @@ body {
 }
 @media (min-width: 768px) {
   .sidebar {
-    position: fixed;
-    top: 50px;
-    bottom: 0;
-    left: 0;
+    height: 100%;
     z-index: 1000;
     display: block;
-    padding: 15px 0;
+    padding: 0;
+    margin: 5px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    color: #a6a8b1;
     font-size: 15px;
     font-weight: 500;
-    background-color: #3a3f51;
   }
 }
 
@@ -56,6 +52,7 @@ body {
   margin-bottom: 20px;
 }
 .nav-sidebar > li > a {
+  color: #30363D; 
   padding-right: 30px;
   padding-left: 50px;
 }
@@ -109,10 +106,10 @@ body {
 forward 定制样式
 */
 
+/*模块样式*/
 .logo {
   height: 50px;
   padding: 0 20px;
-  background-color: #3a3f51;
   display: inline-block;
   font-size: 30px;
   font-weight: 700;
@@ -121,20 +118,29 @@ forward 定制样式
   float: left;
 }
 
-.dashboard-right {
-  position: fixed;
-  right: 0;
-  top: 50px;
-  bottom: 0;
-  vertical-align:top;
-}
-
 .line {
   max-width: 100%;
   height: 1px;
   margin: 10px 12px;
   overflow: hidden;
   font-size: 0;
+}
+
+.dashboard-right {
+  height: 100%;
+  z-index: 1000;
+  margin: 5px;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/*组件样式*/
+td input {
+  min-width: 50px;
+  padding: 0;
+  border: 1px solid #d8d8d8;
 }
 
 .panel {
@@ -153,27 +159,36 @@ forward 定制样式
   padding: 5px;
 }
 
+.dashboard-navbar {
+  width: 100%;
+  height: 60px;
+  display: block;
+}
+
+.dashboard-navbar>ul>li {
+  float: left;
+  margin: 5px 5px 5px 0;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+}
+
+/*位置样式*/
 .center {
   text-align:center;
 }
 
-.padder {
-  padding-right: 15px !important;
-  padding-left: 15px !important;
+.no-wrapper {
+  padding: 0;
 }
 
 .wrapper {
   padding: 15px;
 }
 
-.shadow {
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
-}
-
-td input {
-  min-width: 50px;
-  padding: 0;
-  border: 1px solid #d8d8d8;
+.padder {
+  padding-right: 15px !important;
+  padding-left: 15px !important;
 }
 
 .top-left-fix {
@@ -188,14 +203,62 @@ td input {
   top: 0;
 }
 
+.t-50-b-10-l-0 {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  bottom: 10px;
+}
+
+.t-50-b-10-r-0 {
+  position: fixed;
+  top: 50px;
+  right: 0;
+  bottom: 10px;
+}
+
 .top-right-six {
   position: absolute;
   right: 6px;
   top: 6px;
 }
 
+
+/*外观样式*/
+.shadow {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
 .opacity {
   opacity: 0.8;
+}
+
+.bg-dark-a {
+  background-color: #30363D;
+}
+
+.bg-gray-a {
+  background-color: #D1D2D0;
+}
+
+.bg-white-a {
+  background-color: #F0F2ED;
+}
+
+.bg-blue-a {
+  background-color: #2289A0;
+}
+
+.bg-azure-a {
+  background-color: #55B7C9;
+}
+
+.bg-orange-a {
+  background-color: #FF9900;
+}
+
+.bg-preblue {
+  background-color: #44495d;
 }
 
 .bg-dark {
@@ -258,12 +321,20 @@ td input {
   border-right: 1px solid #dee5e7;
 }
 
+.b-r-black {
+  border-right: 1px solid #2e3344;
+}
+
 .b-b {
   border-bottom: 1px solid #dee5e7;
 }
 
 .b-l {
   border-left: 1px solid #dee5e7;
+}
+
+.b-l-black {
+  border-left: 1px solid #2e3344;
 }
 
 .b-light {

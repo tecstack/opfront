@@ -3,8 +3,8 @@
     <div class="col-md-12 col-lg-12" style="height:50px;" ui-view="navbar"></div>
   </div>
   <div class="row">
-    <div class="col-md-2 col-lg-2 sidebar navbar-inverse" ui-view="sidebar"></div>
-    <div class="col-md-10 col-lg-10 col-md-offset-2 col-lg-offset-2" ui-view="dashboard-left"></div>
-    <div class="col-md-2 col-lg-2 wrapper bg-snow b-l font-dark dashboard-right" ng-show="showHelper" ui-view="dashboard-right"></div>
+    <div class="col-md-2 col-lg-2 t-50-b-10-l-0 no-wrapper" ui-view="sidebar"></div>
+    <div class="col-md-10 col-lg-10 col-md-offset-2 col-lg-offset-2 no-wrapper" ui-view="dashboard-left"></div>
+    <div class="col-md-2 col-lg-2 t-50-b-10-r-0 no-wrapper" ng-show="showHelper" ui-view="dashboard-right"></div>
   </div>
 </div>
