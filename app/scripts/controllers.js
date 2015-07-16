@@ -157,7 +157,9 @@ helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos,vmHel
       if (event.keyCode !== 13) return;
       var vmid = $scope.vm_id;
       vmInfos.get({vmid:vmid},function(callbackdata){
-        $scope.vm_infos = callbackdata.vm_infos;
+        var temparray = new Array();
+        temparray.push(callbackdata.vm_info);
+        $scope.vm_infos = temparray;
       });
     }
 

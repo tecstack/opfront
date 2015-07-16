@@ -1,3 +1,49 @@
-<div class="dashboard-right b-l-black" ng-controller="uirightCtrl">
+<div class="dashboard-right b-l-black padder-l-5 bg-white" ng-controller="uirightCtrl">
+	<div class="panel">
+		<h4 class="center">节点信息</h4>
+		<li class="line"></li>
+		<ul class="list-group">
+			<li class="panel-li">
+				<small>计算节点ID: </small>
+				<small ng-bind="vm_infos_help.pm_id"></small>				
+			</li>
+			<li class="panel-li">
+				<small>计算节点IP: </small>
+				<small ng-bind="vm_infos_help.pm_local_ip"></small>	
+			</li>
+			<li class="panel-li">
+				<small>计算节点名称: </small>
+				<small ng-bind="vm_infos_help.pm_name"></small>				
+			</li>
+			<li class="panel-li">
+				<small>虚机公网IP: </small>
+				<small ng-bind="vm_infos_help.vm_public_ip"></small>	
+			</li>
+		</ul>
+	</div>
+
+	<div class="panel">
+		<h4 class="center">节点信息</h4>
+		<li class="line"></li>
+		<ul class="list-group">
+			<li class="panel-li">
+				<small>计算节点ID: </small>
+				<small ng-bind="vm_infos_help.pm_id"></small>				
+			</li>
+			<li class="panel-li">
+				<small>计算节点IP: </small>
+				<small ng-bind="vm_infos_help.pm_local_ip"></small>	
+			</li>
+			<li class="panel-li">
+				<small>计算节点名称: </small>
+				<small ng-bind="vm_infos_help.pm_name"></small>				
+			</li>
+			<li class="panel-li">
+				<small>虚机公网IP: </small>
+				<small ng-bind="vm_infos_help.vm_public_ip"></small>	
+			</li>
+		</ul>
+	</div>
 	
+	<span class="glyphicon glyphicon-remove top-right-six" ng-click="close()"></span>
 </div>
