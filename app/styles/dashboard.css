@@ -42,7 +42,7 @@ body {
     margin: 5px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
   }
 }
@@ -177,6 +177,8 @@ td input {
 
 .dashboard-navbar>ul>li {
   float: left;
+  text-align: center;
+  font-size: 15px;
   margin: 5px 5px 5px 0;
   width: 100px;
   height: 50px;
@@ -184,7 +186,18 @@ td input {
 }
 
 .dashboard-navbar>ul>li:hover {
-  background-color: #55B7C9;
+  background-color: #FF9900;
+}
+
+.navbar-nav > li > a {
+  padding: 0 15px !important;
+  line-height: 50px;
+  font-size: 30px;
+  color: #ffffff !important;
+}
+
+.navbar-nav > li > a:hover {
+  color: #55B7C9 !important;
 }
 
 /*位置样式*/
@@ -397,42 +410,6 @@ td input {
 
 .b-dashed {
   border-style: dashed !important;
-}
-
-.b-l-light {
-  border-left-color: #edf1f2;
-}
-
-.b-l-dark {
-  border-left-color: #3a3f51;
-}
-
-.b-l-black {
-  border-left-color: #3a3f51;
-}
-
-.b-l-primary {
-  border-left-color: #7266ba;
-}
-
-.b-l-success {
-  border-left-color: #27c24c;
-}
-
-.b-l-info {
-  border-left-color: #23b7e5;
-}
-
-.b-l-warning {
-  border-left-color: #fad733;
-}
-
-.b-l-danger {
-  border-left-color: #f05050;
-}
-
-.b-l-white {
-  border-left-color: #ffffff;
 }
 
 .r {

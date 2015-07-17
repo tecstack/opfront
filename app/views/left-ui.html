@@ -1,12 +1,21 @@
 <div ng-controller="uiCtrl">
 	<div class="dashboard-navbar b-b">
 		<ul class="nav">
-			<li class="bg-dark-a b">ss</li>
-			<li class="bg-gray-a b">dd</li>
-			<li class="bg-white-a b">aa</li>
-			<li class="bg-azure-a b">cc</li>
+			<li class="bg-white-a b">VRF容量</li>
+			<li class="bg-white-a b">VRF详情</li>
+			<li class="bg-white-a b">Vlan容量</li>
+			<li class="bg-white-a b">cc</li>
 		</ul>
 	</div>
-	
+
+	<div class="col-md-6 wrapper">
+		<canvas id="radarChart" style="width:100%; height:100%;"></canvas>
+	</div>
+	<div class="col-md-6 wrapper">
+		<canvas id="lineChart" style="width:100%; height:100%;"></canvas>
+	</div>
+	<div class="col-md-6 wrapper">
+		<canvas id="barChart" style="width:100%; height:100%;"></canvas>
+	</div>
 
 </div>
