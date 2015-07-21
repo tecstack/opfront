@@ -141,7 +141,8 @@ forward 定制样式
 .dashboard-right {
   height: 100%;
   z-index: 1000;
-  margin: 5px;
+  margin: 0;
+  padding: 5px;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   font-size: 15px;
@@ -240,18 +241,18 @@ td input {
   top: 0;
 }
 
-.t-50-b-10-l-0 {
+.t-50-b-0-l-0 {
   position: fixed;
   top: 50px;
   left: 0;
-  bottom: 10px;
+  bottom: 0;
 }
 
-.t-50-b-10-r-0 {
+.t-50-b-0-r-0 {
   position: fixed;
   top: 50px;
   right: 0;
-  bottom: 10px;
+  bottom: 0;
 }
 
 .t-6-r-6-ab {
