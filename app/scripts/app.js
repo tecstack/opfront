@@ -39,7 +39,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 'dashboard-left@index': {
                     templateUrl: 'views/left-main.html'
                 },
-                'dashboard-right@index': {
+                'helper@index': {
                     templateUrl: 'views/left-about.html'
                 }
             }
@@ -60,7 +60,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 'dashboard-left@ui': {
                     templateUrl: 'views/left-ui.html'
                 },
-                'dashboard-right@ui': {
+                'helper@ui': {
                     templateUrl: 'views/right-ui.html'
                 }
             }
@@ -81,7 +81,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 'dashboard-left@nglab': {
                     templateUrl: 'views/left-nglab.html'
                 },
-                'dashboard-right@nglab': {
+                'helper@nglab': {
                     templateUrl: 'views/right-docker.html'
                 }
             }
@@ -102,7 +102,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 'dashboard-left@blog': {
                     templateUrl: 'views/left-blog.html'
                 },
-                'dashboard-right@blog': {
+                'helper@blog': {
                     templateUrl: 'views/left-about.html'
                 }
             }
@@ -123,7 +123,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 'dashboard-left@docker': {
                     templateUrl: 'views/left-docker.html'
                 },
-                'dashboard-right@docker': {
+                'helper@docker': {
                     templateUrl: 'views/right-docker.html'
                 }
             }
@@ -144,7 +144,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 'dashboard-left@about': {
                     templateUrl: 'views/left-about.html'
                 },
-                'dashboard-right@about': {
+                'helper@about': {
                     templateUrl: 'views/left-about.html'
                 }
             }
