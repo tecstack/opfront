@@ -18,6 +18,96 @@ helloworldApp.controller('mainCtrl', function ($scope) {
     ];
   });
 
+//ui 展示页控制器
+helloworldApp.controller('uiCtrl', function ($scope) {
+    var lineChart = $("#lineChart").get(0).getContext("2d");
+    var lineData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56, 55, 40]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }
+        ]
+    };
+    var myLineChart = new Chart(lineChart).Line(lineData);
+
+    var radarChart = $("#radarChart").get(0).getContext("2d");
+    var radarData = {
+        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 90, 81, 56, 55, 40]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 96, 27, 100]
+            }
+        ]
+    };
+    var myRadarChart = new Chart(radarChart).Radar(radarData);
+
+    var barChart = $("#barChart").get(0).getContext("2d");
+    var barData = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,0.8)",
+                highlightFill: "rgba(220,220,220,0.75)",
+                highlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56, 55, 40]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.5)",
+                strokeColor: "rgba(151,187,205,0.8)",
+                highlightFill: "rgba(151,187,205,0.75)",
+                highlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }
+        ]
+    };
+    var myBarChart = new Chart(barChart).Bar(barData);
+
+
+  });
+
+//ui-right 展示帮助页控制器
+helloworldApp.controller('uirightCtrl', function ($scope,$rootScope) {
+    $rootScope.showHelper = true;
+  });
+
 //About 介绍页控制器
 helloworldApp.controller('aboutCtrl', function ($scope) {
     $scope.awesomeThings = [
@@ -28,15 +118,55 @@ helloworldApp.controller('aboutCtrl', function ($scope) {
   });
 
 //Lab angularjs实验区控制器
-helloworldApp.controller('nglabCtrl', function ($scope,vmInfos) {
-    $scope.queryVmInfos = function(){
-      $scope.vminfos = vmInfos.query().vm_infos;
+helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
+
+    $scope.vm_infos =[
+      {
+        vm_name:'CIDC-VM-TEST-001',
+        vm_id:'CIDC-VM-ID-001', 
+        ip:'10.11.191.10', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-001',
+        pm_id:'CIDC-PM-ID-001',
+        creater_time:'2011-02-14 19:22:32'
+      },
+      {
+        vm_name:'CIDC-VM-TEST-002',
+        vm_id:'CIDC-VM-ID-002', 
+        ip:'10.11.191.12', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-002',
+        pm_id:'CIDC-PM-ID-002',
+        creater_time:'2011-02-14 19:22:32'
+      },
+      {
+        vm_name:'CIDC-VM-TEST-003',
+        vm_id:'CIDC-VM-ID-003', 
+        ip:'10.11.191.13', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-003',
+        pm_id:'CIDC-PM-ID-003',
+        creater_time:'2011-02-14 19:22:32'
+      },
+      {
+        vm_name:'CIDC-VM-TEST-004',
+        vm_id:'CIDC-VM-ID-004', 
+        ip:'10.11.191.14', 
+        vm_status:'2',
+        vn_id:'CIDC-VN-ID-004',
+        pm_id:'CIDC-PM-ID-004',
+        creater_time:'2011-02-14 19:22:32'
+      }
+    ];
+    $scope.showEdit = true;
+    $scope.vm_infos_bak = {};
+    $scope.showHelp = function(){
+        $rootScope.showHelper = true;
     };
 
-    $scope.queryVmInfos();
   	$scope.person = {
-  	  firstName: "John",
-  	  lastName: "Doe"
+        firstName: "John",
+        lastName: "Doe"
   	};
 
     $scope.names = [
@@ -71,32 +201,50 @@ helloworldApp.controller('blogCtrl', function ($scope) {
   });
 
 //云主机检视区控制器
-helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
+helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos,vmHelpInfo) {
+    $rootScope.vm_infos_help = {};
+
+    $scope.showEdit = true;
+    $scope.showAdd = false;
+
+    $scope.vm_infos =[];
+    $scope.vm_infos_bak = {};
+    $scope.pp = 20;
+    $scope.total_page = 1;
+    $scope.vm_infos_add = {
+        vm_name:'',
+        vm_id:'', 
+        ip:'', 
+        vm_status:'',
+        vn_id:'',
+        pm_id:'',
+        creater_time:''
+    };
 
     $scope.queryVmInfos = function(){
       vmInfos.get(function(callbackdata){
-        $scope.vminfos = callbackdata.vm_infos;
+        $scope.vm_infos = callbackdata.vm_infos;
       });
     };
 
     $scope.searchId = function(event){
       if (event.keyCode !== 13) return;
-      var vmid = $scope.vmid;
+      var vmid = $scope.vm_id;
       vmInfos.get({vmid:vmid},function(callbackdata){
-        $scope.vminfos = callbackdata.vm_infos;
+        var temparray = new Array();
+        temparray.push(callbackdata.vm_info);
+        $scope.vm_infos = temparray;
       });
     }
 
     $scope.loadPage = function(current_page){
-      $scope.pages = []
-
+      $scope.vm_infos =[];
+      $scope.pages = [];
       vmInfos.get({page:current_page,pp:$scope.pp},function(callbackdata){
-        $scope.vminfos = callbackdata.vm_infos;
+        $scope.vm_infos = callbackdata.vm_infos;
         $scope.total_page = callbackdata.total_page;
-
         var startpage = 1;
         var endpage = $scope.total_page;
-
         if ($scope.total_page > 1 && $scope.total_page <=7) {
             startpage = 1;
             endpage = $scope.total_page;
@@ -112,7 +260,6 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
               endpage = $scope.total_page;
             };
         };
-
         for (var i = startpage; i <= endpage; i++) {
           $scope.pages.push(i);
         }; 
@@ -136,8 +283,39 @@ helloworldApp.controller('dockerCtrl', function ($scope,vmInfos) {
       $scope.loadPage($scope.total_page);
     }
 
-    $scope.pp = 20;
-    $scope.total_page = 1;
+    $scope.addVm = function(vminfo){
+      vmInfos.save({},vminfo,function(callbackdata){
+        console.log(callbackdata.vm_infos);
+      });      
+    };
+
+    $scope.updateVm = function(vminfo){
+      vmInfos.update({vmid:vminfo.vm_id},vminfo,function(callbackdata){
+        console.log(callbackdata.vm_infos);
+      });
+    };
+
+    $scope.deleteById = function(id){
+      vmInfos.delete({vmid:id},function(callbackdata){
+        console.log(callbackdata.vm_infos);
+      });
+    };
+
+    $scope.showHelp = function(vminfo){
+        vmHelpInfo.get({vmid:vminfo.vm_id},function(callbackdata){
+          $rootScope.vm_infos_help = callbackdata.help_info;
+        });
+        $rootScope.showHelper = true;
+    };
+
     $scope.firstPage();
 
+  });
+
+//docker-right 检视关联区控制器
+helloworldApp.controller('dockerrightCtrl', function ($scope,$rootScope) {
+    $rootScope.showHelper = false;
+    $scope.close = function(){
+      $rootScope.showHelper = false;
+    };
   });
