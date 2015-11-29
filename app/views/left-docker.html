@@ -1,4 +1,4 @@
-<div ng-controller="dockerCtrl" class="wrapper">
+<div ng-controller="Cdocker" class="wrapper">
 
 	<div class="header">
 	  <h2>云主机检视</h2>
@@ -12,14 +12,14 @@
         	检索：
         </label>
         <div class="col-md-5">
-          <input type="text" class="form-control" placeholder="输入你想要检索的虚机ID" ng-model="vm_id" ng-keypress="searchId($event)">
+          <input type="text" class="form-control" placeholder="输入你想要检索的虚机ID" ng-model="MvmId" ng-keypress="FsearchId($event)">
         </div>
 
         <label class="col-md-2 control-label">
         	每页条数：
         </label>
         <div class="col-md-3">
-        	<select name="pp" id="#" class="form-control" ng-model="pp" ng-change="refreshPP()">
+        	<select name="pp" id="#" class="form-control" ng-model="Mpp" ng-change="FrefreshPP()">
         		<option value="20">20</option>
         		<option value="50">50</option>
         		<option value="100">100</option>
@@ -35,89 +35,65 @@
         <th>虚机ID</th>
         <th>虚机IP</th>
         <th>虚机状态</th>
-        <th>网段ID</th> 
-        <th>节点ID</th>
+        <th>网段ID</th>
+        <th>节点ID</th
         <th>创建时间</th>
         <th></th>
       </tr>
-      <tr ng-show="showAdd">
-        <td><input type="text" ng-model="vm_infos_add.vm_name"></td>
-        <td><input type="text" ng-model="vm_infos_add.vm_id"></td>
-        <td><input type="text" ng-model="vm_infos_add.ip"></td>
-        <td><input type="text" ng-model="vm_infos_add.vm_status"></td>
-        <td><input type="text" ng-model="vm_infos_add.vn_id"></td>
-        <td><input type="text" ng-model="vm_infos_add.pm_id"></td>
-        <td><input type="text" ng-model="vm_infos_add.creater_time"></td>
-        <td><add ng-model="vm_infos_add" ng-click="addVm(vm_infos_add)"><a>Add</a></add></td>
+      <tr ng-show="MshowAdd">
+        <td><input type="text" ng-model="MvmAddInfos.vm_name"></td>
+        <td><input type="text" ng-model="MvmAddInfos.vm_id"></td>
+        <td><input type="text" ng-model="MvmAddInfos.ip"></td>
+        <td><input type="text" ng-model="MvmAddInfos.vm_status"></td>
+        <td><input type="text" ng-model="MvmAddInfos.vn_id"></td>
+        <td><input type="text" ng-model="MvmAddInfos.pm_id"></td>
+        <td><input type="text" ng-model="MvmAddInfos.creater_time"></td>
+        <td><add ng-model="MvmAddInfos" ng-click="FaddVm(MvmAddInfos)"><a>Add</a></add></td>
       </tr>
-      <tr ng-repeat="x in vm_infos" id="{{x.vm_id}}" ng-dblclick="showHelp(x)">
+      <tr ng-repeat="x in MvmInfos" id="{{x.vm_id}}" ng-dblclick="FshowHelp(x)">
         <td>
-          <clevertd ng-model="x" ng-show="showEdit">{{x.vm_name}}</clevertd>
-          <input type="text" ng-model="x.vm_name" ng-show="!showEdit" />
+          <clevertd ng-model="x" ng-show="MshowEdit">{{x.vm_name}}</clevertd>
+          <input type="text" ng-model="x.vm_name" ng-show="!MshowEdit" />
         </td>
         <td>
-          <clevertd ng-model="x" ng-show="showEdit">{{x.vm_id}}</clevertd>
-          <input type="text" ng-model="x.vm_id" ng-show="!showEdit" />
+          <clevertd ng-model="x" ng-show="MshowEdit">{{x.vm_id}}</clevertd>
+          <input type="text" ng-model="x.vm_id" ng-show="!MshowEdit" />
         </td>
         <td>
-          <clevertd ng-model="x" ng-show="showEdit">{{x.ip}}</clevertd>
-          <input type="text" ng-model="x.ip" ng-show="!showEdit" />
+          <clevertd ng-model="x" ng-show="MshowEdit">{{x.ip}}</clevertd>
+          <input type="text" ng-model="x.ip" ng-show="!MshowEdit" />
         </td>
         <td>
-          <clevertd ng-model="x" ng-show="showEdit">{{x.vm_status}}</clevertd>
-          <input type="text" ng-model="x.vm_status" ng-show="!showEdit" />
+          <clevertd ng-model="x" ng-show="MshowEdit">{{x.vm_status}}</clevertd>
+          <input type="text" ng-model="x.vm_status" ng-show="!MshowEdit" />
         </td>
         <td>
-          <clevertd ng-model="x" ng-show="showEdit">{{x.vn_id}}</clevertd>
-          <input type="text" ng-model="x.vn_id" ng-show="!showEdit" />
+          <clevertd ng-model="x" ng-show="MshowEdit">{{x.vn_id}}</clevertd>
+          <input type="text" ng-model="x.vn_id" ng-show="!MshowEdit" />
         </td>
         <td>
-          <clevertd ng-model="x" ng-show="showEdit">{{x.pm_id}}</clevertd>
-          <input type="text" ng-model="x.pm_id" ng-show="!showEdit" />
+          <clevertd ng-model="x" ng-show="MshowEdit">{{x.pm_id}}</clevertd>
+          <input type="text" ng-model="x.pm_id" ng-show="!MshowEdit" />
         </td>
         <td>
-          <clevertd ng-model="x" ng-show="showEdit">{{x.creater_time}}</clevertd>
-          <input type="text" ng-model="x.creater_time" ng-show="!showEdit" />
+          <clevertd ng-model="x" ng-show="MshowEdit">{{x.creater_time}}</clevertd>
+          <input type="text" ng-model="x.creater_time" ng-show="!MshowEdit" />
         </td>
         <td>
-          <edit ng-model="x" ng-show="showEdit"><a>Edit</a></edit>
-          <update ng-model="x" ng-show="!showEdit" ng-click="updateVm(x)"><a>Update</a></update> 
-          <cancel ng-model="x" ng-show="!showEdit"> | <a>Cancel</a></cancel>
-          <delete ng-model="x" ng-click="deleteById(x.vm_id)"> | <a>Delete</a></delete>    
+          <edit ng-model="x" ng-show="MshowEdit"><a>Edit</a></edit>
+          <update ng-model="x" ng-show="!MshowEdit" ng-click="FupdateVm(x)"><a>Update</a></update>
+          <cancel ng-model="x" ng-show="!MshowEdit"> | <a>Cancel</a></cancel>
+          <delete ng-model="x" ng-click="FdeleteById(x.vm_id)"> | <a>Delete</a></delete>
         </td>
 
       </tr>
     </table>
 
-
-<!--     <table class="table table-striped table-hover">
-      <tr class='danger'>
-        <td>虚机名称</td>
-        <td>虚机ID</td>
-        <td>虚机IP</td>
-        <td>虚机状态</td>
-        <td>网段ID</td> 
-        <td>节点ID</td>
-        <td>创建时间</td>
-
-      </tr>
-      <tr ng-repeat="x in vm_infos" class="info">
-        <td>{{ x.vm_name }}</td>
-        <td>{{ x.vm_id }}</td>
-        <td>{{ x.ip }}</td>
-        <td>{{ x.vm_status }}</td>
-        <td>{{ x.vn_id }}</td>
-        <td>{{ x.pm_id }}</td>
-        <td>{{ x.creater_time }}</td>
-      </tr>
-    </table> -->
-
-
 	<div align="center">
 		<ul class="pagination pagination">
-			<li><a href="#" ng-click="firstPage()">&laquo;首页</a></li>
-			<li ng-repeat="page in pages"><a href="#" ng-click="switchPage(page)">{{ page }}</a></li>
-			<li><a href="#" ng-click="lastPage()">尾页&raquo;</a></li>
+			<li><a href="#" ng-click="FfirstPage()">&laquo;首页</a></li>
+			<li ng-repeat="page in Mpages"><a href="#" ng-click="FswitchPage(page)">{{ page }}</a></li>
+			<li><a href="#" ng-click="FlastPage()">尾页&raquo;</a></li>
 		</ul>
 	</div>
 </div>

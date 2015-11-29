@@ -1,4 +1,5 @@
-<div class="dashboard col-md-10 col-lg-10 col-md-offset-2 col-lg-offset-2" ui-view="dashboard-left"></div> 
-<div class="navbar bg-dark shadow" ui-view="navbar"></div>
-<div class="sidebar col-md-2 col-lg-2 bg-white" ui-view="sidebar"></div>
-<div class="helper col-md-3 col-lg-3 bg-white" ng-show="showHelper" ui-view="helper"></div>
+<div class="dashboard col-md-10 col-lg-10 col-md-offset-2 col-lg-offset-2" ui-view="dashboardView"></div>
+<div class="navbar bg-dark shadow" ui-view="navbarView"></div>
+<div class="sidebar col-md-2 col-lg-2 bg-white" ui-view="sidebarView"></div>
+<div class="helper col-md-3 col-lg-3 bg-white" ng-show="MshowHelper" ui-view="helperView"></div>
+<div class="userboard" ng-show="MshowSign" ui-view="signView"></div>

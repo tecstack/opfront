@@ -51,7 +51,7 @@ helloworldApp.directive('update',function(){
 
 				scope.$apply(function(){
 					angular.copy(ngModel.$modelValue,scope.vm_infos_bak);
-				});				
+				});
 
 				scope.$apply(function(){
 					scope.showEdit = true;
@@ -76,7 +76,7 @@ helloworldApp.directive('cancel',function(){
 
 				scope.$apply(function(){
 					scope.showEdit = true;
-				})				
+				})
 			})
 		}
 	}
@@ -116,5 +116,6 @@ helloworldApp.directive("delete",function(){
 // 		}
 // 	}
 // });
-				// obj.prevAll().removeAttr("contentEditable").removeClass("b-a");
-				// obj.nextAll().removeAttr("contentEditable").removeClass("b-a");
+
+// obj.prevAll().removeAttr("contentEditable").removeClass("b-a");
+// obj.nextAll().removeAttr("contentEditable").removeClass("b-a");

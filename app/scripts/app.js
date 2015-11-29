@@ -15,6 +15,7 @@ var helloworldApp = angular.module('helloworldApp', [
     'ngMessages',
     'ngResource',
     'ui.router',
+    'base64',
     'ngSanitize',
     'ngTouch'
   ]);
@@ -30,17 +31,20 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 '': {
                     templateUrl: 'views/floor.html'
                 },
-                'navbar@index': {
+                'navbarView@index': {
                     templateUrl: 'views/navbar.html'
                 },
-                'sidebar@index': {
+                'sidebarView@index': {
                     templateUrl: 'views/sidebar.html'
                 },
-                'dashboard-left@index': {
+                'dashboardView@index': {
                     templateUrl: 'views/left-main.html'
                 },
-                'helper@index': {
+                'helperView@index': {
                     templateUrl: 'views/left-about.html'
+                },
+                'signView@index': {
+                    templateUrl: 'views/sign.html'
                 }
             }
         })
@@ -51,17 +55,20 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 '': {
                     templateUrl: 'views/floor.html'
                 },
-                'navbar@ui': {
+                'navbarView@ui': {
                     templateUrl: 'views/navbar.html'
                 },
-                'sidebar@ui': {
+                'sidebarView@ui': {
                     templateUrl: 'views/sidebar.html'
                 },
-                'dashboard-left@ui': {
+                'dashboardView@ui': {
                     templateUrl: 'views/left-ui.html'
                 },
-                'helper@ui': {
+                'helperView@ui': {
                     templateUrl: 'views/right-ui.html'
+                },
+                'signView@ui': {
+                    templateUrl: 'views/sign.html'
                 }
             }
         })
@@ -72,17 +79,20 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 '': {
                     templateUrl: 'views/floor.html'
                 },
-                'navbar@nglab': {
+                'navbarView@nglab': {
                     templateUrl: 'views/navbar.html'
                 },
-                'sidebar@nglab': {
+                'sidebarView@nglab': {
                     templateUrl: 'views/sidebar.html'
                 },
-                'dashboard-left@nglab': {
+                'dashboardView@nglab': {
                     templateUrl: 'views/left-nglab.html'
                 },
-                'helper@nglab': {
+                'helperView@nglab': {
                     templateUrl: 'views/right-docker.html'
+                },
+                'signView@nglab': {
+                    templateUrl: 'views/sign.html'
                 }
             }
         })
@@ -93,17 +103,20 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 '': {
                     templateUrl: 'views/floor.html'
                 },
-                'navbar@blog': {
+                'navbarView@blog': {
                     templateUrl: 'views/navbar.html'
                 },
-                'sidebar@blog': {
+                'sidebarView@blog': {
                     templateUrl: 'views/sidebar.html'
                 },
-                'dashboard-left@blog': {
+                'dashboardView@blog': {
                     templateUrl: 'views/left-blog.html'
                 },
-                'helper@blog': {
+                'helperView@blog': {
                     templateUrl: 'views/left-about.html'
+                },
+                'signView@blog': {
+                    templateUrl: 'views/sign.html'
                 }
             }
         })
@@ -114,17 +127,20 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 '': {
                     templateUrl: 'views/floor.html'
                 },
-                'navbar@docker': {
+                'navbarView@docker': {
                     templateUrl: 'views/navbar.html'
                 },
-                'sidebar@docker': {
+                'sidebarView@docker': {
                     templateUrl: 'views/sidebar.html'
                 },
-                'dashboard-left@docker': {
+                'dashboardView@docker': {
                     templateUrl: 'views/left-docker.html'
                 },
-                'helper@docker': {
+                'helperView@docker': {
                     templateUrl: 'views/right-docker.html'
+                },
+                'signView@docker': {
+                    templateUrl: 'views/sign.html'
                 }
             }
         })
@@ -135,21 +151,23 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                 '': {
                     templateUrl: 'views/floor.html'
                 },
-                'navbar@about': {
+                'navbarView@about': {
                     templateUrl: 'views/navbar.html'
                 },
-                'sidebar@about': {
+                'sidebarView@about': {
                     templateUrl: 'views/sidebar.html'
                 },
-                'dashboard-left@about': {
+                'dashboardView@about': {
                     templateUrl: 'views/left-about.html'
                 },
-                'helper@about': {
+                'helperView@about': {
                     templateUrl: 'views/left-about.html'
+                },
+                'signView@about': {
+                    templateUrl: 'views/sign.html'
                 }
             }
         })
 
 
 });
-

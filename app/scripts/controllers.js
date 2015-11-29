@@ -7,19 +7,50 @@
  * # MainCtrl
  * Controller of the helloworldApp
  */
+
 var helloworldApp = angular.module('helloworldApp')
 
+//Login 登录控制器
+helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,SuserService){
+
+    $rootScope.MshowSign = !true;
+
+    $scope.FsignIn = function(Vusername, Vpassword){
+      if (Vusername !== undefined && Vpassword !== undefined) {
+
+          $rootScope.Mtoken = "Basic " + $base64.encode(Vusername+':'+Vpassword);
+
+          SuserService.FsignIn($rootScope.Mtoken).get(
+            // {},
+            {username:Vusername},
+            function successCallback(callbackdata) {
+              // AuthenticationService.isLogged = true;
+              // $window.sessionStorage.token = callbackdata.token;
+              $rootScope.MshowSign = false;
+            },
+            function errorCallback(callbackdata) {
+              console.log(callbackdata.status);
+            }
+          );
+      };
+    };
+
+    $scope.FtoggleSignUp = function(){
+      $scope.MshowSignUp = !$scope.MshowSignUp;
+    }
+});
+
 //Main 首页控制器
-helloworldApp.controller('mainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+helloworldApp.controller('Cmain', function ($scope) {
+    // $scope.awesomeThings = [
+    //   'HTML5 Boilerplate',
+    //   'AngularJS',
+    //   'Karma'
+    // ];
+});
 
 //ui 展示页控制器
-helloworldApp.controller('uiCtrl', function ($scope) {
+helloworldApp.controller('Cui', function ($scope) {
     var lineChart = $("#lineChart").get(0).getContext("2d");
     var lineData = {
         labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -100,31 +131,30 @@ helloworldApp.controller('uiCtrl', function ($scope) {
     };
     var myBarChart = new Chart(barChart).Bar(barData);
 
-
-  });
+});
 
 //ui-right 展示帮助页控制器
-helloworldApp.controller('uirightCtrl', function ($scope,$rootScope) {
-    $rootScope.showHelper = true;
-  });
+helloworldApp.controller('CuiRight', function ($scope,$rootScope) {
+    $rootScope.MshowHelper = true;
+});
 
 //About 介绍页控制器
-helloworldApp.controller('aboutCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+helloworldApp.controller('Cabout', function ($scope) {
+    // $scope.awesomeThings = [
+    //   'HTML5 Boilerplate',
+    //   'AngularJS',
+    //   'Karma'
+    // ];
+});
 
 //Lab angularjs实验区控制器
-helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
+helloworldApp.controller('CngLab', function ($scope,$rootScope,SvmInfos) {
 
-    $scope.vm_infos =[
+    $scope.MvmInfos =[
       {
         vm_name:'CIDC-VM-TEST-001',
-        vm_id:'CIDC-VM-ID-001', 
-        ip:'10.11.191.10', 
+        vm_id:'CIDC-VM-ID-001',
+        ip:'10.11.191.10',
         vm_status:'2',
         vn_id:'CIDC-VN-ID-001',
         pm_id:'CIDC-PM-ID-001',
@@ -132,8 +162,8 @@ helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
       },
       {
         vm_name:'CIDC-VM-TEST-002',
-        vm_id:'CIDC-VM-ID-002', 
-        ip:'10.11.191.12', 
+        vm_id:'CIDC-VM-ID-002',
+        ip:'10.11.191.12',
         vm_status:'2',
         vn_id:'CIDC-VN-ID-002',
         pm_id:'CIDC-PM-ID-002',
@@ -141,8 +171,8 @@ helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
       },
       {
         vm_name:'CIDC-VM-TEST-003',
-        vm_id:'CIDC-VM-ID-003', 
-        ip:'10.11.191.13', 
+        vm_id:'CIDC-VM-ID-003',
+        ip:'10.11.191.13',
         vm_status:'2',
         vn_id:'CIDC-VN-ID-003',
         pm_id:'CIDC-PM-ID-003',
@@ -150,172 +180,169 @@ helloworldApp.controller('nglabCtrl', function ($scope,$rootScope,vmInfos) {
       },
       {
         vm_name:'CIDC-VM-TEST-004',
-        vm_id:'CIDC-VM-ID-004', 
-        ip:'10.11.191.14', 
+        vm_id:'CIDC-VM-ID-004',
+        ip:'10.11.191.14',
         vm_status:'2',
         vn_id:'CIDC-VN-ID-004',
         pm_id:'CIDC-PM-ID-004',
         creater_time:'2011-02-14 19:22:32'
       }
     ];
-    $scope.showEdit = true;
-    $scope.vm_infos_bak = {};
-    $scope.showHelp = function(){
-        $rootScope.showHelper = true;
+    $scope.MshowEdit = true;
+    $scope.FshowHelp = function(){
+        $rootScope.MshowHelper = true;
     };
 
-  	$scope.person = {
+  	$scope.Mperson = {
         firstName: "John",
         lastName: "Doe"
   	};
 
-    $scope.names = [
+    $scope.Mnames = [
         {name:'Jani',country:'Norway'},
         {name:'Hege',country:'Sweden'},
         {name:'Kai',country:'Denmark'}
     ];
 
-    $scope.myVar = false;
-    $scope.toggle = function() {
-        $scope.myVar = !$scope.myVar;
+    $scope.MmyVar = false;
+    $scope.Ftoggle = function() {
+        $scope.MmyVar = !$scope.MmyVar;
     };
 
-    $scope.master = {firstName: "John", lastName: "Doe"};
-    $scope.reset = function() {
-        $scope.user = angular.copy($scope.master);
+    $scope.Mmaster = {firstName: "John", lastName: "Doe"};
+    $scope.Freset = function() {
+        $scope.Muser = angular.copy($scope.Mmaster);
     };
-    $scope.reset();
+    $scope.Freset();
 
-  });
+});
 
 //Blog 博客区控制器
-helloworldApp.controller('blogCtrl', function ($scope) {
+helloworldApp.controller('Cblog', function ($scope) {
 
-    $scope.blogs = [
+    $scope.Mblogs = [
         {author:'小明',date:'2015-5-1 21:22:15',content:'今天是个好日子呀，我只是看到了老师的妹妹经过，为什么老师还是要我出去？讲实话有错吗？'},
         {author:'小红',date:'2015-6-23 22:05:15',content:'今天天气不错，路过了姐姐的办公室，看到了那个传说中的小明，对我笑了笑，然后不出意外地被姐姐吼出教室罚站了。'},
         {author:'小米老师',date:'2014-5-23 02:10:15',content:'今天本来心情很好，结果看到小明东张西望，问他看什么，竟然说“你妹”，这小子就是欠抽'}
     ]
 
-
-  });
+});
 
 //云主机检视区控制器
-helloworldApp.controller('dockerCtrl', function ($scope,$rootScope,vmInfos,vmHelpInfo) {
-    $rootScope.vm_infos_help = {};
+helloworldApp.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelpInfo) {
+    $rootScope.MvmHelpInfos = {};
 
-    $scope.showEdit = true;
-    $scope.showAdd = false;
+    $scope.MshowEdit = true;
+    $scope.MshowAdd = false;
 
-    $scope.vm_infos =[];
-    $scope.vm_infos_bak = {};
-    $scope.pp = 20;
-    $scope.total_page = 1;
-    $scope.vm_infos_add = {
+    $scope.MvmInfos =[];
+    $scope.Mpp = 20;
+    $scope.MtotalPage = 1;
+    $scope.MvmAddInfos = {
         vm_name:'',
-        vm_id:'', 
-        ip:'', 
+        vm_id:'',
+        ip:'',
         vm_status:'',
         vn_id:'',
         pm_id:'',
         creater_time:''
     };
 
-    $scope.queryVmInfos = function(){
-      vmInfos.get(function(callbackdata){
-        $scope.vm_infos = callbackdata.vm_infos;
+    $scope.FqueryVmInfos = function(){
+      SvmInfos.get(function(callbackdata){
+        $scope.MvmInfos = callbackdata.vm_infos;
       });
     };
 
-    $scope.searchId = function(event){
+    $scope.FsearchId = function(event){
       if (event.keyCode !== 13) return;
-      var vmid = $scope.vm_id;
-      vmInfos.get({vmid:vmid},function(callbackdata){
-        var temparray = new Array();
-        temparray.push(callbackdata.vm_info);
-        $scope.vm_infos = temparray;
+      var VvmId = $scope.MvmId;
+      SvmInfos.get({vmid:VvmId},function(callbackdata){
+        var Vtemparray = new Array();
+        Vtemparray.push(callbackdata.vm_info);
+        $scope.MvmInfos = Vtemparray;
       });
     }
 
-    $scope.loadPage = function(current_page){
-      $scope.vm_infos =[];
-      $scope.pages = [];
-      vmInfos.get({page:current_page,pp:$scope.pp},function(callbackdata){
-        $scope.vm_infos = callbackdata.vm_infos;
-        $scope.total_page = callbackdata.total_page;
-        var startpage = 1;
-        var endpage = $scope.total_page;
-        if ($scope.total_page > 1 && $scope.total_page <=7) {
-            startpage = 1;
-            endpage = $scope.total_page;
-        } else if ($scope.total_page > 7) {
-            if (current_page > 3 && (current_page + 3) <= $scope.total_page) {
-              startpage = current_page - 3;
-              endpage = current_page + 3;
-            } else if (current_page <= 3) {
-              startpage = 1;
-              endpage = 7;
-            } else if ((current_page + 3) > $scope.total_page) {
-              startpage = $scope.total_page - 6;
-              endpage = $scope.total_page;
+    $scope.FloadPage = function(VcurrentPage){
+      $scope.MvmInfos = [];
+      $scope.Mpages = [];
+      SvmInfos.get({page:VcurrentPage,pp:$scope.Mpp},function(callbackdata){
+        $scope.MvmInfos = callbackdata.vm_infos;
+        $scope.MtotalPage = callbackdata.total_page;
+        var VstartPage = 1;
+        var VendPage = $scope.MtotalPage;
+        if ($scope.MtotalPage > 1 && $scope.MtotalPage <=7) {
+            VstartPage = 1;
+            VendPage = $scope.MtotalPage;
+        } else if ($scope.MtotalPage > 7) {
+            if (VcurrentPage > 3 && (VcurrentPage + 3) <= $scope.MtotalPage) {
+              VstartPage = VcurrentPage - 3;
+              VendPage = VcurrentPage + 3;
+            } else if (VcurrentPage <= 3) {
+              VstartPage = 1;
+              VendPage = 7;
+            } else if ((VcurrentPage + 3) > $scope.MtotalPage) {
+              VstartPage = $scope.MtotalPage - 6;
+              VendPage = $scope.MtotalPage;
             };
         };
-        for (var i = startpage; i <= endpage; i++) {
-          $scope.pages.push(i);
-        }; 
+        for (var i = VstartPage; i <= VendPage; i++) {
+          $scope.Mpages.push(i);
+        };
       });
 
     }
 
-    $scope.refreshPP = function(){
-      $scope.loadPage(1);
+    $scope.FrefreshPP = function(){
+      $scope.FloadPage(1);
     }
 
-    $scope.switchPage = function(page){
-      $scope.loadPage(page);
+    $scope.FswitchPage = function(Vpage){
+      $scope.FloadPage(Vpage);
     }
 
-    $scope.firstPage = function(){
-      $scope.loadPage(1);
+    $scope.FfirstPage = function(){
+      $scope.FloadPage(1);
     }
 
-    $scope.lastPage = function(){
-      $scope.loadPage($scope.total_page);
+    $scope.FlastPage = function(){
+      $scope.FloadPage($scope.MtotalPage);
     }
 
-    $scope.addVm = function(vminfo){
-      vmInfos.save({},vminfo,function(callbackdata){
-        console.log(callbackdata.vm_infos);
-      });      
-    };
-
-    $scope.updateVm = function(vminfo){
-      vmInfos.update({vmid:vminfo.vm_id},vminfo,function(callbackdata){
+    $scope.FaddVm = function(VvmInfo){
+      SvmInfos.save({},VvmInfo,function(callbackdata){
         console.log(callbackdata.vm_infos);
       });
     };
 
-    $scope.deleteById = function(id){
-      vmInfos.delete({vmid:id},function(callbackdata){
+    $scope.FupdateVm = function(VvmInfo){
+      SvmInfos.update({vmid:VvmInfo.vm_id},VvmInfo,function(callbackdata){
         console.log(callbackdata.vm_infos);
       });
     };
 
-    $scope.showHelp = function(vminfo){
-        vmHelpInfo.get({vmid:vminfo.vm_id},function(callbackdata){
-          $rootScope.vm_infos_help = callbackdata.help_info;
+    $scope.FdeleteById = function(Vid){
+      SvmInfos.delete({vmid:Vid},function(callbackdata){
+        console.log(callbackdata.vm_infos);
+      });
+    };
+
+    $scope.FshowHelp = function(VvmInfo){
+        SvmHelpInfo.get({vmid:VvmInfo.vm_id},function(callbackdata){
+          $rootScope.MvmHelpInfos = callbackdata.help_info;
         });
-        $rootScope.showHelper = true;
+        $rootScope.MshowHelper = true;
     };
 
-    $scope.firstPage();
+    $scope.FfirstPage();
 
-  });
+});
 
 //docker-right 检视关联区控制器
-helloworldApp.controller('dockerrightCtrl', function ($scope,$rootScope) {
-    $rootScope.showHelper = false;
-    $scope.close = function(){
-      $rootScope.showHelper = false;
+helloworldApp.controller('CdockerHelper', function ($scope,$rootScope) {
+    $rootScope.MshowHelper = false;
+    $scope.Fclose = function(){
+      $rootScope.MshowHelper = false;
     };
-  });
+});
