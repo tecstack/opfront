@@ -1,7 +1,7 @@
 <div class="full" ng-controller="Csign">
   <div class="mask"></div>
 
-  <div class="sign-in">
+  <div class="signin">
     <div class="sign-title">Sign In</div>
     <div class="sign-panel">
       <form class="form-horizontal" role="form">
@@ -25,9 +25,10 @@
         </div>
       </form>
     </div>
+    <span class="glyphicon glyphicon-remove button-close" ng-click="FcloseSign()"></span>
   </div>
 
-  <div class="sign-up" ng-show="MshowSignUp">
+  <div class="signup" ng-show="MshowSignUp">
     <div class="sign-title">Sign Up</div>
     <div class="sign-panel">
       <form class="form-horizontal" role="form">

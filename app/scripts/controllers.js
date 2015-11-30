@@ -37,7 +37,11 @@ helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,Su
 
     $scope.FtoggleSignUp = function(){
       $scope.MshowSignUp = !$scope.MshowSignUp;
-    }
+    };
+
+    $scope.FcloseSign = function(){
+      $rootScope.MshowSign = !true;
+    };
 });
 
 //Main 首页控制器
@@ -136,6 +140,9 @@ helloworldApp.controller('Cui', function ($scope) {
 //ui-right 展示帮助页控制器
 helloworldApp.controller('CuiRight', function ($scope,$rootScope) {
     $rootScope.MshowHelper = true;
+    $scope.FcloseHelper = function(){
+      $rootScope.MshowHelper = false;
+    };
 });
 
 //About 介绍页控制器
@@ -341,8 +348,8 @@ helloworldApp.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelp
 
 //docker-right 检视关联区控制器
 helloworldApp.controller('CdockerHelper', function ($scope,$rootScope) {
-    $rootScope.MshowHelper = false;
-    $scope.Fclose = function(){
+    $rootScope.MshowHelper = !false;
+    $scope.FcloseHelper = function(){
       $rootScope.MshowHelper = false;
     };
 });

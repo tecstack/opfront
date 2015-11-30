@@ -169,7 +169,7 @@ body {
 	opacity: 0.4;
 }
 
-.sign-in {
+.signin {
 	z-index: 9999;
 	position: fixed;
 	top: 50%;
@@ -180,7 +180,7 @@ body {
 	background: #fff;
 }
 
-.sign-up {
+.signup {
 	z-index: 10000;
 	position: fixed;
 	top: 50%;
@@ -216,12 +216,12 @@ body {
 	height: 100%;
 }
 
-.close-button {
+.button-close {
 	position: absolute;
 	right: 6px;
 	top: 6px;
 }
-.close-button:hover {
+.button-close:hover {
 	background-color: #3a3f51;
  	color: #FFFFFF;
 }

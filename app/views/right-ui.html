@@ -22,28 +22,6 @@
 		</ul>
 	</div>
 
-	<div class="panel">
-		<h4>节点信息</h4>
-		<li class="line"></li>
-		<ul>
-			<li>
-				<small>计算节点ID: </small>
-				<small ng-bind="MvmHelpInfos.pm_id"></small>
-			</li>
-			<li>
-				<small>计算节点IP: </small>
-				<small ng-bind="MvmHelpInfos.pm_local_ip"></small>
-			</li>
-			<li>
-				<small>计算节点名称: </small>
-				<small ng-bind="MvmHelpInfos.pm_name"></small>
-			</li>
-			<li>
-				<small>虚机公网IP: </small>
-				<small ng-bind="MvmHelpInfos.vm_public_ip"></small>
-			</li>
-		</ul>
-	</div>
 
-	<span class="glyphicon glyphicon-remove close-button" ng-click="Fclose()"></span>
+	<span class="glyphicon glyphicon-remove button-close" ng-click="FcloseHelper()"></span>
 </div>
