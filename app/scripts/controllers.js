@@ -8,7 +8,7 @@
  * Controller of the helloworldApp
  */
 
-var helloworldApp = angular.module('helloworldApp')
+var helloworldApp = angular.module('helloworldApp');
 
 //Login 登录控制器
 helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,SuserService){
@@ -18,7 +18,7 @@ helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,Su
     $scope.FsignIn = function(Vusername, Vpassword){
       if (Vusername !== undefined && Vpassword !== undefined) {
 
-          $rootScope.Mtoken = "Basic " + $base64.encode(Vusername+':'+Vpassword);
+          $rootScope.Mtoken = 'Basic ' + $base64.encode(Vusername+':'+Vpassword);
 
           SuserService.FsignIn($rootScope.Mtoken).get(
             // {},
@@ -32,7 +32,7 @@ helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,Su
               console.log(callbackdata.status);
             }
           );
-      };
+      }
     };
 
     $scope.FtoggleSignUp = function(){
@@ -45,7 +45,7 @@ helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,Su
 });
 
 //Main 首页控制器
-helloworldApp.controller('Cmain', function ($scope) {
+helloworldApp.controller('Cmain', function () {
     // $scope.awesomeThings = [
     //   'HTML5 Boilerplate',
     //   'AngularJS',
@@ -55,80 +55,80 @@ helloworldApp.controller('Cmain', function ($scope) {
 
 //ui 展示页控制器
 helloworldApp.controller('Cui', function ($scope) {
-    var lineChart = $("#lineChart").get(0).getContext("2d");
+    var lineChart = $('#lineChart').get(0).getContext('2d');
     var lineData = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [
             {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
+                label: 'My First dataset',
+                fillColor: 'rgba(220,220,220,0.2)',
+                strokeColor: 'rgba(220,220,220,1)',
+                pointColor: 'rgba(220,220,220,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
                 data: [65, 59, 80, 81, 56, 55, 40]
             },
             {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
+                label: 'My Second dataset',
+                fillColor: 'rgba(151,187,205,0.2)',
+                strokeColor: 'rgba(151,187,205,1)',
+                pointColor: 'rgba(151,187,205,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(151,187,205,1)',
                 data: [28, 48, 40, 19, 86, 27, 90]
             }
         ]
     };
     var myLineChart = new Chart(lineChart).Line(lineData);
 
-    var radarChart = $("#radarChart").get(0).getContext("2d");
+    var radarChart = $('#radarChart').get(0).getContext('2d');
     var radarData = {
-        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+        labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
         datasets: [
             {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(220,220,220,1)",
+                label: 'My First dataset',
+                fillColor: 'rgba(220,220,220,0.2)',
+                strokeColor: 'rgba(220,220,220,1)',
+                pointColor: 'rgba(220,220,220,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
                 data: [65, 59, 90, 81, 56, 55, 40]
             },
             {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.2)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
-                pointStrokeColor: "#fff",
-                pointHighlightFill: "#fff",
-                pointHighlightStroke: "rgba(151,187,205,1)",
+                label: 'My Second dataset',
+                fillColor: 'rgba(151,187,205,0.2)',
+                strokeColor: 'rgba(151,187,205,1)',
+                pointColor: 'rgba(151,187,205,1)',
+                pointStrokeColor: '#fff',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(151,187,205,1)',
                 data: [28, 48, 40, 19, 96, 27, 100]
             }
         ]
     };
     var myRadarChart = new Chart(radarChart).Radar(radarData);
 
-    var barChart = $("#barChart").get(0).getContext("2d");
+    var barChart = $('#barChart').get(0).getContext('2d');
     var barData = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [
             {
-                label: "My First dataset",
-                fillColor: "rgba(220,220,220,0.5)",
-                strokeColor: "rgba(220,220,220,0.8)",
-                highlightFill: "rgba(220,220,220,0.75)",
-                highlightStroke: "rgba(220,220,220,1)",
+                label: 'My First dataset',
+                fillColor: 'rgba(220,220,220,0.5)',
+                strokeColor: 'rgba(220,220,220,0.8)',
+                highlightFill: 'rgba(220,220,220,0.75)',
+                highlightStroke: 'rgba(220,220,220,1)',
                 data: [65, 59, 80, 81, 56, 55, 40]
             },
             {
-                label: "My Second dataset",
-                fillColor: "rgba(151,187,205,0.5)",
-                strokeColor: "rgba(151,187,205,0.8)",
-                highlightFill: "rgba(151,187,205,0.75)",
-                highlightStroke: "rgba(151,187,205,1)",
+                label: 'My Second dataset',
+                fillColor: 'rgba(151,187,205,0.5)',
+                strokeColor: 'rgba(151,187,205,0.8)',
+                highlightFill: 'rgba(151,187,205,0.75)',
+                highlightStroke: 'rgba(151,187,205,1)',
                 data: [28, 48, 40, 19, 86, 27, 90]
             }
         ]
@@ -201,8 +201,8 @@ helloworldApp.controller('CngLab', function ($scope,$rootScope,SvmInfos) {
     };
 
   	$scope.Mperson = {
-        firstName: "John",
-        lastName: "Doe"
+        firstName: 'John',
+        lastName: 'Doe'
   	};
 
     $scope.Mnames = [
@@ -216,7 +216,7 @@ helloworldApp.controller('CngLab', function ($scope,$rootScope,SvmInfos) {
         $scope.MmyVar = !$scope.MmyVar;
     };
 
-    $scope.Mmaster = {firstName: "John", lastName: "Doe"};
+    $scope.Mmaster = {firstName: 'John', lastName: 'Doe'};
     $scope.Freset = function() {
         $scope.Muser = angular.copy($scope.Mmaster);
     };
@@ -231,7 +231,7 @@ helloworldApp.controller('Cblog', function ($scope) {
         {author:'小明',date:'2015-5-1 21:22:15',content:'今天是个好日子呀，我只是看到了老师的妹妹经过，为什么老师还是要我出去？讲实话有错吗？'},
         {author:'小红',date:'2015-6-23 22:05:15',content:'今天天气不错，路过了姐姐的办公室，看到了那个传说中的小明，对我笑了笑，然后不出意外地被姐姐吼出教室罚站了。'},
         {author:'小米老师',date:'2014-5-23 02:10:15',content:'今天本来心情很好，结果看到小明东张西望，问他看什么，竟然说“你妹”，这小子就是欠抽'}
-    ]
+    ];
 
 });
 
@@ -262,14 +262,16 @@ helloworldApp.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelp
     };
 
     $scope.FsearchId = function(event){
-      if (event.keyCode !== 13) return;
+      if (event.keyCode !== 13) {
+        return;
+      }
       var VvmId = $scope.MvmId;
       SvmInfos.get({vmid:VvmId},function(callbackdata){
-        var Vtemparray = new Array();
+        var Vtemparray = [];
         Vtemparray.push(callbackdata.vm_info);
         $scope.MvmInfos = Vtemparray;
       });
-    }
+    };
 
     $scope.FloadPage = function(VcurrentPage){
       $scope.MvmInfos = [];
@@ -292,30 +294,29 @@ helloworldApp.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelp
             } else if ((VcurrentPage + 3) > $scope.MtotalPage) {
               VstartPage = $scope.MtotalPage - 6;
               VendPage = $scope.MtotalPage;
-            };
-        };
+            }
+        }
         for (var i = VstartPage; i <= VendPage; i++) {
           $scope.Mpages.push(i);
-        };
+        }
       });
-
-    }
+    };
 
     $scope.FrefreshPP = function(){
       $scope.FloadPage(1);
-    }
+    };
 
     $scope.FswitchPage = function(Vpage){
       $scope.FloadPage(Vpage);
-    }
+    };
 
     $scope.FfirstPage = function(){
       $scope.FloadPage(1);
-    }
+    };
 
     $scope.FlastPage = function(){
       $scope.FloadPage($scope.MtotalPage);
-    }
+    };
 
     $scope.FaddVm = function(VvmInfo){
       SvmInfos.save({},VvmInfo,function(callbackdata){

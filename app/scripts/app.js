@@ -167,7 +167,7 @@ helloworldApp.config(function($stateProvider, $urlRouterProvider) {
                     templateUrl: 'views/sign.html'
                 }
             }
-        })
+        });
 
 
 });
