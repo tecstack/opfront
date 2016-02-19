@@ -13,26 +13,41 @@ var helloworldApp = angular.module('helloworldApp');
 //Login 登录控制器
 helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,SuserService){
 
-    $rootScope.MshowSign = !true;
+    $rootScope.MshowSign = true;
 
-    $scope.FsignIn = function(Vusername, Vpassword){
-      if (Vusername !== undefined && Vpassword !== undefined) {
+    $scope.FsignIn = function(VuserInfo){
+      SuserService.FsignIn().post(
+        {},
+        VuserInfo,
+        function successCallback(callbackdata){
+          console.log('login success');
+          console.log(callbackdata);
+          console.log(callbackdata.status);
+          $scope.Mtoken = callbackdata.token;
+        },
+        function errorCallback(callbackdata){
+          console.log('login failed');
+          console.log(callbackdata);
+          console.log(callbackdata.status);
+        }
+      );
+    };
 
-          $rootScope.Mtoken = 'Basic ' + $base64.encode(Vusername+':'+Vpassword);
-
-          SuserService.FsignIn($rootScope.Mtoken).get(
-            // {},
-            {username:Vusername},
-            function successCallback(callbackdata) {
-              // AuthenticationService.isLogged = true;
-              // $window.sessionStorage.token = callbackdata.token;
-              $rootScope.MshowSign = false;
-            },
-            function errorCallback(callbackdata) {
-              console.log(callbackdata.status);
-            }
-          );
-      }
+    $scope.FtokenAuth = function(){
+      SuserService.FtokenAuth().post(
+        {},
+        {'token':$scope.Mtoken},
+        function successCallback(callbackdata){
+          console.log('auth success');
+          console.log(callbackdata);
+          console.log(callbackdata.status);
+        },
+        function errorCallback(callbackdata){
+          console.log('auth failed');
+          console.log(callbackdata);
+          console.log(callbackdata.status);
+        }
+      );
     };
 
     $scope.FtoggleSignUp = function(){
@@ -42,6 +57,26 @@ helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,Su
     $scope.FcloseSign = function(){
       $rootScope.MshowSign = !true;
     };
+
+    // $scope.FsignIn = function(Vusername, Vpassword){
+    //   if (Vusername !== undefined && Vpassword !== undefined) {
+    //
+    //       $rootScope.Mtoken = 'Basic ' + $base64.encode(Vusername+':'+Vpassword);
+    //
+    //       SuserService.FsignIn($rootScope.Mtoken).get(
+    //         // {},
+    //         {username:Vusername},
+    //         function successCallback(callbackdata) {
+    //           // AuthenticationService.isLogged = true;
+    //           // $window.sessionStorage.token = callbackdata.token;
+    //           $rootScope.MshowSign = false;
+    //         },
+    //         function errorCallback(callbackdata) {
+    //           console.log(callbackdata.status);
+    //         }
+    //       );
+    //   }
+    // };
 });
 
 //Main 首页控制器
