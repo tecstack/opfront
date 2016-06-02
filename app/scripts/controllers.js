@@ -2,20 +2,116 @@
 
 /**
  * @ngdoc function
- * @name helloworldApp.controller:MainCtrl
+ * @name promise.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the helloworldApp
+ * Controller of the promise
  */
 
-var helloworldApp = angular.module('helloworldApp');
+var promise = angular.module('promise');
 
-//Login 登录控制器
-helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,SuserService){
+// New
+// charjs默认配置
+Chart.defaults.global.defaultFontColor = '#fff';
+Chart.defaults.global.scaleFontColor = '#fff';
 
-    $rootScope.MshowSign = true;
+// helper触发器
+promise.controller('ChelperTrigger', function($scope,$rootScope){
+  $scope.toggleHelper = function(){
+    $rootScope.MshowHelper = !$rootScope.MshowHelper;
+  };
+});
+
+// 首页控制器
+promise.controller('Cindex', function($scope,$rootScope){
+  $scope.indexDataLine = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+        {
+            label: 'My First dataset',
+            fillColor: 'rgba(220,220,220,0.2)',
+            strokeColor: 'rgba(220,220,220,1)',
+            pointColor: 'rgba(220,220,220,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+            label: 'My Second dataset',
+            fillColor: 'rgba(151,187,205,0.2)',
+            strokeColor: 'rgba(151,187,205,1)',
+            pointColor: 'rgba(151,187,205,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(151,187,205,1)',
+            data: [28, 48, 40, 19, 86, 27, 90]
+        }
+    ]
+  };
+  $scope.indexDataPie = [
+    {
+        value: 300,
+        color:"RGBA(255, 102, 0, 0.8)",
+        highlight: "RGBA(255, 102, 0, 1)",
+        label: "Red"
+    },
+    {
+        value: 50,
+        color: "rgba(255, 255, 255, 0.8)",
+        highlight: "rgba(255,255,255,1)",
+        label: "White"
+    },
+    {
+        value: 100,
+        color: "RGBA(69, 129, 218, 0.8)",
+        highlight: "RGBA(69, 129, 218, 1)",
+        label: "Blue"
+    }
+  ];
+  $scope.tableDataTh = ['ID','名称','来源','年龄','爱好','特长','座右铭','书籍','植物','上周二的早餐','对第二次世界大战同盟国胜利的看法','有钱以后想干什么'];
+  $scope.tableData = [
+    ['0','azrael','中国南方基地','28','没啥爱好','胳膊和腿比较长','整什么幺蛾子','克苏鲁神话','捕虫瑾','好像忘了吃了','正义终将会取得胜利','先懵逼一会儿'],
+    ['1','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
+    ['2','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
+    ['3','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
+    ['4','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
+    ['5','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
+    ['89757','Null','Null','Null','Null','Null','414FAS#%IO','Null','Null','壳牌机油','Null','升级一下芯片']
+  ];
+
+});
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+promise.controller('Csign', function ($scope,$rootScope,$window,$base64,SuserService){
+// angularjs controller Csign: FsignIn/FsignUp/FsignOut/FtoggleSignUp/FcloseSign
+    $rootScope.MshowSign = false;
 
     $scope.FsignIn = function(VuserInfo){
+      // angularjs function FsignIn().  Using for login.
+      // ResourceApi HTTP GET "class" actions: Resource.action([parameters], [success], [error])
+      // ResourceApi non-GET "class" actions: Resource.action([parameters], postData, [success], [error])
+      // default actions: {
+      // 'get':    {method:'GET'},
+      // 'save':   {method:'POST'},
+      // 'query':  {method:'GET', isArray:true},
+      // 'remove': {method:'DELETE'},
+      // 'delete': {method:'DELETE'} };
       SuserService.FsignIn().post(
         {},
         VuserInfo,
@@ -33,54 +129,19 @@ helloworldApp.controller('Csign', function ($scope,$rootScope,$window,$base64,Su
       );
     };
 
-    $scope.FtokenAuth = function(){
-      SuserService.FtokenAuth().post(
-        {},
-        {'token':$scope.Mtoken},
-        function successCallback(callbackdata){
-          console.log('auth success');
-          console.log(callbackdata);
-          console.log(callbackdata.status);
-        },
-        function errorCallback(callbackdata){
-          console.log('auth failed');
-          console.log(callbackdata);
-          console.log(callbackdata.status);
-        }
-      );
-    };
-
     $scope.FtoggleSignUp = function(){
+      // angularjs function FtoggleSignUp().  Using for toggle signup page.
       $scope.MshowSignUp = !$scope.MshowSignUp;
     };
 
     $scope.FcloseSign = function(){
+      // angularjs function FcloseSign().  Using for close sign(including signin and signup) page.
       $rootScope.MshowSign = !true;
     };
-
-    // $scope.FsignIn = function(Vusername, Vpassword){
-    //   if (Vusername !== undefined && Vpassword !== undefined) {
-    //
-    //       $rootScope.Mtoken = 'Basic ' + $base64.encode(Vusername+':'+Vpassword);
-    //
-    //       SuserService.FsignIn($rootScope.Mtoken).get(
-    //         // {},
-    //         {username:Vusername},
-    //         function successCallback(callbackdata) {
-    //           // AuthenticationService.isLogged = true;
-    //           // $window.sessionStorage.token = callbackdata.token;
-    //           $rootScope.MshowSign = false;
-    //         },
-    //         function errorCallback(callbackdata) {
-    //           console.log(callbackdata.status);
-    //         }
-    //       );
-    //   }
-    // };
 });
 
 //Main 首页控制器
-helloworldApp.controller('Cmain', function () {
+promise.controller('Cmain', function () {
     // $scope.awesomeThings = [
     //   'HTML5 Boilerplate',
     //   'AngularJS',
@@ -89,7 +150,7 @@ helloworldApp.controller('Cmain', function () {
 });
 
 //ui 展示页控制器
-helloworldApp.controller('Cui', function ($scope) {
+promise.controller('Cui', function ($scope) {
     var lineChart = $('#lineChart').get(0).getContext('2d');
     var lineData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -173,7 +234,7 @@ helloworldApp.controller('Cui', function ($scope) {
 });
 
 //ui-right 展示帮助页控制器
-helloworldApp.controller('CuiRight', function ($scope,$rootScope) {
+promise.controller('CuiRight', function ($scope,$rootScope) {
     $rootScope.MshowHelper = true;
     $scope.FcloseHelper = function(){
       $rootScope.MshowHelper = false;
@@ -181,7 +242,7 @@ helloworldApp.controller('CuiRight', function ($scope,$rootScope) {
 });
 
 //About 介绍页控制器
-helloworldApp.controller('Cabout', function ($scope) {
+promise.controller('Cabout', function ($scope) {
     // $scope.awesomeThings = [
     //   'HTML5 Boilerplate',
     //   'AngularJS',
@@ -190,7 +251,7 @@ helloworldApp.controller('Cabout', function ($scope) {
 });
 
 //Lab angularjs实验区控制器
-helloworldApp.controller('CngLab', function ($scope,$rootScope,SvmInfos) {
+promise.controller('CngLab', function ($scope,$rootScope,SvmInfos) {
 
     $scope.MvmInfos =[
       {
@@ -260,7 +321,7 @@ helloworldApp.controller('CngLab', function ($scope,$rootScope,SvmInfos) {
 });
 
 //Blog 博客区控制器
-helloworldApp.controller('Cblog', function ($scope) {
+promise.controller('Cblog', function ($scope) {
 
     $scope.Mblogs = [
         {author:'小明',date:'2015-5-1 21:22:15',content:'今天是个好日子呀，我只是看到了老师的妹妹经过，为什么老师还是要我出去？讲实话有错吗？'},
@@ -271,7 +332,7 @@ helloworldApp.controller('Cblog', function ($scope) {
 });
 
 //云主机检视区控制器
-helloworldApp.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelpInfo) {
+promise.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelpInfo) {
     $rootScope.MvmHelpInfos = {};
 
     $scope.MshowEdit = true;
@@ -383,7 +444,7 @@ helloworldApp.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelp
 });
 
 //docker-right 检视关联区控制器
-helloworldApp.controller('CdockerHelper', function ($scope,$rootScope) {
+promise.controller('CdockerHelper', function ($scope,$rootScope) {
     $rootScope.MshowHelper = !false;
     $scope.FcloseHelper = function(){
       $rootScope.MshowHelper = false;

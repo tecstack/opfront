@@ -1,11 +1,14 @@
 'use strict';
 
-var helloworldApp = angular.module('helloworldApp');
+var promise = angular.module('promise');
 
-helloworldApp.factory('SuserService', function($resource){
-	// var url = 'http://localhost:5000';
-	var url = 'http://192.168.86.23:5000';
-	var ver = 'v0.0';
+promise.factory('SuserService', function($resource){
+	// angularjs service-factory SuserService: SignIn/SignUp/SignOut
+
+	// var VbaseUrl = 'http://localhost:5000';
+	var VbaseUrl = 'http://192.168.86.23:5000';
+	var Vversion = 'v0.0';
+	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/user/';
 
 	return {
 		// FsignIn: function(token) {
@@ -16,23 +19,25 @@ helloworldApp.factory('SuserService', function($resource){
 		// 	return signInRestApi;
 		// },
 		FsignIn: function() {
-			var signInRestApi = $resource(url+'/api/'+ver+'/user/login', {}, {
+			// $resource api Fsignin()
+			// $resource(url, [paramDefaults], [actions], options);
+			var VsignInRestApi = $resource(VuserUrl+'signin', {}, {
 				'post': {method:'POST', isArray:false}
 			});
-			return signInRestApi;
+			return VsignInRestApi;
 		},
-		FsignUp: function() {},
-		FtokenAuth: function() {
-			var tokenAuthRestApi = $resource(url+'/api/'+ver+'/user/tokenauth', {}, {
+		FsignUp: function() {
+			var VsignUpRestApi = $resource(VuserUrl+'signup', {}, {
 				'post': {method:'POST', isArray:false}
 			});
-			return tokenAuthRestApi;
-		}
+			return VsignUpRestApi;
+		},
+		FsignOut: function() {}
 	};
 
 });
 
-helloworldApp.factory('SvmInfos', function($resource){
+promise.factory('SvmInfos', function($resource){
 	var url = 'http://localhost:5000';
 	var ver = 'v0.0';
 	var vmInfosRestApi = $resource(url+'/api/'+ver+'/vminfos/:vmid', {}, {
@@ -42,7 +47,7 @@ helloworldApp.factory('SvmInfos', function($resource){
 	return vmInfosRestApi;
 });
 
-helloworldApp.factory('SvmHelpInfo', function($resource){
+promise.factory('SvmHelpInfo', function($resource){
 	var url = 'http://localhost:5000';
 	var ver = 'v0.0';
 	var vmInfosRestApi = $resource(url+'/api/'+ver+'/vminfos/help/:vmid', {}, {

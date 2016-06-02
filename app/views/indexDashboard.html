@@ -1,0 +1,28 @@
+<div ng-controller="Cindex">
+  <div class="smallNode">
+    <div class="title">文本</div>
+    欢迎来到Promise,这里是首页，你将会在使用过程中接触到下面的各种元素，使你的运维工作更加轻松
+  </div>
+
+  <div class="bigNode">
+    <div class="title">表格</div>
+    <table>
+      <tr>
+        <th ng-repeat="data in tableDataTh">{{data}}</th>
+      </tr>
+      <tr ng-repeat="tr in tableData">
+        <td ng-repeat="td in tr track by $index">{{td}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="smallNode">
+    <div class="title">线性图</div>
+    <canvas class="chartLine full" data={{indexDataLine}}></canvas>
+  </div>
+
+  <div class="smallNode">
+    <div class="title">饼图</div>
+    <canvas class="chartPie full" data={{indexDataPie}}></canvas>
+  </div>
+</div>

@@ -1,5 +1,42 @@
-<div class="dashboard col-md-10 col-lg-10 col-md-offset-2 col-lg-offset-2" ui-view="dashboardView"></div>
-<div class="navbar bg-dark shadow" ui-view="navbarView"></div>
-<div class="sidebar col-md-2 col-lg-2 bg-white" ui-view="sidebarView"></div>
-<div class="helper col-md-3 col-lg-3 bg-white" ng-show="MshowHelper" ui-view="helperView"></div>
-<div class="userboard" ng-show="MshowSign" ui-view="signView"></div>
+<div class="navbar">
+  <div class="logo">Promise</div>
+  <div class="navbarNode">登出</div>
+  <div class="navbarNode">待办</div>
+  <div class="navbarNode">用户</div>
+  <div class="navbarNode">记录</div>
+  <div class="navbarInput"><input type="text" placeholder="检索"></div>
+</div>
+
+<div class="sidebarTrigger">
+  <div class="vetical">>></div>
+</div>
+
+<div class="sidebar">
+  <div class="sidebarNode">
+    <div>资源管理</div>
+    <div class="sidebarSubnode">设备</div>
+    <div class="sidebarSubnode">系统</div>
+    <div class="sidebarSubnode">组件</div>
+  </div>
+  <div class="sidebarNode">
+    <div>维护操作</div>
+    <div class="sidebarSubnode">封装指令</div>
+    <div class="sidebarSubnode">脚本调度</div>
+    <div class="sidebarSubnode">组件管理</div>
+    <div class="sidebarSubnode">配置管理</div>
+    <div class="sidebarSubnode">日志管理</div>
+  </div>
+  <div class="sidebarNode">
+    <div>问题故障</div>
+    <div class="sidebarSubnode">问题</div>
+    <div class="sidebarSubnode">故障</div>
+  </div>
+</div>
+
+<div class="helperTrigger" ng-controller="ChelperTrigger" ng-click="toggleHelper()">
+  <div class="vetical"><<</div>
+</div>
+
+<div class="helper" ui-view="helperView" ng-show="MshowHelper"></div>
+
+<div class="dashboard" ui-view="dashboardView"></div>

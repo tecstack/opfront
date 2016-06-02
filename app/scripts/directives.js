@@ -1,8 +1,100 @@
 'use strict';
 
-var helloworldApp = angular.module('helloworldApp');
+var promise = angular.module('promise');
 
-helloworldApp.directive('add',function(){
+// New
+// logo
+promise.directive('logo',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			element.bind('click',function(){
+				window.location.href='/';
+			});
+		}
+	};
+});
+// sidebarNode 切换
+promise.directive('sidebarNode',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			element.children().first().bind('click',function(){
+				element.siblings().children(".sidebarSubnode").removeClass("show");
+				element.children(".sidebarSubnode").toggleClass("show");
+			});
+		}
+	};
+});
+// chartjs line
+promise.directive('chartLine',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			var chartDom = element.get(0).getContext('2d');
+			var chartData = jQuery.parseJSON(attrs.data)
+		  var myChart = new Chart(chartDom).Line(chartData);
+		}
+	};
+});
+// chartjs bar
+promise.directive('chartBar',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			var chartDom = element.get(0).getContext('2d');
+			var chartData = jQuery.parseJSON(attrs.data)
+		  var myChart = new Chart(chartDom).Bar(chartData);
+		}
+	};
+});
+// chartjs radar
+promise.directive('chartRadar',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			var chartDom = element.get(0).getContext('2d');
+			var chartData = jQuery.parseJSON(attrs.data)
+		  var myChart = new Chart(chartDom).Radar(chartData);
+		}
+	};
+});
+// chartjs polar
+promise.directive('chartPolar',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			var chartDom = element.get(0).getContext('2d');
+			var chartData = jQuery.parseJSON(attrs.data)
+		  var myChart = new Chart(chartDom).PolarArea(chartData);
+		}
+	};
+});
+// chartjs pie
+promise.directive('chartPie',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			var chartDom = element.get(0).getContext('2d');
+			var chartData = jQuery.parseJSON(attrs.data)
+		  var myChart = new Chart(chartDom).Pie(chartData);
+		}
+	};
+});
+//
+
+
+
+
+
+
+
+
+
+
+
+
+promise.directive('add',function(){
 	return{
 		restrict: 'E',
 		link: function(scope,element,attrs,ngModel){
@@ -15,7 +107,7 @@ helloworldApp.directive('add',function(){
 	};
 });
 
-helloworldApp.directive('edit',function(){
+promise.directive('edit',function(){
 	return{
 		restrict: 'E',
 		require: 'ngModel',
@@ -42,7 +134,7 @@ helloworldApp.directive('edit',function(){
 	};
 });
 
-helloworldApp.directive('update',function(){
+promise.directive('update',function(){
 	return{
 		restrict: 'E',
 		require: 'ngModel',
@@ -63,7 +155,7 @@ helloworldApp.directive('update',function(){
 	};
 });
 
-helloworldApp.directive('cancel',function(){
+promise.directive('cancel',function(){
 	return{
 		restrict: 'E',
 		require: 'ngModel',
@@ -84,7 +176,7 @@ helloworldApp.directive('cancel',function(){
 	};
 });
 
-helloworldApp.directive('delete',function(){
+promise.directive('delete',function(){
 	return{
 		restrict:'E',
 		require: 'ngModel',
@@ -95,20 +187,13 @@ helloworldApp.directive('delete',function(){
 				console.log('delete item where vm_id:'+id);
 
 				scope.$apply(function(){
-
-					// for(var i=0; i<scope.vminfos.length; i++){
-					// 	if(scope.vminfos[i].vm_id==id){
-					// 		console.log(scope.vminfos[i])
-					// 		scope.vminfos.splice(i,1);
-					// 	}
-					// }
 				});
 			});
 		}
 	};
 });
 
-// helloworldApp.directive('',function(){
+// promise.directive('',function(){
 // 	return{
 // 		restrict: 'E',
 // 		link: function(scope,element,attrs,ngModel){

@@ -1,0 +1,355 @@
+/* css example */
+/* .example { */
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+/* } */
+
+/* Global */
+body {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	margin: 0;
+	padding: 0;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	font-family: "雅痞-简", "Yuppy SC", "Microsoft YaHei", "微软雅黑", sans-serif;
+	/* visual: background / color / transition / list-style / shadows / ... */
+	-webkit-font-smoothing: antialiased;
+	color: #FFFFFF;
+	background-color: #525A6C;
+}
+
+/* Promise组件样式 */
+.navbar {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: block;
+	overflow-x: hidden;
+	overflow-y: visible;
+	z-index: 2;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 100%;
+	height: 50px;
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	padding: 0;
+	/* visual: background / color / transition / list-style / shadows / ... */
+	background-color: #525A6C;
+}
+.logo {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	display: inline-block;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 15%;
+	height: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	font-size: 40px;
+	font-weight: 900;
+	line-height: 50px;
+	text-align: center;
+	/* visual: background / color / transition / list-style / shadows / ... */
+	color: #FFFFFF;
+	cursor: pointer;
+}
+.logo:hover {
+	color: #e74c3c;
+}
+.navbarNode {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	display: inline-block;
+	float: right;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 7%;
+	height: 100%;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	font-size: 25px;
+	line-height: 50px;
+	text-align: center;
+	/* visual: background / color / transition / list-style / shadows / ... */
+	cursor: pointer;
+}
+.navbarNode:hover {
+	color: #e74c3c;
+}
+.navbarInput {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	display: inline-block;
+	float: right;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 15%;
+	height: 100%;
+	margin-right: 20%;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	font-size: 25px;
+	line-height: 50px;
+	text-align: center;
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+.navbarInput>input {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	border: 0;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	font-size: 25px;
+	line-height: 50px;
+	text-align: center;
+	/* visual: background / color / transition / list-style / shadows / ... */
+	color: #FFFFFF;
+	background-color: inherit;
+}
+.navbarInput>input:focus {
+	outline: 0;
+}
+
+.sidebarTrigger {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	display: block;
+	z-index: 2;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 2%;
+	border: 0;
+	margin: 0px;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	cursor: pointer;
+}
+.sidebar {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 0px;
+	bottom: 0;
+	left: -15%;
+	display: block;
+	overflow-x: visible;
+	overflow-y: hidden;
+	z-index: 2;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 15%;
+	border: 0;
+	border-radius: 0;
+	margin: 0px;
+	padding-top: 10%;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	background-color: #525A6C;
+	box-shadow: 1px 0 5px #2c3e50;
+}
+.sidebarNode {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: static;
+	display: block;
+	/* box model: border / margin / padding / width / height / ... */
+	margin-bottom: 10px;
+	width: 100%;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	line-height: 50px;
+	font-size: 25px;
+	text-align: center;
+	/* visual: background / color / transition / list-style / shadows / ... */
+	color: #FFFFFF;
+	cursor: pointer;
+}
+.sidebarNode:hover {
+	/*font-size: 30px;*/
+	color: #e74c3c;
+}
+.sidebarNode:active {
+	color: #e74c3c;
+}
+.sidebarSubnode {
+	display: none;
+	margin-bottom: 5px;
+	width: 100%;
+	line-height: 25px;
+	font-size: 20px;
+	text-align: center;
+	cursor: pointer;
+	color: #FFFFFF;
+}
+.sidebarSubnode:hover {
+	/*font-size: 25px;*/
+	color: #e74c3c;
+}
+
+.helperTrigger {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	display: block;
+	z-index: 2;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 2%;
+	border: 0;
+	margin: 0px;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	cursor: pointer;
+}
+.helperTrigger:hover {
+	color: #e74c3c;
+}
+.helper {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 50px;
+	bottom: 0;
+	right: -25%;
+	display: block;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 2;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 25%;
+	border: 0;
+	border-radius: 0;
+	margin: 0px;
+	padding: 0px;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+.helperNode {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	border: 0;
+	padding: 5px;
+	margin: 10px;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	background-color: #525A6C;
+	box-shadow: 0 0 10px #2c3e50;
+}
+.helperTitle {
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	line-height: 24px;
+	font-size: 20px;
+	font-weight: 400;
+}
+.helperText {
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	line-height: 22px;
+	font-size: 16px;
+}
+
+.dashboard {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: relative;
+	top: 50px;
+	display: block;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 1;
+	/* box model: border / margin / padding / width / height / ... */
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	padding: 2%;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+.smallNode {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	display: inline-block;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	z-index: 1;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 46%;
+	border: 0;
+	margin: 1%;
+	padding: 5px;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	box-shadow: 0 0 10px #2c3e50;
+}
+.bigNode {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	display: inline-block;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	z-index: 1;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 96%;
+	border: 0;
+	margin: 1%;
+	padding: 5px;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	box-shadow: 0 0 10px #2c3e50;
+}
+.title {
+	font-size: 22px;
+	line-height: 24px;
+	font-weight: 500;
+}
+
+table {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	width: 100%;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	text-align: center;
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+tr:hover {
+	/* visual: background / color / transition / list-style / shadows / ... */
+	background-color: #7B91AB;
+}
+td:hover {
+	background-color: #7EDAFB;
+}
+
+/* 位置样式 */
+.vetical {
+	position: absolute;
+	top: 50%;
+	bottom: 50%;
+	width: 100%;
+	font-weight: 500;
+	text-align: center;
+}
+.button-close {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	position: absolute;
+	right: 6px;
+	top: 6px;
+}
+.button-close:hover {
+	background-color: #3a3f51;
+ 	color: #FFFFFF;
+}
+
+/* 边框样式 */
+.full {
+	width: 100%;
+}
+
+/* 可视化样式 */
+.show {
+	display: block;
+}
+.bgBlue {
+	background-color: #A1C8DF;
+}
