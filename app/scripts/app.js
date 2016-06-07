@@ -27,15 +27,17 @@ var promise = angular.module('promise', [
           .state('index', {
               url: '/',
               views: {
-                  '': {
-                      templateUrl: 'views/floor.html'
-                  },
-                  'helperView@index': {
-                      templateUrl: 'views/indexHelper.html'
-                  },
-                  'dashboardView@index': {
-                      templateUrl: 'views/indexDashboard.html'
-                  }
+                  '': {templateUrl: 'views/floor.html'},
+                  'helperView@index': {templateUrl: 'views/indexHelper.html'},
+                  'dashboardView@index': {templateUrl: 'views/indexDashboard.html'}
+              }
+          })
+          .state('ui', {
+            url: '/ui',
+            views: {
+              '': {templateUrl: 'views/floor.html'},
+              'helperView@ui': {templateUrl: 'views/uiHelper.html'},
+              'dashboardView@ui': {templateUrl: 'views/uiDashboard.html'}
               }
           })
   });

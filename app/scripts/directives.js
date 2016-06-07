@@ -3,17 +3,19 @@
 var promise = angular.module('promise');
 
 // New
+
 // logo
-promise.directive('logo',function(){
-	return{
-		restrict: 'C',
-		link: function(scope,element,attrs){
-			element.bind('click',function(){
-				window.location.href='/';
-			});
-		}
-	};
-});
+// promise.directive('logo',function(){
+// 	return{
+// 		restrict: 'C',
+// 		link: function(scope,element,attrs){
+// 			element.bind('click',function(){
+// 				window.location.href='/';
+// 			});
+// 		}
+// 	};
+// });
+
 // sidebarNode 切换
 promise.directive('sidebarNode',function(){
 	return{
