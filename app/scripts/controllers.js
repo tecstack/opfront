@@ -11,22 +11,29 @@
 var promise = angular.module('promise');
 
 // New
-// charjs默认配置
+// charjs default config
 Chart.defaults.global.defaultFontColor = '#fff';
 Chart.defaults.global.scaleFontColor = '#fff';
 
-// helper触发器
+// navbar
+promise.controller('Cnavbar', function($scope, $rootScope){
+  $scope.FtoggleMenu = function(){
+    $rootScope.MshowMenu = !$rootScope.MshowMenu
+  };
+});
+
+// helper trigger
 promise.controller('ChelperTrigger', function($scope,$rootScope){
-  $scope.toggleHelper = function(){
+  $scope.FtoggleHelper = function(){
     $rootScope.MshowHelper = !$rootScope.MshowHelper;
   };
 });
 
-// 首页控制器
+// index
 promise.controller('Cindex', function($scope,$rootScope){
 });
 
-// ui控制器
+// ui
 promise.controller('Cui', function($scope,$rootScope){
   $scope.indexDataLine = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -73,15 +80,15 @@ promise.controller('Cui', function($scope,$rootScope){
         label: "Blue"
     }
   ];
-  $scope.tableDataTh = ['ID','名称','来源','年龄','爱好','特长','座右铭','书籍','植物','上周二的早餐','对第二次世界大战同盟国胜利的看法','有钱以后想干什么'];
+  $scope.tableDataTh = ['ID','名称','来源','年龄','爱好','特长','座右铭','书籍','植物','上周二的早餐','对第二次世界大战的看法','有钱以后想干什么'];
   $scope.tableData = [
     ['0','azrael','中国南方基地','28','没啥爱好','胳膊和腿比较长','整什么幺蛾子','克苏鲁神话','捕虫瑾','好像忘了吃了','正义终将会取得胜利','先懵逼一会儿'],
+    ['89757','Null','Null','Null','Null','Null','414FAS#%IO','Null','Null','壳牌机油','Null','升级一下芯片'],
     ['1','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
     ['2','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
     ['3','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
     ['4','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
-    ['5','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
-    ['89757','Null','Null','Null','Null','Null','414FAS#%IO','Null','Null','壳牌机油','Null','升级一下芯片']
+    ['5','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null']
   ];
 
 });

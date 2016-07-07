@@ -1,43 +1,64 @@
-<div class="navbar">
-  <div class="logo"><a href="#/">Promise</a></div>
-  <div class="navbarNode"><a href="#/">登出</a></div>
-  <div class="navbarNode"><a href="#/">待办</a></div>
-  <div class="navbarNode"><a href="#/">用户</a></div>
-  <div class="navbarNode"><a href="#/">记录</a></div>
+<div class="navbar" ng-controller="Cnavbar">
+  <div class="navbarIcon">
+    <div ng-click="FtoggleMenu()"><i class="iconfont">&#xe648;</i></div>
+    <div class="sidebar" ng-show="MshowMenu">
+      <div class="sidebarNode">
+        <div class="sidebarTitle">
+          <div>资源池</div>
+          <i class="iconfont">&#xe676;</i>
+        </div>
+        <div class="sidebarSubnode">
+          <div class="sidebarSubnodeContent">设备<div class="nodeNumber">534</div></div>
+          <div class="sidebarSubnodeContent">系统<div class="nodeNumber">8</div></div>
+          <div class="sidebarSubnodeContent">组件<div class="nodeNumber">17</div></div>
+        </div>
+      </div>
+      <div class="sidebarNode">
+        <div class="sidebarTitle">
+          <div>维护</div>
+          <i class="iconfont">&#xe676;</i>
+        </div>
+        <div class="sidebarSubnode">
+          <div class="sidebarSubnodeContent">封装指令<div class="nodeNumber">20</div></div>
+          <div class="sidebarSubnodeContent">脚本调度<div class="nodeNumber">108</div></div>
+          <div class="sidebarSubnodeContent">组件管理<div class="nodeNumber">17</div></div>
+          <div class="sidebarSubnodeContent">配置管理<div class="nodeNumber">1038</div></div>
+          <div class="sidebarSubnodeContent">日志管理<div class="nodeNumber">786</div></div>
+        </div>
+      </div>
+      <div class="sidebarNode">
+        <div class="sidebarTitle">
+          <div>问题与故障</div>
+          <i class="iconfont">&#xe676;</i>
+        </div>
+        <div class="sidebarSubnode">
+          <div class="sidebarSubnodeContent">问题<div class="nodeNumber">304</div></div>
+          <div class="sidebarSubnodeContent">故障<div class="nodeNumber">178</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbarIcon"><a href="#/"><i class="iconfont">&#xe626;</i></a></div>
   <div class="navbarNode"><a href="#/ui">UI</a></div>
-  <div class="navbarInput"><input type="text" placeholder="检索"></div>
+  <div class="navbarNode"><a href="#/">Todo</a></div>
+  <div class="navbarNode"><a href="#/">Record</a></div>
+  <div class="navbarNode"><a href="#/">Sign out</a></div>
+  <div class="navbarIconAnti"><a href="#/"><i class="iconfont">&#xe636;</i></a></div>
+  <div class="navbarIconAnti"><a href="#/"><i class="iconfont">&#xe66d;</i></a></div>
+  <div class="navbarInput"><input type="text" placeholder="Search..."></div>
 </div>
 
-<div class="sidebarTrigger">
-  <div class="vetical">>></div>
+<div class="helper" ng-show="MshowHelper">
+  <div class="helperLogo">
+    <i class="iconfont">&#xe683;</i>
+    <br />
+    Helper
+  </div>
+  <div ui-view="helperView"></div>
 </div>
 
-<div class="sidebar">
-  <div class="sidebarNode">
-    <div>资源管理</div>
-    <div class="sidebarSubnode">设备</div>
-    <div class="sidebarSubnode">系统</div>
-    <div class="sidebarSubnode">组件</div>
-  </div>
-  <div class="sidebarNode">
-    <div>维护操作</div>
-    <div class="sidebarSubnode">封装指令</div>
-    <div class="sidebarSubnode">脚本调度</div>
-    <div class="sidebarSubnode">组件管理</div>
-    <div class="sidebarSubnode">配置管理</div>
-    <div class="sidebarSubnode">日志管理</div>
-  </div>
-  <div class="sidebarNode">
-    <div>问题故障</div>
-    <div class="sidebarSubnode">问题</div>
-    <div class="sidebarSubnode">故障</div>
-  </div>
-</div>
-
-<div class="helperTrigger" ng-controller="ChelperTrigger" ng-click="toggleHelper()">
+<div class="helperTrigger" ng-controller="ChelperTrigger" ng-click="FtoggleHelper()">
   <div class="vetical"><<</div>
 </div>
-
-<div class="helper" ui-view="helperView" ng-show="MshowHelper"></div>
 
 <div class="dashboard" ui-view="dashboardView"></div>
