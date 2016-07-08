@@ -327,6 +327,7 @@ body {
 }
 .smallNode {
 	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+  position: relative;
 	float: left;
 	vertical-align: top;
 	overflow: hidden;
@@ -340,10 +341,11 @@ body {
 	/* typographic: font / line-height / text-align / word-wrap / ... */
 	/* visual: background / color / transition / list-style / shadows / ... */
 	/*background-color: #fff;*/
-	box-shadow: 0 0 2px #CAD1D7;
+	/*box-shadow: 0 0 2px #CAD1D7;*/
 }
 .bigNode {
 	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+  position: relative;
 	float: left;
 	vertical-align: top;
 	overflow: hidden;
@@ -356,16 +358,14 @@ body {
 	/* typographic: font / line-height / text-align / word-wrap / ... */
 	/* visual: background / color / transition / list-style / shadows / ... */
 	/*background-color: #fff;*/
-	box-shadow: 0 0 2px #CAD1D7;
+	/*box-shadow: 0 0 2px #CAD1D7;*/
 }
 .nodeLR {
 	float: left;
-	/*height: 100%;*/
 	width: 50%;
 }
-.nodeTB {
+.nodeUD {
 	display: block;
-	/*height: 50%;*/
 	width: 100%;
 }
 .title {
@@ -379,10 +379,14 @@ body {
 }
 .textContent {
 	text-align: center;
-	padding: 80px 10%;
+  padding: 0 10%;
+  margin-top: 80px;
 }
 .formContent {
-	padding: 30px 30%;
+  width: 350px;
+  margin: auto;
+  border-top: 1px solid #fff;
+  padding-top: 40px;
 }
 .tableContent {
 	padding: 5px;
@@ -406,7 +410,7 @@ body {
 	text-align: center;
 	cursor: default;
 }
-.inputWraper>input[type="text"] {
+.inputWraper>input[type="text"],.inputWraper>input[type="password"] {
 	display: inline-block;
 	border: 0;
 	margin: 0;
@@ -416,7 +420,7 @@ body {
 	line-height: 25px;
 	text-align: left;
 }
-.inputWraper>input[type="text"]:focus {
+.inputWraper>input[type="text"]:focus,.inputWraper>input[type="password"]:focus {
   outline: 0;
 }
 .formContent>button {
@@ -473,6 +477,53 @@ body {
 	/*background-color: #77829C;*/
 }
 
+.signBg {
+  position: fixed;;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+.signBg input[type="text"],.signBg input[type="password"] {
+  background-color: transparent;
+  color: #fff;
+}
+.signTitle {
+  display: block;
+  margin-top: 200px;
+  margin-bottom: 20px;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 60px;
+  text-align: center;
+  color: #95A7EE;
+}
+.signError {
+  margin-bottom: 10px;
+  width: 100%;
+  color: #FF0002;
+  text-align: center;
+}
+select {
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  margin-bottom: 15px;
+  padding-left: 5px;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  line-height: 40px;
+  font-size: 20px;
+  color: #fff;
+  background-color: #95A7EE;
+}
+select:hover {
+  background-color: #A5BFF7;
+}
+select:focus {
+  outline: 0;
+}
 
 /* 位置样式 */
 .vetical {

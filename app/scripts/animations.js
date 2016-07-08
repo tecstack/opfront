@@ -2,7 +2,19 @@
 
 var promise = angular.module('promise');
 
-
+promise.animation('.signBg', function(){
+  return{
+    addClass: function(element){
+      // hide
+      element.animate({'opacity': '0'}, 300, function(){$(this).css('display', 'none')});
+    },
+    removeClass: function(element){
+      // show
+      element.css('display', 'block');
+      element.animate({'opacity': '1'}, 300);
+    }
+  };
+});
 
 promise.animation('.sidebar', function(){
   return{

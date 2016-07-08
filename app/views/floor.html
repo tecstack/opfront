@@ -43,7 +43,7 @@
   <div class="navbarNode"><a href="#/">Todo</a></div>
   <div class="navbarNode"><a href="#/">Record</a></div>
   <div class="navbarNode"><a href="#/">Sign out</a></div>
-  <div class="navbarIconAnti"><a href="#/"><i class="iconfont">&#xe636;</i></a></div>
+  <div class="navbarIconAnti"><a href="#/sign"><i class="iconfont">&#xe636;</i></a></div>
   <div class="navbarIconAnti"><a href="#/"><i class="iconfont">&#xe66d;</i></a></div>
   <div class="navbarInput"><input type="text" placeholder="Search..."></div>
 </div>
@@ -62,3 +62,30 @@
 </div>
 
 <div class="dashboard" ui-view="dashboardView"></div>
+
+<div class="signBg" ng-show="MshowSign" style="background:url('http://g.hiphotos.baidu.com/zhidao/pic/item/5ab5c9ea15ce36d3c3068ba93cf33a87e950b12c.jpg');background-size:100% 100%;">
+  <div ng-controller="Csign">
+    <div class="bigNode">
+      <div class="nodeTB">
+        <div class="signTitle">Promise・Sign</div>
+        <div class="formContent">
+          <div class="inputWraper">
+            <i class="iconfont">&#xe636;</i>
+            <input type="text" placeholder="用户名" ngModel="MuserInfo.username">
+          </div>
+          <div class="inputWraper">
+            <i class="iconfont">&#xe61b;</i>
+            <input type="password" placeholder="密码" ngModel="MuserInfo.password">
+          </div>
+          <div class="signError" ng-show="MsignError">登录失败</div>
+          <button type="button" name="button" ng-click="FsignIn(MuserInfo)">
+            <span>登录</span>
+          </button>
+          <button type="button" name="button">
+            <span>注册</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

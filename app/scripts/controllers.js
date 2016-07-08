@@ -12,8 +12,8 @@ var promise = angular.module('promise');
 
 // New
 // charjs default config
-Chart.defaults.global.defaultFontColor = '#fff';
-Chart.defaults.global.scaleFontColor = '#fff';
+Chart.defaults.global.defaultFontColor = '#000';
+Chart.defaults.global.scaleFontColor = '#000';
 
 // navbar
 promise.controller('Cnavbar', function($scope, $rootScope){
@@ -27,6 +27,36 @@ promise.controller('ChelperTrigger', function($scope,$rootScope){
   $scope.FtoggleHelper = function(){
     $rootScope.MshowHelper = !$rootScope.MshowHelper;
   };
+});
+
+// sign
+promise.controller('Csign', function($scope,$rootScope,SuserService){
+  $rootScope.$watch('MisSign', function(newValue, oldValue){
+    $rootScope.MshowSign = !$rootScope.MisSign;
+  });
+
+  $scope.FsignIn = function(VuserInfo){
+  // angularjs function FsignIn().  Using for login.
+    SuserService.FsignIn().post(
+      {},
+      VuserInfo,
+      function successCallback(callbackdata){
+        console.log('login success');
+        console.log(callbackdata);
+        console.log(callbackdata.status);
+        $rootScope.Mtoken = callbackdata.token;
+        $rootScope.MisSign = true;
+      },
+      function errorCallback(callbackdata){
+        console.log('login failed');
+        console.log(callbackdata);
+        console.log(callbackdata.status);
+        $scope.MsignError = true;
+        $rootScope.MisSign = false;
+      }
+    );
+};
+
 });
 
 // index

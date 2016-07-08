@@ -22,13 +22,13 @@ promise.factory('SuserService', function($resource){
 			// $resource api Fsignin()
 			// $resource(url, [paramDefaults], [actions], options);
 			var VsignInRestApi = $resource(VuserUrl+'signin', {}, {
-				'post': {method:'POST', isArray:false}
+				'post': {method:'POST', isArray:false, timeout:5000}
 			});
 			return VsignInRestApi;
 		},
 		FsignUp: function() {
 			var VsignUpRestApi = $resource(VuserUrl+'signup', {}, {
-				'post': {method:'POST', isArray:false}
+				'post': {method:'POST', isArray:false, timeout:5000}
 			});
 			return VsignUpRestApi;
 		},

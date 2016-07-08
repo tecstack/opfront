@@ -1,19 +1,16 @@
 <div ng-controller="Cui">
 
-  <div class="smallNode">
-	  <div class="nodeLR">
-		  <img class="full" src="http://m2.quanjing.com/2m/axiom_rm001/axiom1885413.jpg" alt="Promise">
-	  </div>
-  	<div class="nodeLR">
+  <div class="smallNode" style="background:url('http://m2.quanjing.com/2m/axiom_rm001/axiom1885413.jpg');background-size:100% 100%;">
+    <div class="nodeUD">
       <div class="textContent">
         <div class="title">Promise</div>
         <div>Promise是移动云南方基地运维团队自主研发的自动运维平台</div>
       </div>
-  	</div>
+    </div>
   </div>
 
   <div class="smallNode">
-    <div class="nodeTB">
+    <div class="nodeUD">
       <div class="formContent">
         <div class="title">用户</div>
         <div class="inputWraper">
@@ -35,7 +32,7 @@
   </div>
 
   <div class="smallNode">
-    <div class="nodeTB">
+    <div class="nodeUD">
       <div class="textContent">
         <div class="title">
           <i class="iconfont">&#xe67e;</i>
@@ -52,15 +49,28 @@
   </div>
 
   <div class="smallNode">
-    <div class="nodeTB">
+    <div class="nodeUD">
       <div class="formContent">
         <div class="title">选框</div>
+        <select name="pats">
+          <option value="cat">Volvo</option>
+          <option value="dog">Saab</option>
+          <option value="fish">Fiat</option>
+          <option value="void">Audi</option>
+        </select>
+        <span>保存登录信息</span><input type="checkbox" name="Bike">
       </div>
     </div>
   </div>
 
+  <div class="smallNode">
+    <div class="chartContent">
+      <canvas class="chartPie full" data={{indexDataPie}}></canvas>
+    </div>
+  </div>
+
   <div class="bigNode">
-    <div class="nodeTB">
+    <div class="nodeUD">
       <div class="tableContent">
         <table>
           <tr>
@@ -74,11 +84,4 @@
     </div>
   </div>
 
-
-
-  <div class="smallNode">
-    <div class="chartContent">
-      <canvas class="chartPie full" data={{indexDataPie}}></canvas>
-    </div>
-  </div>
 </div>
