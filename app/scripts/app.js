@@ -40,12 +40,20 @@ var promise = angular.module('promise', [
         'dashboardView@ui': {templateUrl: 'views/uiDashboard.html'}
       }
     })
-    .state('sign', {
-      url: '/sign',
+    .state('user', {
+      url: '/user',
       views: {
         '': {templateUrl: 'views/floor.html'},
-        'helperView@sign': {templateUrl: 'views/signHelper.html'},
-        'dashboardView@sign': {templateUrl: 'views/signDashboard.html'}
+        'helperView@user': {templateUrl: 'views/userHelper.html'},
+        'dashboardView@user': {templateUrl: 'views/userDashboard.html'}
+      }
+    })
+    .state('pm', {
+      url: '/pm',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@pm': {templateUrl: 'views/pmHelper.html'},
+        'dashboardView@pm': {templateUrl: 'views/pmDashboard.html'}
       }
     })
   });

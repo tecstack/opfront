@@ -10,7 +10,16 @@
 
 var promise = angular.module('promise');
 
-// New
+// angular init
+promise.run(function($rootScope, $timeout){
+  $timeout(
+    function(){
+      $rootScope.FcookieAuth();
+    },
+    100
+  );
+});
+
 // charjs default config
 Chart.defaults.global.defaultFontColor = '#000';
 Chart.defaults.global.scaleFontColor = '#000';
@@ -30,32 +39,118 @@ promise.controller('ChelperTrigger', function($scope,$rootScope){
 });
 
 // sign
-promise.controller('Csign', function($scope,$rootScope,SuserService){
+promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
+  // watch if signed
   $rootScope.$watch('MisSign', function(newValue, oldValue){
     $rootScope.MshowSign = !$rootScope.MisSign;
   });
 
-  $scope.FsignIn = function(VuserInfo){
-  // angularjs function FsignIn().  Using for login.
-    SuserService.FsignIn().post(
+  // cookies-token-delay
+  $rootScope.FtokenDelay = function(){
+    if ($rootScope.Mtoken){
+      var now = new Date();
+      var expire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+2, now.getMinutes(), now.getSeconds());
+      $cookies.put('token', $rootScope.Mtoken, {expires: expire});
+    };
+  };
+
+  // cookies-rftoken-autodelay
+  $rootScope.FrftokenDelay = function(){
+    var Vrftoken = $cookies.get('rftoken');
+    if (Vrftoken){
+      var now = new Date();
+      var expire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+2, now.getMinutes(), now.getSeconds());
+      $cookies.put('rftoken', Vrftoken, {expires: expire});
+    }
+    else {
+      $rootScope.Mrftoken = Null;
+    };
+  };
+
+  // cookies-rftoken-refresh
+  $rootScope.FtokenRefresh = function(Vrftoken){
+    SuserService.FtokenRefresh().post(
       {},
-      VuserInfo,
+      {'granttype': 'refreshtoken', 'refreshtoken': Vrftoken},
       function successCallback(callbackdata){
-        console.log('login success');
-        console.log(callbackdata);
-        console.log(callbackdata.status);
         $rootScope.Mtoken = callbackdata.token;
-        $rootScope.MisSign = true;
+        $rootScope.FtokenDelay();
+        $rootScope.FrftokenDelay();
+        $rootScope.FtokenSignIn($rootScope.Mtoken);
       },
       function errorCallback(callbackdata){
-        console.log('login failed');
         console.log(callbackdata);
-        console.log(callbackdata.status);
+        $scope.MsignErrorInfos = callbackdata.data.message;
+        $scope.MsignError = false;
+        $rootScope.MisSign = false;
+      }
+    );
+  };
+
+  // cookies-token-signin
+  $rootScope.FtokenSignIn = function(Vtoken){
+    SuserService.FtokenSignIn(Vtoken).post(
+      {},
+      {},
+      function successCallback(callbackdata){
+        $rootScope.MisSign = true;
+        $scope.MsignError = false;
+        $rootScope.FrftokenDelay();
+      },
+      function errorCallback(callbackdata){
+        console.log(callbackdata);
+        $scope.MsignErrorInfos = callbackdata.data.message;
         $scope.MsignError = true;
         $rootScope.MisSign = false;
       }
     );
-};
+  };
+
+  // cookies-auth-main
+  $rootScope.FcookieAuth = function(){
+    var Vrftoken = $cookies.get('rftoken');
+    if (!Vrftoken){
+      // token expire, turn to web auth
+      $scope.MsignError = false;
+      $rootScope.MisSign = false;
+    }
+    else {
+      // token not expire, token auth and auto delay
+      $rootScope.FtokenRefresh(Vrftoken);
+    }
+  };
+
+  // web-auth-main
+  $scope.FsignIn = function(VuserInfo){
+    SuserService.FsignIn().post(
+      {},
+      VuserInfo,
+      function successCallback(callbackdata){
+        // logic
+        $rootScope.Mtoken = callbackdata.token;
+        $rootScope.Mrftoken = callbackdata.rftoken;
+        $rootScope.MisSign = true;
+        $scope.MsignError = false;
+        // cookies storage for 2 hours
+        var now = new Date();
+        var expire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+2, now.getMinutes(), now.getSeconds());
+        $cookies.put('token', $rootScope.Mtoken, {expires: expire});
+        $cookies.put('rftoken', $rootScope.Mrftoken, {expires: expire});
+      },
+      function errorCallback(callbackdata){
+        $scope.MsignErrorInfos = callbackdata.data.message;
+        $scope.MsignError = true;
+        $rootScope.MisSign = false;
+      }
+    );
+  };
+
+  // web-auth-signout
+  $rootScope.FsignOut = function(){
+    $cookies.remove('token');
+    $cookies.remove('rftoken');
+    $rootScope.MisSign = false;
+  }
 
 });
 
@@ -122,10 +217,20 @@ promise.controller('Cui', function($scope,$rootScope){
   ];
 
 });
-//
 
-
-
+// pm
+promise.controller('Cpm', function($scope){
+  $scope.tableDataTh = ['ID','IP','Hostname','Group'];
+  $scope.tableData = [
+    ['0','10.1.1.1','Fortress','MGMT'],
+    ['1','192.168.182.100','Lab-Ansible','Lab'],
+    ['2','192.168.182.101','Lab-1','Lab'],
+    ['3','192.168.182.102','Lab-2','Lab'],
+    ['4','192.168.182.103','Lab-3','Lab'],
+    ['5','192.168.182.104','Lab-4','Lab'],
+    ['6','192.168.182.105','Lab-5','Lab']
+  ];
+});
 
 
 

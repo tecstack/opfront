@@ -3,10 +3,10 @@
 var promise = angular.module('promise');
 
 promise.factory('SuserService', function($resource){
-	// angularjs service-factory SuserService: SignIn/SignUp/SignOut
+	// angularjs service-factory SuserService: signin/tokensignin/tokenrefresh/
 
+	var VbaseUrl = 'http://192.168.182.3';
 	// var VbaseUrl = 'http://localhost:5000';
-	var VbaseUrl = 'http://192.168.86.23:5000';
 	var Vversion = 'v0.0';
 	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/user/';
 
@@ -19,20 +19,30 @@ promise.factory('SuserService', function($resource){
 		// 	return signInRestApi;
 		// },
 		FsignIn: function() {
-			// $resource api Fsignin()
 			// $resource(url, [paramDefaults], [actions], options);
-			var VsignInRestApi = $resource(VuserUrl+'signin', {}, {
-				'post': {method:'POST', isArray:false, timeout:5000}
+			var VsignInRestApi = $resource(VuserUrl+'login', {}, {
+				'post': {method:'POST', isArray:false, timeout:5000, headers:{'Content-Type': 'application/json'}}
 			});
 			return VsignInRestApi;
+		},
+		FtokenSignIn: function(Vtoken) {
+			var VtokenSignInRestApi = $resource(VuserUrl+'tokenauth', {}, {
+				'post': {method:'POST', isArray:false, timeout:5000, headers:{'Content-Type': 'application/json', 'token': Vtoken}}
+			});
+			return VtokenSignInRestApi;
+		},
+		FtokenRefresh: function() {
+			var VtokenRefreshRestApi = $resource(VuserUrl+'tokenrefresh', {}, {
+				'post': {method:'POST', isArray:false, timeout:5000, headers:{'Content-Type': 'application/json'}}
+			});
+			return VtokenRefreshRestApi;
 		},
 		FsignUp: function() {
 			var VsignUpRestApi = $resource(VuserUrl+'signup', {}, {
 				'post': {method:'POST', isArray:false, timeout:5000}
 			});
 			return VsignUpRestApi;
-		},
-		FsignOut: function() {}
+		}
 	};
 
 });

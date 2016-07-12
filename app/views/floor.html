@@ -1,4 +1,5 @@
 <div class="navbar" ng-controller="Cnavbar">
+  <!-- MENU -->
   <div class="navbarIcon">
     <div ng-click="FtoggleMenu()"><i class="iconfont">&#xe648;</i></div>
     <div class="sidebar" ng-show="MshowMenu">
@@ -8,9 +9,15 @@
           <i class="iconfont">&#xe676;</i>
         </div>
         <div class="sidebarSubnode">
-          <div class="sidebarSubnodeContent">设备<div class="nodeNumber">534</div></div>
-          <div class="sidebarSubnodeContent">系统<div class="nodeNumber">8</div></div>
-          <div class="sidebarSubnodeContent">组件<div class="nodeNumber">17</div></div>
+          <div class="sidebarSubnodeContent">
+            <a href="#/pm">物理主机<div class="nodeNumber">534</div></a>
+          </div>
+          <div class="sidebarSubnodeContent">
+            <a href="">系统<div class="nodeNumber">8</div></a>
+          </div>
+          <div class="sidebarSubnodeContent">
+            <a href="">组件<div class="nodeNumber">17</div></a>
+          </div>
         </div>
       </div>
       <div class="sidebarNode">
@@ -38,14 +45,31 @@
       </div>
     </div>
   </div>
+
+  <!-- Index -->
   <div class="navbarIcon"><a href="#/"><i class="iconfont">&#xe626;</i></a></div>
+
+  <!-- UI -->
   <div class="navbarNode"><a href="#/ui">UI</a></div>
+
+  <!-- Todo -->
   <div class="navbarNode"><a href="#/">Todo</a></div>
+
+  <!-- Record -->
   <div class="navbarNode"><a href="#/">Record</a></div>
-  <div class="navbarNode"><a href="#/">Sign out</a></div>
-  <div class="navbarIconAnti"><a href="#/sign"><i class="iconfont">&#xe636;</i></a></div>
+
+  <!-- Sign out -->
+  <div class="navbarNode" ng-click="FsignOut()"><a href="#/">Sign out</a></div>
+
+  <!-- User -->
+  <div class="navbarIconAnti"><a href="#/user"><i class="iconfont">&#xe636;</i></a></div>
+
+  <!-- Settings -->
   <div class="navbarIconAnti"><a href="#/"><i class="iconfont">&#xe66d;</i></a></div>
+
+  <!-- Search -->
   <div class="navbarInput"><input type="text" placeholder="Search..."></div>
+
 </div>
 
 <div class="helper" ng-show="MshowHelper">
@@ -63,7 +87,7 @@
 
 <div class="dashboard" ui-view="dashboardView"></div>
 
-<div class="signBg" ng-show="MshowSign" style="background:url('http://g.hiphotos.baidu.com/zhidao/pic/item/5ab5c9ea15ce36d3c3068ba93cf33a87e950b12c.jpg');background-size:100% 100%;">
+<div class="signBg" ng-show="MshowSign">
   <div ng-controller="Csign">
     <div class="bigNode">
       <div class="nodeTB">
@@ -71,13 +95,13 @@
         <div class="formContent">
           <div class="inputWraper">
             <i class="iconfont">&#xe636;</i>
-            <input type="text" placeholder="用户名" ngModel="MuserInfo.username">
+            <input type="text" placeholder="用户名" ng-model="MuserInfo.username">
           </div>
           <div class="inputWraper">
             <i class="iconfont">&#xe61b;</i>
-            <input type="password" placeholder="密码" ngModel="MuserInfo.password">
+            <input type="password" placeholder="密码" ng-model="MuserInfo.password">
           </div>
-          <div class="signError" ng-show="MsignError">登录失败</div>
+          <div class="signError" ng-show="MsignError">{{MsignErrorInfos}}</div>
           <button type="button" name="button" ng-click="FsignIn(MuserInfo)">
             <span>登录</span>
           </button>

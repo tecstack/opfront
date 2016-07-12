@@ -1,0 +1,22 @@
+<div ng-controller="Cpm">
+  <div class="bigNode">
+    <div class="nodeUD">
+      <div class="tableContent">
+        <select name="pats">
+          <option value="cat">Volvo</option>
+          <option value="dog">Saab</option>
+          <option value="fish">Fiat</option>
+          <option value="void">Audi</option>
+        </select>
+        <table>
+          <tr>
+            <th ng-repeat="data in tableDataTh">{{data}}</th>
+          </tr>
+          <tr ng-repeat="tr in tableData">
+            <td ng-repeat="td in tr track by $index">{{td}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
