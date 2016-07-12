@@ -15,6 +15,7 @@ promise.run(function($rootScope, $timeout){
   $timeout(
     function(){
       $rootScope.FcookieAuth();
+      // $rootScope.MisSign = false;
     },
     100
   );
@@ -145,6 +146,13 @@ promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
     );
   };
 
+  // web-auth-via-key-press
+  $scope.FsignInEnter = function(event,VuserInfo){
+    if (event.keyCode == 13){
+      $scope.FsignIn(VuserInfo);
+    };
+  }
+
   // web-auth-signout
   $rootScope.FsignOut = function(){
     $cookies.remove('token');
@@ -230,6 +238,39 @@ promise.controller('Cpm', function($scope){
     ['5','192.168.182.104','Lab-4','Lab'],
     ['6','192.168.182.105','Lab-5','Lab']
   ];
+
+  $scope.Mpp = "100";
+  $scope.FrefreshPP = function(){
+    console.log($scope.Mpp);
+  }
+
+  // test
+  $scope.Mpages = 3;
+  $scope.tableDatas = [
+    [
+      ['0','10.1.1.1','Fortress','MGMT'],
+      ['1','192.168.182.100','Lab-Ansible','Lab'],
+      ['2','192.168.182.101','Lab-1','Lab']
+    ],
+    [
+      ['0','10.1.1.2','team','MGMT'],
+      ['1','10.1.1.2','alert','Lab'],
+      ['2','10.1.1.2','Lab-2','Lab']
+    ],
+    [
+      ['01','10.1.1.3','op','MGMT'],
+      ['13','10.1.1.3','bcec','Lab'],
+      ['24','10.1.1.3','clm','Lab']
+    ],
+  ];
+  $scope.FgetPmPage = function(page){
+    return $scope.tableDatas[page-1]
+  };
+  $scope.Mfilters = [
+    [],
+    [],
+    []
+  ]
 });
 
 

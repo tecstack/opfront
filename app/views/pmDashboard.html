@@ -2,12 +2,44 @@
   <div class="bigNode">
     <div class="nodeUD">
       <div class="tableContent">
-        <select name="pats">
-          <option value="cat">Volvo</option>
-          <option value="dog">Saab</option>
-          <option value="fish">Fiat</option>
-          <option value="void">Audi</option>
+
+        <div class="searchWraper">
+          <i class="iconfont">&#xe629;</i>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <select name="pp" ng-model="Mpp" ng-change="FrefreshPP()">
+          <option value="20">每页20项</option>
+          <option value="50">每页50项</option>
+          <option value="100" selected>每页100项</option>
         </select>
+
+        <div class="label">上页</div>
+        <input type="text" placeholder="跳转到..(共{{Mpages}}页)">
+        <div class="label">下页</div>
+
+        <input type="text" placeholder="排序">
+
+        <div class="clear">
+          <div class="label">添加筛选</div>
+
+          <div class="filterWrapper">
+            <select name="filters" class="filterName">
+              <option value="ip">ip</option>
+              <option value="hostname">hostname</option>
+              <option value="group" selected>group</option>
+            </select>
+            <select name="bool" class="filterBool">
+              <option value="ip">=</option>
+              <option value="hostname">!=</option>
+            </select>
+            <input type="text" class="filterContent">
+          </div>
+
+
+        </div>
+
+
         <table>
           <tr>
             <th ng-repeat="data in tableDataTh">{{data}}</th>
@@ -16,6 +48,13 @@
             <td ng-repeat="td in tr track by $index">{{td}}</td>
           </tr>
         </table>
+
+        <div>
+          <div class="label firstLabel">上页</div>
+          <input type="text" placeholder="跳转到..(共{{Mpages}}页)">
+          <div class="label">下页</div>
+        </div>
+
       </div>
     </div>
   </div>

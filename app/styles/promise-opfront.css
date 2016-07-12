@@ -38,6 +38,45 @@ body {
 	/*background-color: #DEE0E9;*/
 	/*background-color: #E9EFF2;*/
 }
+input:focus, select:focus, button:focus {
+	outline: 0;
+}
+input[type="text"],input[type="password"] {
+	border: 0;
+	margin: 0;
+	padding: 0 5px;
+	font-size: 20px;
+	line-height: 40px;
+	text-align: left;
+  color: #fff;
+}
+input::-moz-placeholder {
+  color: #fff;
+}
+input:-moz-placeholder {
+  color: #fff;
+}
+input:-ms-input-placeholder {
+  color: #fff;
+}
+input::-webkit-input-placeholder {
+  color: #fff;
+}
+select {
+  appearance:none;
+  -moz-appearance:none;
+  -webkit-appearance:none;
+  margin-bottom: 5px;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+  text-align-last: center;
+  line-height: 40px;
+  font-size: 20px;
+  color: #fff;
+  background-color: #95A7EE;
+}
 
 /* Promise组件样式 */
 .navbar {
@@ -135,6 +174,7 @@ body {
 	border: 0;
 	margin: 0;
 	padding-left: 15px;
+  padding-right: 0;
 	width: calc(100% - 15px);
 	height: 100%;
 	/* typographic: font / line-height / text-align / word-wrap / ... */
@@ -145,8 +185,17 @@ body {
 	color: #000000;
 	background-color: #fff;
 }
-.navbarInput>input:focus {
-	outline: 0;
+.navbarInput>input::-moz-placeholder {
+  color: #6F6E74;
+}
+.navbarInput>input:-moz-placeholder {
+  color: #6F6E74;
+}
+.navbarInput>input:-ms-input-placeholder {
+  color: #6F6E74;
+}
+.navbarInput>input::-webkit-input-placeholder {
+  color: #6F6E74;
 }
 .navbar a {
 	display: inline-block;
@@ -343,8 +392,6 @@ body {
 	padding: 0;
 	/* typographic: font / line-height / text-align / word-wrap / ... */
 	/* visual: background / color / transition / list-style / shadows / ... */
-	/*background-color: #fff;*/
-	/*box-shadow: 0 0 2px #CAD1D7;*/
 }
 .bigNode {
 	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
@@ -360,8 +407,6 @@ body {
 	padding: 0;
 	/* typographic: font / line-height / text-align / word-wrap / ... */
 	/* visual: background / color / transition / list-style / shadows / ... */
-	/*background-color: #fff;*/
-	/*box-shadow: 0 0 2px #CAD1D7;*/
 }
 .nodeLR {
 	float: left;
@@ -415,17 +460,86 @@ body {
 }
 .inputWraper>input[type="text"],.inputWraper>input[type="password"] {
 	display: inline-block;
-	border: 0;
-	margin: 0;
 	padding: 5px 10px;
 	width: calc(100% - 36px - 20px);
 	font-size: 16px;
 	line-height: 25px;
 	text-align: left;
 }
-.inputWraper>input[type="text"]:focus,.inputWraper>input[type="password"]:focus {
-  outline: 0;
+.searchWraper {
+  float: left;
+	width: 100%;
+	margin-bottom: 5px;
+  margin-right: 5px;
+	padding: 0;
 }
+.tableContent .searchWraper {
+  width: 20%;
+}
+.searchWraper>.iconfont {
+	float: left;
+	margin-right: 5px;
+	padding: 0 5px;
+  width: 30px;
+	font-size: 30px;
+  font-weight: 900;
+	line-height: 40px;
+	text-align: center;
+	cursor: default;
+  color: #fff;
+  background-color: #95A7EE;
+}
+.searchWraper>input[type="text"] {
+	float: left;
+  margin-right: 0;
+  width: calc(100% - 55px);
+  background-color: #95A7EE;
+}
+.tableContent select {
+  float: left;
+  margin-right: 5px;
+  width: 10%;
+  text-align: center;
+}
+.tableContent input {
+  float: left;
+	margin-right: 5px;
+  width: 15%;
+  background-color: #95A7EE;
+}
+.label {
+  float: left;
+  margin-right: 5px;
+  padding: 0 5px;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  background-color: #95A7EE;
+}
+.firstLabel {
+  margin-left: calc(50% - 55px - 7%);
+}
+.filterWrapper {
+}
+.filterWrapper>.filterName {
+  width: 110px;
+}
+.filterWrapper>.filterBool {
+  width: 40px;
+}
+.filterWrapper>.filterContent {
+  width: 180px;
+  text-align: center;
+}
+.clear {
+  clear: both;
+}
+.searchWraper>input[type="text"]:hover, .tableContent input:hover, .searchWraper>.iconfont:hover, .label:hover, select:hover {
+  background-color: #A5BFF7;
+}
+
 .formContent>button {
 	display: block;
 	border: 0;
@@ -443,9 +557,8 @@ body {
 .formContent>button:hover {
 	background-color: #A5BFF7;
 }
-.formContent>button:focus {
-	outline: 0;
-}
+
+
 
 .dashboard table {
 	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
@@ -509,26 +622,7 @@ body {
   color: #FF0002;
   text-align: center;
 }
-select {
-  appearance:none;
-  -moz-appearance:none;
-  -webkit-appearance:none;
-  margin-bottom: 15px;
-  padding-left: 5px;
-  width: 100%;
-  border: 0;
-  border-radius: 0;
-  line-height: 40px;
-  font-size: 20px;
-  color: #fff;
-  background-color: #95A7EE;
-}
-select:hover {
-  background-color: #A5BFF7;
-}
-select:focus {
-  outline: 0;
-}
+
 
 /* 位置样式 */
 .vetical {

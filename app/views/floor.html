@@ -99,7 +99,7 @@
           </div>
           <div class="inputWraper">
             <i class="iconfont">&#xe61b;</i>
-            <input type="password" placeholder="密码" ng-model="MuserInfo.password">
+            <input type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event,MuserInfo)">
           </div>
           <div class="signError" ng-show="MsignError">{{MsignErrorInfos}}</div>
           <button type="button" name="button" ng-click="FsignIn(MuserInfo)">
