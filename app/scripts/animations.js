@@ -41,6 +41,40 @@ promise.animation('.helper', function(){
   };
 });
 
+promise.directive('label',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+      element.children("div").bind({
+        click: function(e){
+          e.stopPropagation();
+        }
+      });
+      element.bind({
+        click: function(e){
+          element.children("div").toggle(100);
+        }
+      });
+		}
+	};
+});
+
+promise.animation('.filterWrapper', function(){
+  return{
+    enter: function(element, parent){
+      element.css({
+        'display': 'block',
+        'height': '0'
+      });
+      element.animate({'opacity': '1', 'height': '40px'}, 100);
+    },
+    leave: function(element){
+      element.animate({'opacity': '0', 'height': '0'}, 100, function(){$(this).css('display', 'none')});
+    }
+  };
+});
+
+
 // first angularjs animation method (directive + jquery)
 
 // promise.directive('sidebar',function(){

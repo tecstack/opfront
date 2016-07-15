@@ -15,7 +15,7 @@ promise.run(function($rootScope, $timeout){
   $timeout(
     function(){
       $rootScope.FcookieAuth();
-      // $rootScope.MisSign = false;
+      // $rootScope.MisSign = true;
     },
     100
   );
@@ -64,7 +64,7 @@ promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
       $cookies.put('rftoken', Vrftoken, {expires: expire});
     }
     else {
-      $rootScope.Mrftoken = Null;
+      $rootScope.Mrftoken = null;
     };
   };
 
@@ -226,330 +226,108 @@ promise.controller('Cui', function($scope,$rootScope){
 
 });
 
-// pm
-promise.controller('Cpm', function($scope){
-  $scope.tableDataTh = ['ID','IP','Hostname','Group'];
-  $scope.tableData = [
-    ['0','10.1.1.1','Fortress','MGMT'],
-    ['1','192.168.182.100','Lab-Ansible','Lab'],
-    ['2','192.168.182.101','Lab-1','Lab'],
-    ['3','192.168.182.102','Lab-2','Lab'],
-    ['4','192.168.182.103','Lab-3','Lab'],
-    ['5','192.168.182.104','Lab-4','Lab'],
-    ['6','192.168.182.105','Lab-5','Lab']
+// host
+promise.controller('Chost', function($scope, $rootScope, ShostService){
+  $scope.tableDataTh = [
+    // th的值用于展示；filtername的值用于定位筛选，一定要和数据里的key一致
+    {'th': '主机ID', 'filterName': 'hostid'},
+    {'th': '主机IP', 'filterName': 'ip'},
+    {'th': '主机名', 'filterName': 'host'},
+    {'th': '组', 'filterName': 'name'}
   ];
+  $scope.tableDatas = [
+    // {
+    //   "available": "0",
+    //   "groups": [{"groupid": "4", "name": "Zabbix servers"}],
+    //   "host": "Zabbix server",
+    //   "hostid": "0",
+    //   "interfaces": [{"interfaceid": "1", "ip": "127.0.0.1"}],
+    //   "status": "1"
+    // },
+    // {
+    //   "available": "1",
+    //   "groups": [{"groupid": "8", "name": "cloudlab"}, {"groupid": "5", "name": "Discovered hosts"}],
+    //   "host": "192.168.182.2",
+    //   "hostid": "1",
+    //   "interfaces": [{"interfaceid": "11", "ip": "192.168.182.2"}],
+    //   "status": "0"
+    // }
+  ];
+
+  $scope.Mfilters = [
+    // {filterName:'ip', filterBool:'=', filterContent:'192'},
+    // {filterName:'host', filterBool:'!=', filterContent:'LAB-100'},
+    // {filterName:'hostid', filterBool:'=', filterContent:'MGMT'}
+  ];
+
+  $scope.FaddFilter = function(){
+    $scope.Mfilters.push({filterName:'', filterBool:'', filterContent:''});
+  };
+  $scope.FremoveFilter = function(filter){
+    var Vfilters = $scope.Mfilters;
+    Vfilters.splice(Vfilters.indexOf(filter), 1);
+  };
+  $scope.FshowPmHelper = function(pm){
+    // ['0','10.1.1.1','Fortress','MGMT']
+    $rootScope.MpmNode = pm;
+    $rootScope.MshowHelper = true;
+  };
 
   $scope.Mpp = "100";
-  $scope.FrefreshPP = function(){
-    console.log($scope.Mpp);
-  }
+  $scope.Mpages = 1;
+  $scope.McurrentPage = 1;
 
-  // test
-  $scope.Mpages = 3;
-  $scope.tableDatas = [
-    [
-      ['0','10.1.1.1','Fortress','MGMT'],
-      ['1','192.168.182.100','Lab-Ansible','Lab'],
-      ['2','192.168.182.101','Lab-1','Lab']
-    ],
-    [
-      ['0','10.1.1.2','team','MGMT'],
-      ['1','10.1.1.2','alert','Lab'],
-      ['2','10.1.1.2','Lab-2','Lab']
-    ],
-    [
-      ['01','10.1.1.3','op','MGMT'],
-      ['13','10.1.1.3','bcec','Lab'],
-      ['24','10.1.1.3','clm','Lab']
-    ],
-  ];
-  $scope.FgetPmPage = function(page){
-    return $scope.tableDatas[page-1]
+  $scope.FgetHost = function(){
+    var vars = {};
+    if ($scope.Mpp != "0") {
+      vars.pp = $scope.Mpp;
+      vars.page = $scope.McurrentPage;
+    }
+    ShostService.Fhost($rootScope.Mtoken).get(
+      vars,
+      function successCallback(callbackdata){
+        // logic
+        // {
+        //   "data": [
+        //     {"available": "0", "groups": [{"groupid": "4", "name": "Zabbix servers"}], "host": "Zabbix server", "hostid": "10084", "interfaces": [{"interfaceid": "1", "ip": "127.0.0.1"}], "status": "1"},
+        //     ...,
+        //     {"available": "1", "groups": [{"groupid": "8", "name": "cloudlab"}, {"groupid": "5", "name": "Discovered hosts"}], "host": "192.168.182.2", "hostid": "10106", "interfaces": [{"interfaceid": "11", "ip": "192.168.182.2"}], "status": "0"}
+        //   ]
+        // }
+        $scope.tableData = callbackdata.data;
+        $scope.Mpages = callbackdata.totalpage;
+      },
+      function errorCallback(callbackdata){
+        console.log(callbackdata.message);
+      }
+    );
   };
-  $scope.Mfilters = [
-    [],
-    [],
-    []
-  ]
+
+  // watch if current page changes
+  $scope.$watchGroup(['McurrentPage', 'Mpp'], function(newValue, oldValue){
+    $scope.FgetHost();
+  });
+
+  $scope.FprevPage = function(){
+    if ($scope.McurrentPage > 1) {
+      $scope.McurrentPage --;
+    };
+  };
+  $scope.FnextPage = function(){
+    if ($scope.McurrentPage < $scope.Mpages) {
+      $scope.McurrentPage ++;
+    };
+  };
+  $scope.FgoPage = function(event, page){
+    if (event.keyCode == 13){
+      $scope.McurrentPage = parseInt(page);
+    };
+  };
+  $scope.FgoPage($scope.McurrentPage);
+
 });
 
+// Pm helper
+promise.controller('ChostHelper', function($scope, $rootScope){
 
-
-
-
-
-
-
-
-
-
-
-
-// promise.controller('Csign', function ($scope,$rootScope,$window,$base64,SuserService){
-// // angularjs controller Csign: FsignIn/FsignUp/FsignOut/FtoggleSignUp/FcloseSign
-//     $rootScope.MshowSign = false;
-//
-//     $scope.FsignIn = function(VuserInfo){
-//       // angularjs function FsignIn().  Using for login.
-//       // ResourceApi HTTP GET "class" actions: Resource.action([parameters], [success], [error])
-//       // ResourceApi non-GET "class" actions: Resource.action([parameters], postData, [success], [error])
-//       // default actions: {
-//       // 'get':    {method:'GET'},
-//       // 'save':   {method:'POST'},
-//       // 'query':  {method:'GET', isArray:true},
-//       // 'remove': {method:'DELETE'},
-//       // 'delete': {method:'DELETE'} };
-//       SuserService.FsignIn().post(
-//         {},
-//         VuserInfo,
-//         function successCallback(callbackdata){
-//           console.log('login success');
-//           console.log(callbackdata);
-//           console.log(callbackdata.status);
-//           $scope.Mtoken = callbackdata.token;
-//         },
-//         function errorCallback(callbackdata){
-//           console.log('login failed');
-//           console.log(callbackdata);
-//           console.log(callbackdata.status);
-//         }
-//       );
-//     };
-//
-//     $scope.FtoggleSignUp = function(){
-//       // angularjs function FtoggleSignUp().  Using for toggle signup page.
-//       $scope.MshowSignUp = !$scope.MshowSignUp;
-//     };
-//
-//     $scope.FcloseSign = function(){
-//       // angularjs function FcloseSign().  Using for close sign(including signin and signup) page.
-//       $rootScope.MshowSign = !true;
-//     };
-// });
-//
-// //Main 首页控制器
-// promise.controller('Cmain', function () {
-//     // $scope.awesomeThings = [
-//     //   'HTML5 Boilerplate',
-//     //   'AngularJS',
-//     //   'Karma'
-//     // ];
-// });
-//
-// //ui-right 展示帮助页控制器
-// promise.controller('CuiRight', function ($scope,$rootScope) {
-//     $rootScope.MshowHelper = true;
-//     $scope.FcloseHelper = function(){
-//       $rootScope.MshowHelper = false;
-//     };
-// });
-//
-// //About 介绍页控制器
-// promise.controller('Cabout', function ($scope) {
-//     // $scope.awesomeThings = [
-//     //   'HTML5 Boilerplate',
-//     //   'AngularJS',
-//     //   'Karma'
-//     // ];
-// });
-//
-// //Lab angularjs实验区控制器
-// promise.controller('CngLab', function ($scope,$rootScope,SvmInfos) {
-//
-//     $scope.MvmInfos =[
-//       {
-//         vm_name:'CIDC-VM-TEST-001',
-//         vm_id:'CIDC-VM-ID-001',
-//         ip:'10.11.191.10',
-//         vm_status:'2',
-//         vn_id:'CIDC-VN-ID-001',
-//         pm_id:'CIDC-PM-ID-001',
-//         creater_time:'2011-02-14 19:22:32'
-//       },
-//       {
-//         vm_name:'CIDC-VM-TEST-002',
-//         vm_id:'CIDC-VM-ID-002',
-//         ip:'10.11.191.12',
-//         vm_status:'2',
-//         vn_id:'CIDC-VN-ID-002',
-//         pm_id:'CIDC-PM-ID-002',
-//         creater_time:'2011-02-14 19:22:32'
-//       },
-//       {
-//         vm_name:'CIDC-VM-TEST-003',
-//         vm_id:'CIDC-VM-ID-003',
-//         ip:'10.11.191.13',
-//         vm_status:'2',
-//         vn_id:'CIDC-VN-ID-003',
-//         pm_id:'CIDC-PM-ID-003',
-//         creater_time:'2011-02-14 19:22:32'
-//       },
-//       {
-//         vm_name:'CIDC-VM-TEST-004',
-//         vm_id:'CIDC-VM-ID-004',
-//         ip:'10.11.191.14',
-//         vm_status:'2',
-//         vn_id:'CIDC-VN-ID-004',
-//         pm_id:'CIDC-PM-ID-004',
-//         creater_time:'2011-02-14 19:22:32'
-//       }
-//     ];
-//     $scope.MshowEdit = true;
-//     $scope.FshowHelp = function(){
-//         $rootScope.MshowHelper = true;
-//     };
-//
-//   	$scope.Mperson = {
-//         firstName: 'John',
-//         lastName: 'Doe'
-//   	};
-//
-//     $scope.Mnames = [
-//         {name:'Jani',country:'Norway'},
-//         {name:'Hege',country:'Sweden'},
-//         {name:'Kai',country:'Denmark'}
-//     ];
-//
-//     $scope.MmyVar = false;
-//     $scope.Ftoggle = function() {
-//         $scope.MmyVar = !$scope.MmyVar;
-//     };
-//
-//     $scope.Mmaster = {firstName: 'John', lastName: 'Doe'};
-//     $scope.Freset = function() {
-//         $scope.Muser = angular.copy($scope.Mmaster);
-//     };
-//     $scope.Freset();
-//
-// });
-//
-// //Blog 博客区控制器
-// promise.controller('Cblog', function ($scope) {
-//
-//     $scope.Mblogs = [
-//         {author:'小明',date:'2015-5-1 21:22:15',content:'今天是个好日子呀，我只是看到了老师的妹妹经过，为什么老师还是要我出去？讲实话有错吗？'},
-//         {author:'小红',date:'2015-6-23 22:05:15',content:'今天天气不错，路过了姐姐的办公室，看到了那个传说中的小明，对我笑了笑，然后不出意外地被姐姐吼出教室罚站了。'},
-//         {author:'小米老师',date:'2014-5-23 02:10:15',content:'今天本来心情很好，结果看到小明东张西望，问他看什么，竟然说“你妹”，这小子就是欠抽'}
-//     ];
-//
-// });
-//
-// //云主机检视区控制器
-// promise.controller('Cdocker', function ($scope,$rootScope,SvmInfos,SvmHelpInfo) {
-//     $rootScope.MvmHelpInfos = {};
-//
-//     $scope.MshowEdit = true;
-//     $scope.MshowAdd = false;
-//
-//     $scope.MvmInfos =[];
-//     $scope.Mpp = 20;
-//     $scope.MtotalPage = 1;
-//     $scope.MvmAddInfos = {
-//         vm_name:'',
-//         vm_id:'',
-//         ip:'',
-//         vm_status:'',
-//         vn_id:'',
-//         pm_id:'',
-//         creater_time:''
-//     };
-//
-//     $scope.FqueryVmInfos = function(){
-//       SvmInfos.get(function(callbackdata){
-//         $scope.MvmInfos = callbackdata.vm_infos;
-//       });
-//     };
-//
-//     $scope.FsearchId = function(event){
-//       if (event.keyCode !== 13) {
-//         return;
-//       }
-//       var VvmId = $scope.MvmId;
-//       SvmInfos.get({vmid:VvmId},function(callbackdata){
-//         var Vtemparray = [];
-//         Vtemparray.push(callbackdata.vm_info);
-//         $scope.MvmInfos = Vtemparray;
-//       });
-//     };
-//
-//     $scope.FloadPage = function(VcurrentPage){
-//       $scope.MvmInfos = [];
-//       $scope.Mpages = [];
-//       SvmInfos.get({page:VcurrentPage,pp:$scope.Mpp},function(callbackdata){
-//         $scope.MvmInfos = callbackdata.vm_infos;
-//         $scope.MtotalPage = callbackdata.total_page;
-//         var VstartPage = 1;
-//         var VendPage = $scope.MtotalPage;
-//         if ($scope.MtotalPage > 1 && $scope.MtotalPage <=7) {
-//             VstartPage = 1;
-//             VendPage = $scope.MtotalPage;
-//         } else if ($scope.MtotalPage > 7) {
-//             if (VcurrentPage > 3 && (VcurrentPage + 3) <= $scope.MtotalPage) {
-//               VstartPage = VcurrentPage - 3;
-//               VendPage = VcurrentPage + 3;
-//             } else if (VcurrentPage <= 3) {
-//               VstartPage = 1;
-//               VendPage = 7;
-//             } else if ((VcurrentPage + 3) > $scope.MtotalPage) {
-//               VstartPage = $scope.MtotalPage - 6;
-//               VendPage = $scope.MtotalPage;
-//             }
-//         }
-//         for (var i = VstartPage; i <= VendPage; i++) {
-//           $scope.Mpages.push(i);
-//         }
-//       });
-//     };
-//
-//     $scope.FrefreshPP = function(){
-//       $scope.FloadPage(1);
-//     };
-//
-//     $scope.FswitchPage = function(Vpage){
-//       $scope.FloadPage(Vpage);
-//     };
-//
-//     $scope.FfirstPage = function(){
-//       $scope.FloadPage(1);
-//     };
-//
-//     $scope.FlastPage = function(){
-//       $scope.FloadPage($scope.MtotalPage);
-//     };
-//
-//     $scope.FaddVm = function(VvmInfo){
-//       SvmInfos.save({},VvmInfo,function(callbackdata){
-//         console.log(callbackdata.vm_infos);
-//       });
-//     };
-//
-//     $scope.FupdateVm = function(VvmInfo){
-//       SvmInfos.update({vmid:VvmInfo.vm_id},VvmInfo,function(callbackdata){
-//         console.log(callbackdata.vm_infos);
-//       });
-//     };
-//
-//     $scope.FdeleteById = function(Vid){
-//       SvmInfos.delete({vmid:Vid},function(callbackdata){
-//         console.log(callbackdata.vm_infos);
-//       });
-//     };
-//
-//     $scope.FshowHelp = function(VvmInfo){
-//         SvmHelpInfo.get({vmid:VvmInfo.vm_id},function(callbackdata){
-//           $rootScope.MvmHelpInfos = callbackdata.help_info;
-//         });
-//         $rootScope.MshowHelper = true;
-//     };
-//
-//     $scope.FfirstPage();
-//
-// });
-//
-// //docker-right 检视关联区控制器
-// promise.controller('CdockerHelper', function ($scope,$rootScope) {
-//     $rootScope.MshowHelper = !false;
-//     $scope.FcloseHelper = function(){
-//       $rootScope.MshowHelper = false;
-//     };
-// });
+});

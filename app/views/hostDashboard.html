@@ -1,0 +1,66 @@
+<div ng-controller="Chost">
+  <div class="bigNode">
+    <div class="nodeUD">
+      <div class="tableContent">
+
+        <div class="label">
+          筛选
+          <div class="filterBox">
+            <div class="filterWrapper" ng-repeat="filter in Mfilters">
+              <i class="iconfont" ng-click="FremoveFilter(filter)">&#xe67f;</i>
+              <select name="filters" class="filterName" ng-model="filter.filterName">
+                <option ng-repeat="option in tableDataTh" value="{{option.filterName}}">{{option.th}}</option>
+              </select>
+              <select name="bool" class="filterBool" ng-model="filter.filterBool">
+                <option value="=">=</option>
+                <option value="!=">!=</option>
+              </select>
+              <input type="text" class="filterContent" ng-model="filter.filterContent">
+            </div>
+            <div class="filterWrapper">
+              <i class="iconfont" ng-click="FaddFilter()">&#xe649;</i>
+              <div class="filterText">匹配数：{{tableDataFilter.length}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="searchWraper">
+          <i class="iconfont">&#xe629;</i>
+          <input type="text" placeholder="Search...">
+        </div>
+
+        <select name="pp" ng-model="Mpp">
+          <option value="20">每页20项</option>
+          <option value="50">每页50项</option>
+          <option value="100" selected>每页100项</option>
+          <option value="0">多到数不完</option>
+        </select>
+
+        <div class="label" ng-click="FprevPage()">上页</div>
+        <input type="text" placeholder="跳转到..(共{{Mpages}}页)" ng-keyup="FgoPage($event,MinputPage)" ng-model="MinputPage">
+        <div class="label" ng-click="FnextPage()">下页</div>
+
+        <input type="text" placeholder="排序">
+
+        <table>
+          <tr>
+            <th ng-repeat="data in tableDataTh">{{data.th}}</th>
+          </tr>
+          <tr ng-repeat="node in (tableDataFilter = (tableData | hostFilter:Mfilters))" ng-dblclick="FshowPmHelper(node)">
+            <td>{{node.hostid}}</td>
+            <td>{{node.interfaces[0].ip}}</td>
+            <td>{{node.host}}</td>
+            <td>{{node.groups | groupsFilter}}</td>
+          </tr>
+        </table>
+
+        <div>
+          <div class="label firstLabel" ng-click="FprevPage()">上页</div>
+          <input type="text" placeholder="跳转到..(共{{Mpages}}页)" ng-keyup="FgoPage($event,MinputPage)" ng-model="MinputPage">
+          <div class="label" ng-click="FnextPage()">下页</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

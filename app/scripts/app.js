@@ -48,12 +48,12 @@ var promise = angular.module('promise', [
         'dashboardView@user': {templateUrl: 'views/userDashboard.html'}
       }
     })
-    .state('pm', {
-      url: '/pm',
+    .state('host', {
+      url: '/host',
       views: {
         '': {templateUrl: 'views/floor.html'},
-        'helperView@pm': {templateUrl: 'views/pmHelper.html'},
-        'dashboardView@pm': {templateUrl: 'views/pmDashboard.html'}
+        'helperView@host': {templateUrl: 'views/hostHelper.html'},
+        'dashboardView@host': {templateUrl: 'views/hostDashboard.html'}
       }
     })
   });

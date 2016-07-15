@@ -1,0 +1,11 @@
+<div ng-controller="ChostHelper">
+  <div class="helperNode">
+    <!-- MpmNode = ['0','10.1.1.1','Fortress','MGMT'] -->
+    <div class="helperTitle">主机详情</div>
+    <div class="helperText">ID：{{MpmNode.hostid}}</div>
+    <div class="helperText">IP：{{MpmNode.interfaces[0].ip}}</div>
+    <div class="helperText">Hostname：{{MpmNode.host}}</div>
+    <div class="helperText">Group:</div>
+    <div class="helperText" ng-repeat="group in MpmNode.groups">{{group.groupid}}: {{group.name}}</div>
+  </div>
+</div>

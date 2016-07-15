@@ -47,14 +47,27 @@ promise.factory('SuserService', function($resource){
 
 });
 
-promise.factory('SvmInfos', function($resource){
-	var url = 'http://localhost:5000';
-	var ver = 'v0.0';
-	var vmInfosRestApi = $resource(url+'/api/'+ver+'/vminfos/:vmid', {}, {
-		// 'get': {method:'GET', headers: {'Authorization': 'Token token='xxxxxxxxx ''}},
-		'update': {method:'PUT', isArray:false }
-	});
-	return vmInfosRestApi;
+promise.factory('ShostService', function($resource){
+	var VbaseUrl = 'http://192.168.182.3';
+	// var VbaseUrl = 'http://localhost:5000';
+	var Vversion = 'v0.0';
+	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/host/';
+
+	return {
+		Fhost: function(Vtoken) {
+			// $resource(url, [paramDefaults], [actions], options);
+			var VhostRestApi = $resource(VuserUrl, {}, {
+				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken}}
+			});
+			return VhostRestApi;
+		},
+		FhostId: function(Vtoken, VhostId) {
+			var VhostIdRestApi = $resource(VuserUrl+VhostId, {}, {
+				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken}}
+			});
+			return VhostIdRestApi;
+		},
+	};
 });
 
 promise.factory('SvmHelpInfo', function($resource){
