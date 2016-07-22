@@ -1,3 +1,4 @@
+<div class="bg"></div>
 <div class="navbar" ng-controller="Cnavbar">
   <!-- MENU -->
   <div class="navbarIcon">
@@ -26,11 +27,21 @@
           <i class="iconfont">&#xe676;</i>
         </div>
         <div class="sidebarSubnode">
-          <div class="sidebarSubnodeContent">封装指令<div class="nodeNumber">20</div></div>
-          <div class="sidebarSubnodeContent">脚本调度<div class="nodeNumber">108</div></div>
-          <div class="sidebarSubnodeContent">组件管理<div class="nodeNumber">17</div></div>
-          <div class="sidebarSubnodeContent">配置管理<div class="nodeNumber">1038</div></div>
-          <div class="sidebarSubnodeContent">日志管理<div class="nodeNumber">786</div></div>
+          <div class="sidebarSubnodeContent">
+            <a href="#/module">封装指令<div class="nodeNumber">20</div></a>
+          </div>
+          <div class="sidebarSubnodeContent">
+            <a href="#/script">脚本调度<div class="nodeNumber">108</div></a>
+          </div>
+          <div class="sidebarSubnodeContent">
+            组件管理<div class="nodeNumber">17</div>
+          </div>
+          <div class="sidebarSubnodeContent">
+            配置管理<div class="nodeNumber">1038</div>
+          </div>
+          <div class="sidebarSubnodeContent">
+            日志管理<div class="nodeNumber">786</div>
+          </div>
         </div>
       </div>
       <div class="sidebarNode">
@@ -89,15 +100,15 @@
 
 <div class="signBg" ng-show="MshowSign">
   <div ng-controller="Csign">
-    <div class="bigNode">
-      <div class="nodeTB">
+    <div class="row">
+      <div class="bigNode transparent">
         <div class="signTitle">Promise・Sign</div>
         <div class="formContent">
-          <div class="inputWraper">
+          <div class="formInputWraper">
             <i class="iconfont">&#xe636;</i>
             <input type="text" placeholder="用户名" ng-model="MuserInfo.username">
           </div>
-          <div class="inputWraper">
+          <div class="formInputWraper">
             <i class="iconfont">&#xe61b;</i>
             <input type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event,MuserInfo)">
           </div>

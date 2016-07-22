@@ -59,7 +59,7 @@ promise.directive('label',function(){
 	};
 });
 
-promise.animation('.filterWrapper', function(){
+promise.animation('.toolbar', function(){
   return{
     enter: function(element, parent){
       element.css({
@@ -73,6 +73,37 @@ promise.animation('.filterWrapper', function(){
     }
   };
 });
+
+promise.animation('.dashboardRight', function(){
+  return{
+    addClass: function(element){
+      element.animate({'opacity': '0', 'left': '100%'}, 300);
+    },
+    removeClass: function(element){
+      element.css({
+        'left': '100%'
+      });
+      element.animate({'opacity': '1', 'left': '20%'}, 300);
+    }
+  };
+});
+
+
+// promise.animation('.trAnimate', function(){
+//   return{
+//     enter: function(element, parent){
+//       element.css({
+//         'display': 'table-row',
+//         'line-height': '0',
+//         'opacity': '0'
+//       });
+//       element.animate({'opacity': '1', 'line-height': '45px'}, 100);
+//     },
+//     leave: function(element){
+//       element.animate({'opacity': '0', 'line-height': '0'}, 100, function(){$(this).css('display', 'none')});
+//     }
+//   };
+// });
 
 
 // first angularjs animation method (directive + jquery)

@@ -2,18 +2,6 @@
 
 var promise = angular.module('promise');
 
-// New
-// node高度对齐
-// promise.directive('smallNode',function(){
-// 	return{
-// 		restrict: 'C',
-// 		link: function(scope,element,attrs){
-// 			var height = element.css('height');
-// 			element.children().css('height', height);
-// 		}
-// 	};
-// });
-
 // sidebarNode 切换
 promise.directive('sidebarNode',function(){
 	return{
@@ -23,10 +11,7 @@ promise.directive('sidebarNode',function(){
 				'mouseenter': function(){
 					element.siblings().children(".sidebarSubnode").removeClass("show");
 					element.children(".sidebarSubnode").addClass("show");
-				},
-				// 'mouseleave': function(){
-				// 	element.children(".sidebarSubnode").removeClass("show");
-				// }
+				}
 		});
 		}
 	};

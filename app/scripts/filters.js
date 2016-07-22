@@ -54,7 +54,7 @@ promise.filter('hostFilter', function(){
     // ];
 
     // no filter
-    if (Vfilters.length == 0) {
+    if (Vfilters.length == 0 || !input) {
       return input;
     };
 
@@ -105,4 +105,33 @@ promise.filter('hostFilter', function(){
     // return
     return output;
   };
+});
+
+// walker result filter: [{xxx},{xxx}] - > 'OK' 'Change' 'fail' 'unreachable'
+promise.filter('trailsFilter', function(){
+  return function(input){
+    //     sum_changed:0
+    //     sum_failures:1
+    //     sum_ok:0
+    //     sum_skipped:0
+    //     sum_unreachable:0
+    var output = '';
+    if (input.sum_unreachable > 0) {
+      output = 'unreachable';
+    }
+    else if (input.sum_failures > 0) {
+      output = 'failed';
+    }
+    else if (input.sum_changed > 0 || input.sum_ok > 0) {
+      output = 'success';
+    }
+    else if (input.sum_skipped > 0) {
+      output = 'skipped';
+    }
+    else {
+      output = 'waiting';
+    }
+    ;
+    return output;
+  }
 });

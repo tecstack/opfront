@@ -17,7 +17,8 @@ var promise = angular.module('promise', [
     'ui.router',
     'base64',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.codemirror'
   ]);
 
   promise.config(function($stateProvider, $urlRouterProvider) {
@@ -54,6 +55,22 @@ var promise = angular.module('promise', [
         '': {templateUrl: 'views/floor.html'},
         'helperView@host': {templateUrl: 'views/hostHelper.html'},
         'dashboardView@host': {templateUrl: 'views/hostDashboard.html'}
+      }
+    })
+    .state('module', {
+      url: '/module',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@module': {templateUrl: 'views/moduleHelper.html'},
+        'dashboardView@module': {templateUrl: 'views/moduleDashboard.html'}
+      }
+    })
+    .state('script', {
+      url: '/script',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@script': {templateUrl: 'views/scriptHelper.html'},
+        'dashboardView@script': {templateUrl: 'views/scriptDashboard.html'}
       }
     })
   });

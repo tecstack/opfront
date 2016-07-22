@@ -70,11 +70,25 @@ promise.factory('ShostService', function($resource){
 	};
 });
 
-promise.factory('SvmHelpInfo', function($resource){
-	var url = 'http://localhost:5000';
-	var ver = 'v0.0';
-	var vmInfosRestApi = $resource(url+'/api/'+ver+'/vminfos/help/:vmid', {}, {
+promise.factory('SshellService', function($resource){
+	var VbaseUrl = 'http://192.168.182.3';
+	// var VbaseUrl = 'http://localhost:5000';
+	var Vversion = 'v0.0';
+	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/shellwalker/';
 
-	});
-	return vmInfosRestApi;
+	return {
+		FcreateWalker: function(Vtoken) {
+			// $resource(url, [paramDefaults], [actions], options);
+			var VshellRestApi = $resource(VuserUrl, {}, {
+				'post': {method:'POST', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+			});
+			return VshellRestApi;
+		},
+		FqueryWalker: function(Vtoken) {
+			var VshellQueryRestApi = $resource(VuserUrl, {}, {
+				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken}}
+			});
+			return VshellQueryRestApi;
+		},
+	};
 });
