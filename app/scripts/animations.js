@@ -88,6 +88,69 @@ promise.animation('.dashboardRight', function(){
   };
 });
 
+promise.animation('.row', function(){
+  return{
+    addClass: function(element){
+      var marginLR = parseInt(element.css('margin-left')) + parseInt(element.css('margin-right'));
+      var width = parseInt(element.css('width')) + marginLR;
+      element.animate({'left': width + 'px'}, 100, function(){$(this).css('display', 'none')});
+    },
+    removeClass: function(element){
+      var marginLR = parseInt(element.css('margin-left')) + parseInt(element.css('margin-right'));
+      var width = parseInt(element.css('width')) + marginLR;
+      element.css({
+        'display': 'block',
+        'left': width + 'px'
+      });
+      element.animate({'left': '0'}, 100);
+    }
+  };
+});
+
+promise.animation('.codeEditorLoding', function(){
+  return{
+    addClass: function(element){
+      element.animate({'opacity': '0'}, 500, function(){$(this).css('display', 'none')});
+    },
+    removeClass: function(element){
+      element.css({
+        'display': 'block',
+        'opacity': '0'
+      });
+      element.animate({'opacity': '1'}, 500);
+    }
+  };
+});
+
+promise.directive('progressBar',function(){
+	return{
+		restrict: 'C',
+    scope: {
+      progress: '='
+    },
+		link: function(scope,element,attrs){
+      scope.$watchCollection('progress', function(newValue, oldValue) {
+        if (newValue) {
+          var Vkind = attrs.kind;
+          var Vnumber = newValue[Vkind];
+          var Vtotal = newValue.total;
+          if (Vtotal) {
+            var Vprogress = parseFloat(Vnumber)/parseFloat(Vtotal)*100;
+            element.animate({'width': Vprogress + '%'}, 150);
+            if (Vnumber) {
+              element.html(Vnumber);
+            } else {
+              element.empty();
+            };
+          } else {
+            element.empty();
+            element.animate({'width': '0'}, 150);
+          };
+        };
+      });
+		}
+	};
+});
 
 // promise.animation('.trAnimate', function(){
 //   return{

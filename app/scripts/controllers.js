@@ -11,7 +11,9 @@
 var promise = angular.module('promise');
 
 // angular init
-promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, ShostService){
+promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, ShostService, SwalkerService){
+  // --------------------------pre-init---------------------------
+
   // -----------------------Sign--------------------------
   // cookies-token-delay
   $rootScope.FtokenDelay = function(){
@@ -45,7 +47,6 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
         $rootScope.FtokenSignIn($rootScope.Mtoken);
       },
       function errorCallback(callbackdata){
-        console.log(callbackdata);
         $rootScope.MsignErrorInfos = callbackdata.data.message;
         $rootScope.MsignError = false;
         $rootScope.MisSign = false;
@@ -84,26 +85,7 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
     }
   };
 
-
   // ----------------------hosts------------------------
-  // [
-    // {
-    //   "available": "0",
-    //   "groups": [{"groupid": "4", "name": "Zabbix servers"}],
-    //   "host": "Zabbix server",
-    //   "hostid": "0",
-    //   "interfaces": [{"interfaceid": "1", "ip": "127.0.0.1"}],
-    //   "status": "1"
-    // },
-    // {
-    //   "available": "1",
-    //   "groups": [{"groupid": "8", "name": "cloudlab"}, {"groupid": "5", "name": "Discovered hosts"}],
-    //   "host": "192.168.182.2",
-    //   "hostid": "1",
-    //   "interfaces": [{"interfaceid": "11", "ip": "192.168.182.2"}],
-    //   "status": "0"
-    // }
-  // ];
   $rootScope.MhostsData = [];
   $rootScope.MhostsSelected = [];
   $rootScope.MhostsDataFilter = [];
@@ -141,13 +123,6 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
     ShostService.Fhost($rootScope.Mtoken).get(
       vars,
       function successCallback(callbackdata){
-        // {
-        //   "data": [
-        //     {"available": "0", "groups": [{"groupid": "4", "name": "Zabbix servers"}], "host": "Zabbix server", "hostid": "10084", "interfaces": [{"interfaceid": "1", "ip": "127.0.0.1"}], "status": "1"},
-        //     ...,
-        //     {"available": "1", "groups": [{"groupid": "8", "name": "cloudlab"}, {"groupid": "5", "name": "Discovered hosts"}], "host": "192.168.182.2", "hostid": "10106", "interfaces": [{"interfaceid": "11", "ip": "192.168.182.2"}], "status": "0"}
-        //   ]
-        // }
         $rootScope.MhostsData = callbackdata.data;
         $rootScope.MpageOptions.totalPage = callbackdata.totalpage;
         for (var index in $rootScope.MhostsData) {
@@ -217,7 +192,6 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
     $rootScope.MhostsSelected = oldArray;
   };
 
-
   // ---------------------auto token login---------------------
   $rootScope.FcookieAuth();
   $timeout(
@@ -268,6 +242,8 @@ promise.controller('ChelperTrigger', function($scope,$rootScope){
 
 // sign
 promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
+  // --------------------------pre-init---------------------------
+
   // web-auth-main
   $scope.FsignIn = function(VuserInfo){
     SuserService.FsignIn().post(
@@ -314,6 +290,7 @@ promise.controller('Cindex', function($scope,$rootScope){
 
 // ui
 promise.controller('Cui', function($scope,$rootScope){
+  // --------------------------pre-init---------------------------
   $scope.indexDataLine = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
@@ -372,7 +349,7 @@ promise.controller('Cui', function($scope,$rootScope){
 
 });
 
-// host
+// ------------------------------Host----------------------------
 promise.controller('Chost', function($scope, $rootScope, ShostService){
   $scope.FshowPmHelper = function(pm){
     // ['0','10.1.1.1','Fortress','MGMT']
@@ -386,241 +363,408 @@ promise.controller('ChostHelper', function($scope, $rootScope){
 
 });
 
-// script
-promise.controller('Cscript', function($scope, $rootScope, ShostService){
-  // script selector
-  $scope.MscriptSelected = [];
+
+// ------------------------------Script----------------------------
+promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService){
+  // --------------------------pre-init---------------------------
+  $scope.MisPublicOptions = [
+    {'label':'仅自己', 'value':0},
+    {'label':'所有人', 'value':1}
+  ];
+
+
+  // ---------------------script service---------------------
+  $rootScope.Mscripts = [];
+  $scope.Mscript = {
+    'script_name': '',
+    'script_text': '',
+    'script_lang': '',
+    'is_public': 0
+  };
+  $scope.MscriptInfo = {
+    'create': '',
+    'update': '',
+    'delete': '',
+    'getList': ''
+  };
+  $scope.MscriptId = '';
+
+  $scope.FcreateScript = function(Vscript){
+    SscriptService.Fcreate($rootScope.Mtoken).post(
+      {},
+      Vscript,
+      function successCallback(callbackdata){
+        $scope.MscriptInfo.create = callbackdata.message;
+        $timeout(function () {
+          $scope.Mshow.list = true;
+          $scope.Mshow.editor = false;
+          $scope.FgetScriptList();
+        }, 500);
+      },
+      function errorCallback(callbackdata){
+        $scope.MscriptInfo.create = callbackdata.data.message;
+      }
+    );
+  };
+  $scope.FupdateScript = function(Vscript){
+    SscriptService.Fmodify($rootScope.Mtoken, $scope.MscriptId).put(
+      {},
+      Vscript,
+      function successCallback(callbackdata){
+        $scope.MscriptInfo.create = callbackdata.message;
+        $timeout(function () {
+          $scope.Mshow.list = true;
+          $scope.Mshow.editor = false;
+          $scope.FgetScriptList();
+        }, 500);
+      },
+      function errorCallback(callbackdata){
+        $scope.MscriptInfo.create = callbackdata.data.message;
+      }
+    );
+  };
+  $scope.FgetScript = function(){};
+  $scope.FgetScriptList = function(){
+    SscriptService.FgetList($rootScope.Mtoken).get(
+      {},
+      function successCallback(callbackdata){
+        $scope.MscriptInfo.getList = callbackdata.message;
+        $rootScope.Mscripts = callbackdata.scripts;
+      },
+      function errorCallback(callbackdata){
+        $scope.MscriptInfo.getList = callbackdata.data.message;
+      }
+    );
+  };
+
+
+  $scope.MscriptTh = ['名称','语言','公开','创建人','最后更新时间','操作'];
   $scope.MeditorOptions = {
     lineNumbers: true,
-    theme:'monokai',
+    theme:'dracula',
     // readOnly: 'nocursor',
-    lineWrapping : true,
-    mode: 'python'
+    lineWrapping : false,
+    mode: 'python',
   };
-  $scope.MscriptContent = 'def tset(){\r  \r}';
-  $scope.FsaveScript = function(){
-    if ($scope.MscriptName) {
-      var VscriptNode = {
-        'name': $scope.MscriptName,
-        'content': $scope.MscriptContent
-      };
-      $scope.MscriptSelected.push(VscriptNode);
-    }
-    else {
-      // 判断脚本内容是否为空的部分还要添加
-      console.log('You need to name the script first');
+
+
+  // ---------------------watch && show---------------------
+  $scope.Mshow = {
+    'list': true,
+    'editor': false,
+    'create': false,
+    'update': false
+  };
+  $scope.FnewAction = function(){
+    $scope.Mscript = {'script_lang': $scope.MeditorOptions.mode};
+    $scope.Mshow.list = false;
+    $scope.Mshow.editor = true;
+    $scope.Mshow.create = true;
+    $scope.Mshow.update = false;
+  };
+  $scope.FupdateAction = function(Vscript){
+    $scope.MscriptId = Vscript.script_id;
+    $scope.Mshow.list = false;
+    $scope.Mshow.editor = true;
+    $scope.Mshow.create = false;
+    $scope.Mshow.update = true;
+    $scope.Mscript = {
+      'script_name': Vscript.script_name,
+      'script_text': Vscript.script_text,
+      'script_lang': Vscript.script_lang,
+      'is_public': Vscript.is_public
     };
   };
-
-  // vars selector
-  $scope.MvarsSelected = [];
-  $scope.FaddVars = function(){
-    $scope.MvarsSelected.push('');
+  $scope.FbackAction = function(){
+    $scope.Mshow.list = true;
+    $scope.Mshow.editor = false;
   };
-  $scope.FremoveVars = function(node){
-    var Vvars = $scope.MvarsSelected
-    Vvars.splice(Vvars.indexOf(node), 1);
-  };
-
-  // executor
-  $scope.Fexecute = function(){
-    $scope.MshowRight.detail = false;
-    $scope.MshowRight.executor = true;
-  };
-  $scope.Fback = function(){
-    $scope.MshowRight.detail = true;
-    $scope.MshowRight.executor = false;
-  };
-
-  // show watch
-  $scope.MshowGo = false;
-  $scope.MshowRight = {
-    'detail': true,
-    'executor': false
-  };
-  $scope.MshowDetail = {
-    'hosts': false,
-    'script': false,
-    'vars': false
-  };
-  $scope.MshowJudge = {
-    'hosts': false,
-    'script': false
-  }
-  $scope.FshowDetailDiv = function(name){
-    for (var key in $scope.MshowDetail) {
-      $scope.MshowDetail[key] = (key === name)?true:false;
-    };
-  };
-  $scope.$watchCollection('MhostsSelected',function(newValue, oldValue){
-    $scope.MshowJudge.hosts = ($rootScope.MhostsSelected.length > 0)?true:false;
+  $scope.$watch('MeditorOptions.mode', function(newValue, oldValue){
+    $scope.Mscript.script_lang = $scope.MeditorOptions.mode;
   });
-  $scope.$watchCollection('MscriptSelected',function(newValue, oldValue){
-    $scope.MshowJudge.script = ($scope.MscriptSelected.length > 0)?true:false;
-  });
-  $scope.$watchCollection('MshowJudge', function(newValue, oldValue){
-    $scope.MshowGo = ($scope.MshowJudge.hosts == true && $scope.MshowJudge.script == true)?true:false;
+  $scope.$watch('Mscript.script_lang', function(newValue, oldValue){
+    $scope.MeditorOptions.mode = $scope.Mscript.script_lang;
   });
 
+  // --------------------------after-init---------------------------
+  $scope.FgetScriptList();
 });
 
 
 
-
-// --------------------------module---------------------------
-
-promise.controller('Cmodule', function($scope, $rootScope, $timeout, SshellService){
-  // shell service
-  $scope.FcreateWalker = function(VshellInfo) {
-    SshellService.FcreateWalker($rootScope.Mtoken).post(
+// --------------------------Module---------------------------
+promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, SscriptService, SwalkerService){
+  // ---------------------script service---------------------
+  $scope.FgetScriptList = function(){
+    SscriptService.FgetList($rootScope.Mtoken).get(
       {},
-      VshellInfo,
       function successCallback(callbackdata){
-        // console.log(callbackdata);
-        // message:"mission start"
-        // trails:Array[2]
-        // walker_id:"b83c997c4f4511e6a80b005056b862a481c7de450e5d34a08cd7539caa015c0c"
-        $scope.MwalkerId = callbackdata.walker_id;
-        $scope.MerrInfo = callbackdata.message;
+        $rootScope.Mscripts = callbackdata.scripts;
       },
       function errorCallback(callbackdata){
-        // console.log(callbackdata);
-        $scope.MerrInfo = callbackdata.message;
       }
     );
   };
-  $scope.FqueryWalker = function(VwalkerId) {
-    SshellService.FqueryWalker($rootScope.Mtoken).get(
-      {'walkerid': VwalkerId},
+  // ---------------------walker service---------------------
+  $scope.FcreateWalker = function(VmoduleName, VmoduleVars){
+    SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
+      {},
+      VmoduleVars,
       function successCallback(callbackdata){
+        $scope.MwalkerId = callbackdata.walker_id;
+        $scope.MerrInfo = callbackdata.message;
+        $scope.MinfoWalkerPromise = $interval(
+          function (){
+            $scope.FinfoWalker($scope.MmoduleSelected.name, $scope.MwalkerId);
+          },
+          2000
+        );
+      },
+      function errorCallback(callbackdata){
         // console.log(callbackdata);
-        // message:"walker info",
-        // walker_name:"20160721212518-kiutg98",
-        // trails:[
-        //   {
-        //     ip:"192.168.182.3"
-        //     msg:null
-        //     stdout:""
-        //     stderr:""
-        //     sum_changed:0
-        //     sum_failures:1
-        //     sum_ok:0
-        //     sum_skipped:0
-        //     sum_unreachable:0
-        //     time_end:"2016-07-21T21:25:19.732532+00:00"
-        //     time_start:"2016-07-21T21:25:19.717201+00:00"
-        //     time_delta_string:"xxx"
-        //     trail_id:"915a119e4f4611e6a80b005056b862a4def6187d74ed38aca7e6978f2eecd7c7"
-        //   },
-        // ]
+        $scope.MerrInfo = callbackdata.data.message;
+      }
+    );
+  };
+  $scope.FqueryWalker = function(VmoduleName){
+    SwalkerService.FqueryWalker($rootScope.Mtoken, VmoduleName).get(
+      {},
+      function successCallback(callbackdata){
+      },
+      function errorCallback(callbackdata){
+        // console.log(callbackdata);
+      }
+    );
+  };
+  $scope.FinfoWalker = function(VmoduleName, VwalkerId){
+    SwalkerService.FinfoWalker($rootScope.Mtoken, VmoduleName, VwalkerId).get(
+      {},
+      function successCallback(callbackdata){
+        var VtotalHosts = callbackdata.trails.length;
+        var Vsuccess = 0;
+        var Vfailed = 0;
+        var Vunreachable = 0;
+        var Vskipped = 0;
         for (var index in callbackdata.trails) {
           var node = callbackdata.trails[index];
           var ip = node.ip;
           $scope.Mresult[ip] = node;
+          if (node.sum_changed || node.sum_ok) {
+            Vsuccess += 1;
+          } else if (node.sum_failures) {
+            Vfailed += 1;
+          } else if (node.sum_unreachable) {
+            Vunreachable += 1;
+          } else if (node.sum_skipped) {
+            Vskipped += 1;
+          }
         };
+        $scope.Mprogress.success = Vsuccess;
+        $scope.Mprogress.failed = Vfailed;
+        $scope.Mprogress.unreachable = Vunreachable;
+        $scope.Mprogress.skipped = Vskipped;
+        $scope.Mprogress.total = VtotalHosts;
         $scope.MerrInfo = callbackdata.message;
       },
       function errorCallback(callbackdata){
-        // console.log(callbackdata);
-        $scope.MerrInfo = callbackdata.message;
+        $scope.MerrInfo = callbackdata.data.message;
       }
     );
-  }
-
-  // shell editor
-  $scope.MeditorOptions = {
-    lineNumbers: false,
-    theme:'monokai',
-    // readOnly: 'nocursor',
-    lineWrapping : true,
-    mode: 'shell'
   };
-  $scope.MshellSelected = {'shell':''};
-  $scope.Mshell = '';
-  $scope.Mosuser = 'root';
-  $scope.FsaveShell = function(){
-    if ($scope.Mshell) {
-      $scope.MshellSelected.shell = $scope.Mshell;
-    }
-    else {
-      // 判断脚本内容是否为空的部分还要添加
-      console.log('shell blank');
+  $scope.FstopInfoWalker = function(){
+    if (angular.isDefined($scope.MinfoWalkerPromise)) {
+      $interval.cancel($scope.MinfoWalkerPromise);
+      $scope.MinfoWalkerPromise = undefined;
     };
   };
+  $scope.$on('$destroy', function() {
+    // Make sure that the interval is destroyed too
+    $scope.FstopInfoWalker();
+  });
 
-  // executor
-  $scope.MshellInfo = {
-    'shell': '',
-    'iplist': [],
-    'osuser': ''
+  // ---------------------Module Editor---------------------
+  // init
+  $scope.Mprogress = {
+    'success': 0,
+    'failed': 0,
+    'unreachable': 0,
+    'skipped': 0,
+    'total': 0,
   };
-  $scope.Mresult = {
-    // '1.1.1.1': {
-    //   'ip': '1.1.1.1',
-    //   'stdout': '',
-    //   'stderr': '',
-    //   'sum_failures': '',
-    //   'sum_changed': '',
-    //   'sum_ok': '',
-    //   'sum_unreachable': '',
-    //   'time_delta_string': ''
-    //   ....
-    // }
-  }
+
+  $scope.MosuserOptions = [
+    {'label':'ROOT', 'value':'root'},
+  ];
+  $scope.MeditorOptions = {
+    'shell': {
+      lineNumbers: true,
+      theme:'monokai',
+      // readOnly: 'nocursor',
+      lineWrapping : false,
+      mode: 'shell',
+    },
+    'script': {
+      lineNumbers: true,
+      theme:'monokai',
+      readOnly: 'nocursor',
+      lineWrapping : false,
+      mode: 'python',
+    },
+    'executor': {
+      lineNumbers: true,
+      theme:'material',
+      readOnly: 'nocursor',
+      lineWrapping : false,
+      mode: 'shell',
+    },
+  };
+  $scope.MselectContent = function(Vcontent){
+    $scope.MmoduleSelected.content = Vcontent;
+    $rootScope.MshowHelper = false;
+  };
+
+  // shell editor
+  $scope.MshellContent = {
+    'shell': '',
+    'osuser': 'root'
+  };
+
+  // script editor
+  $scope.MscriptContent = {
+    'scriptid': '',
+    'osuser': 'root'
+  };
+  $scope.FshowScripts = function(){
+    $rootScope.MshowHelper = true;
+    for (var key in $rootScope.MshowHelperNode) {
+      $rootScope.MshowHelperNode[key] = false;
+    }
+    $rootScope.MshowHelperNode.script = true;
+    $scope.FgetScriptList();
+  };
+
+  // ---------------------Executor---------------------
+  $scope.MpostWalkerInfo = {};
+  $scope.Mresult = {};
   $scope.Fexecute = function(){
     $scope.MshowRight.detail = false;
     $scope.MshowRight.executor = true;
-    $scope.MshellInfo.shell = $scope.MshellSelected.shell;
-    $scope.MshellInfo.osuser = $scope.Mosuser;
+    $scope.MshowLoading = true;
+    $scope.Mresult = {};
+    $scope.MpostWalkerInfo = {};
+    jQuery.extend($scope.MpostWalkerInfo,$scope.MmoduleSelected.content);
+    $scope.MpostWalkerInfo.iplist = [];
+    $scope.Mstdout = '';
+    for (var kind in $scope.Mprogress) {
+      $scope.Mprogress[kind] = 0;
+    }
     for (var node in $rootScope.MhostsSelected) {
       var ip = $rootScope.MhostsSelected[node].interfaces[0].ip;
-      $scope.MshellInfo.iplist.push(ip);
+      $scope.MpostWalkerInfo.iplist.push(ip);
       $scope.Mresult[ip] = {};
     }
-    $scope.FcreateWalker($scope.MshellInfo);
-    $timeout(
-      function(){
-        $scope.FqueryWalker($scope.MwalkerId);
-      },
-      2000
-    );
+    $scope.FcreateWalker($scope.MmoduleSelected.name, $scope.MpostWalkerInfo);
   };
   $scope.Fback = function(){
     $scope.MshowRight.detail = true;
     $scope.MshowRight.executor = false;
   };
   $scope.FshowStdout = function(node){
-    $scope.Mstdout = node.stdout;
-  };
-
-
-  // watch show
-  $scope.MshowGo = false;
-  $scope.MshowRight = {
-    'detail': true,
-    'executor': false
-  };
-  $scope.MshowDetail = {
-    'hosts': false,
-    'shell': false,
-  };
-  $scope.MshowJudge = {
-    'hosts': false,
-    'shell': false
-  }
-  $scope.FshowDetailDiv = function(name){
-    for (var key in $scope.MshowDetail) {
-      $scope.MshowDetail[key] = (key === name)?true:false;
+    if (node.stdout) {
+      $scope.Mstdout = node.stdout;
+    }
+    else if (node.stderr) {
+      $scope.Mstdout = node.stderr;
     };
   };
+
+
+  // ---------------------watch & show---------------------
+  // 用来决定detail->module->?页面里对应模块编辑器的显示
+  $scope.Mmodules = {
+    'shell': false,
+    'script': false
+  };
+  // 当前选择进行编辑的模块，name是名称，content是左侧显示栏的内容，也是后续发往createWalker的内容之一
+  $scope.MmoduleSelected = {
+    'name': '',
+    'content': {}
+  };
+  // 选择模块，显示对应的编辑器，屏蔽其他模块编辑器，更改MmoduleSelected内容
+  $scope.FselectModule = function(VmoduleName){
+    $scope.MmoduleSelected.name = VmoduleName;
+    $scope.MmoduleSelected.content = {};
+    for (var key in $scope.Mmodules) {
+      $scope.Mmodules[key] = (VmoduleName == key)?true:false;
+    };
+  };
+  // 决定是否显示执行标志，只有选择了主机和编辑了模块内容后才会显示
+  $scope.MshowGo = false;
+  // 决定右侧的界面显示，detail代表选定编辑页面，executor代表执行过程页面，执行execute()之后便会跳转到executor
+  $scope.MshowRight = {
+    'detail': true,
+    'executor': false,
+  };
+  // 决定detail编辑页面里的内容显示，hosts代表主机列表选取页面，module代表模块编辑器
+  $scope.MshowRightNode = {
+    'hosts': false,
+    'module': false,
+  };
+  // 用来决定显示哪一种条件判定结果，是否选择了主机，是否选定了模块
+  $scope.MshowBottomSuccess = {
+    'hosts': false,
+    'module': false
+  };
+  // 切换右侧node显示，在主机列表页面和模块编辑器之间切换
+  $scope.FshowRightNode = function(name){
+    for (var key in $scope.MshowRightNode) {
+      $scope.MshowRightNode[key] = (key === name)?true:false;
+    };
+  };
+  // 监控rootScope中的script变量（一般是从helper或者其他页面触发），根据语言变更编辑器的样式，更新scriptid。
+  $scope.$watch('Mscript', function(newValue, oldValue){
+    if ($rootScope.Mscript) {
+      $scope.MeditorOptions.script.mode = $rootScope.Mscript.script_lang;
+      $scope.MscriptContent.scriptid = $rootScope.Mscript.script_id;
+    };
+  });
+  // 监控是否选定了模块内容，变更判定状态和字段
+  $scope.$watch('MmoduleSelected.content', function(newValue, oldValue){
+    $scope.MshowBottomSuccess.module = (jQuery.isEmptyObject(newValue))?false:true;
+  });
+  // 监控是否选定了hosts内容，变更判定状态和字段
   $scope.$watchCollection('MhostsSelected',function(newValue, oldValue){
-    $scope.MshowJudge.hosts = ($rootScope.MhostsSelected.length > 0)?true:false;
+    $scope.MshowBottomSuccess.hosts = ($rootScope.MhostsSelected.length > 0)?true:false;
   });
-  $scope.$watchCollection('MshellSelected',function(newValue, oldValue){
-    $scope.MshowJudge.shell = ($scope.MshellSelected.shell)?true:false;
+  // 监控两个判定状态，主机和模块，都选定之后出现执行按钮
+  $scope.$watchCollection('MshowBottomSuccess', function(newValue, oldValue){
+    $scope.MshowGo = ($scope.MshowBottomSuccess.hosts == true && $scope.MshowBottomSuccess.module == true)?true:false;
   });
-  $scope.$watchCollection('MshowJudge', function(newValue, oldValue){
-    $scope.MshowGo = ($scope.MshowJudge.hosts == true && $scope.MshowJudge.shell == true)?true:false;
+  // 监控walker结果信息，如果成功更新了状态(ok/change/failed/unreachable/skipped)，则停止轮询
+  $scope.$watchCollection('Mresult', function(newValue, oldValue){
+    if (!jQuery.isEmptyObject(newValue)) {
+      for (var node in newValue) {
+        if (newValue[node].sum_ok || newValue[node].sum_changed || newValue[node].sum_failures || newValue[node].sum_unreachable || newValue[node].sum_skipped) {
+          $scope.FstopInfoWalker();
+          $scope.MshowLoading = false;
+          break;
+        }
+      }
+    };
   });
 
+});
+
+// --------------------------Module Helper---------------------------
+promise.controller('CmoduleHelper', function($scope, $rootScope){
+  // pre-init
+  $rootScope.MshowHelperNode = {
+    'shell': false,
+    'script': false
+  };
+
+  // action
+  $scope.FselectScript = function(Vscript){
+    $rootScope.Mscript = Vscript;
+  };
 });

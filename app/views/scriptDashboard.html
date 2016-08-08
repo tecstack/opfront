@@ -1,235 +1,71 @@
 <div ng-controller="Cscript">
-  <!-- left dashboard-->
-  <div class="dashboardLeft">
-    <!-- hosts scan -->
-    <div class="leftNodeScript">
-      <!-- title -->
-      <div class="nodeTitle">指定目标</div>
-
-      <!-- content -->
+  <div class="row" ng-show="Mshow.list">
+    <div class="bigNode">
+      <div class="nodeTitle">Script List</div>
       <div class="nodeContent">
-        <!-- left -->
-        <div class="nodeContentLeft">
-          <table>
-            <tr class="trAnimate" ng-repeat="node in MhostsSelected">
-              <td>{{node.interfaces[0].ip}}</td>
-            </tr>
-          </table>
-        </div>
-        <!-- right -->
-        <div class="nodeContentRight" ng-click="FshowDetailDiv('hosts')">
-          <div class="bigNumber">{{MhostsSelected.length}}</div>
-          <div class="smallText">已选机器</div>
-        </div>
-      </div>
-
-      <!-- judgement -->
-      <div class="nodeBottom errorContent" ng-show="!MshowJudge.hosts">
-        还没有选取目标机器
-      </div>
-      <div class="nodeBottom successContent" ng-show="MshowJudge.hosts">
-        <i class="iconfont">&#xe67c;</i>
-      </div>
-    </div>
-
-    <!-- script scan -->
-    <div class="leftNodeScript">
-      <!-- title -->
-      <div class="nodeTitle">指定脚本</div>
-
-      <!-- content -->
-      <div class="nodeContent">
-        <!-- left -->
-        <div class="nodeContentLeft">
-          <table>
-            <tr class="trAnimate" ng-repeat="node in MscriptSelected track by $index">
-              <td>{{node.name}}</td>
-            </tr>
-          </table>
-        </div>
-        <!-- right -->
-        <div class="nodeContentRight" ng-click="FshowDetailDiv('script')">
-          <div class="bigNumber">{{MscriptSelected.length}}</div>
-          <div class="smallText">已选脚本</div>
-        </div>
-      </div>
-
-      <!-- judgement -->
-      <div class="nodeBottom errorContent" ng-show="!MshowJudge.script">
-        还没有选取脚本
-      </div>
-      <div class="nodeBottom successContent" ng-show="MshowJudge.script">
-        <i class="iconfont">&#xe67c;</i>
-      </div>
-    </div>
-
-    <!-- vars scan -->
-    <div class="leftNodeScript">
-      <!-- title -->
-      <div class="nodeTitle">指定参数(可选)</div>
-
-      <!-- content -->
-      <div class="nodeContent">
-        <!-- left -->
-        <div class="nodeContentLeft">
-          <table>
-            <tr class="trAnimate" ng-repeat="node in MvarsSelected track by $index">
-              <td>{{MvarsSelected[$index]}}</td>
-            </tr>
-          </table>
-        </div>
-        <!-- right -->
-        <div class="nodeContentRight" ng-click="FshowDetailDiv('vars')">
-          <div class="bigNumber">{{MvarsSelected.length}}</div>
-          <div class="smallText">已选参数</div>
-        </div>
-      </div>
-
-      <!-- judgesment -->
-      <!-- <div class="bottombar errorContent" ng-show="!MshowJudge.hosts">
-        还没有选取目标机器
-      </div> -->
-      <div class="nodeBottom successContent">
-        <i class="iconfont">&#xe67c;</i>
-      </div>
-    </div>
-  </div>
-
-  <!-- right dashboard detail -->
-  <div class="dashboardRight" ng-show="MshowRight.detail">
-
-    <!-- create walker! -->
-    <div class="row" ng-show="MshowGo" ng-click="Fexecute()">
-      <div class="flatBigNode go">
-        <div class="nodeContent">
-          <div>执行！</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- hosts detail -->
-    <div class="row" ng-show="MshowDetail.hosts">
-      <div class="bigNode">
-        <!-- title -->
-        <div class="nodeTitle">机器列表</div>
-        <!-- content -->
-        <div class="nodeContent">
-          <!-- toolbar -->
-          <div class="tableContent">
-            <div class="toolbar">
-              <div class="toolbarNode label">
-                筛选
-                <div class="filterBox">
-                  <div class="toolbar" ng-repeat="filter in Mfilters">
-                    <i class="toolbarNode iconfont" ng-click="FremoveFilter(filter)">&#xe67f;</i>
-                    <select class="toolbarNode filterName" name="filters" ng-model="filter.filterName">
-                      <option ng-repeat="option in MhostsDataTh" value="{{option.filterName}}">{{option.th}}</option>
-                    </select>
-                    <select class="toolbarNode filterBool" name="bool" ng-model="filter.filterBool">
-                      <option value="=">=</option>
-                      <option value="!=">!=</option>
-                    </select>
-                    <input class="toolbarNode filterContent" type="text" ng-model="filter.filterContent">
-                  </div>
-                  <div class="toolbar">
-                    <i class="toolbarNode iconfont" ng-click="FaddFilter()">&#xe649;</i>
-                    <div class="toolbarNode">匹配数：{{MhostsDataFilter.length}}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="label toolbarNode">已选：{{MhostsSelected.length}}</div>
-            </div>
-          </div>
-          <!-- hosts table -->
-          <div class="tableContent">
-            <table>
-              <tr>
-                <th><input type="checkbox" ng-model="McheckAll.status" ng-change="FcheckAll(McheckAll)"></th>
-                <th ng-repeat="data in MhostsDataTh">{{data.th}}</th>
-              </tr>
-              <tr class="trAnimate" ng-repeat="node in MhostsDataFilter">
-                <td><input class="checkNode" type="checkbox" ng-model="node.select" ng-change="FchangeSelect(node)"></td>
-                <td>{{node.hostid}}</td>
-                <td>{{node.interfaces[0].ip}}</td>
-                <td>{{node.host}}</td>
-                <td>{{node.groups | groupsFilter}}</td>
-              </tr>
-            </table>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- script detail -->
-    <div class="row" ng-show="MshowDetail.script">
-      <div class="bigNode">
-        <!-- title -->
-        <div class="nodeTitle">脚本编辑器</div>
-        <!-- content -->
-        <div class="nodeContent">
-          <!-- toolbar -->
-          <div class="tableContent">
-            <div class="toolbar">
-              <input type="text" class="toolbarNode" placeholder="命名" ng-model="MscriptName">
-              <div class="toolbarNode label" ng-click="FsaveScript()">保存</div>
-            </div>
-          </div>
-
-          <!-- code editor -->
-          <div class="tableContent">
-            <div ui-codemirror="MeditorOptions" ng-model="MscriptContent"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- vars detail -->
-    <div class="row" ng-show="MshowDetail.vars">
-      <div class="bigNode">
-        <!-- title -->
-        <div class="nodeTitle">参数编辑器</div>
-        <!-- content -->
-        <div class="nodeContent">
-          <div class="tableContent">
-            <!-- toolbar -->
-            <div class="toolbar">
-              <i class="toolbarNode iconfont" ng-click="FaddVars()">&#xe649;</i>
-            </div>
-            <div class="toolbar" ng-repeat="node in MvarsSelected track by $index">
-              <i class="toolbarNode iconfont" ng-click="FremoveVars(node)">&#xe67f;</i>
-              <input class="toolbarNode" type="text" ng-model="MvarsSelected[$index]">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- right dashboard executor -->
-  <div class="dashboardRight" ng-show="MshowRight.executor">
-    <div class="row">
-      <div class="bigNode">
-        <div class="nodeTitle">执行结果</div>
-        <div class="nodeContent">
+        <div class="tableContent">
           <div class="toolbar">
-            <div class="toolbarNode label" ng-click="Fback()">返回</div>
-          </div>
-          <div class="nodeContentLeft">
-            <div ui-codemirror="MeditorOptions"></div>
-          </div>
-          <div class="nodeContentRight">
-            <!-- <table>
-              <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)">
-                <td>{{key}}</td>
-                <td>{{value|trailsFilter}}</td>
-              </tr>
-            </table> -->
+            <input type="text" class="toolbarNode" placeholder="Search...">
+            <div class="toolbarNode label" ng-click="FgetScriptList()">刷新</div>
+            <div class="toolbarNode label" ng-click="FnewAction()">新建</div>
           </div>
         </div>
-        <div class="nodeBottom">{{MerrInfo}}</div>
+
+        <div class="tableContent">
+          <table>
+            <tr>
+              <th ng-repeat="data in MscriptTh track by $index">{{data}}</th>
+            </tr>
+            <tr ng-repeat="script in Mscripts track by $index">
+              <td>{{script.script_name}}</td>
+              <td>{{script.script_lang}}</td>
+              <td>{{script.is_public}}</td>
+              <td>{{script.owner_name}}</td>
+              <td>{{script.time_last_edit | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+              <td>
+                <a href="" ng-click="FupdateAction(script)">编辑</a>
+                <a href="">克隆</a>
+                <a href="">删除</a>
+                <a href="">执行</a>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
+      <div class="nodeBottom">{{MscriptInfo.getList}}</div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="Mshow.editor">
+    <div class="bigNode">
+      <div class="nodeTitle">Script Editor</div>
+      <div class="nodeContent">
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarNode label">命名：</div>
+            <input type="text" class="toolbarNode" ng-model="Mscript.script_name">
+            <div class="toolbarNode label">语言：</div>
+            <select class="toolbarNode" name="" ng-model="MeditorOptions.mode">
+              <option value="python">Python</option>
+              <option value="shell">Shell</option>
+            </select>
+            <div class="toolbarNode label">公开：</div>
+            <select class="toolbarNode" name="" ng-model="Mscript.is_public" ng-options="item.value as item.label for item in MisPublicOptions">
+            </select>
+          </div>
+        </div>
+        <div class="tableContent">
+          <div ui-codemirror="MeditorOptions" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
+        </div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarNode label" ng-show="Mshow.create" ng-click="FcreateScript(Mscript)">保存</div>
+            <div class="toolbarNode label" ng-show="Mshow.update" ng-click="FupdateScript(Mscript)">更新</div>
+            <div class="toolbarNode label" ng-click="FbackAction()">返回</div>
+          </div>
+        </div>
+      </div>
+      <div class="nodeBottom">{{MscriptInfo.create}}</div>
     </div>
   </div>
 

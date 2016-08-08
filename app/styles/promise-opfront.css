@@ -8,11 +8,11 @@
 
 /* Icon */
 @font-face {font-family: "iconfont";
-  src: url('/images/icon/iconfont.eot'); /* IE9*/
-  src: url('/images/icon/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('/images/icon/iconfont.woff') format('woff'), /* chrome, firefox */
-  url('/images/icon/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('/images/icon/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('/styles/fonts/icon/iconfont.eot'); /* IE9*/
+  src: url('/styles/fonts/icon/iconfont.eot#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('/styles/fonts/icon/iconfont.woff') format('woff'), /* chrome, firefox */
+  url('/styles/fonts/icon/iconfont.ttf') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('/styles/fonts/icon/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -119,6 +119,14 @@ table td:last-child, table th:last-child {
 }
 table td:hover {
 	/*background-color: #77829C;*/
+}
+table a {
+	display: inline-block;
+	color: #fff;
+	text-decoration:none;
+}
+table a:hover {
+	color: #E16169;
 }
 
 /* Promise组件样式 */
@@ -516,6 +524,8 @@ table td:hover {
 .row {
   float: left;
   position: relative;
+  top: 0;
+  left: 0;
   border: 0;
   padding: 0;
   margin: 15px 15px 0 15px;
@@ -843,24 +853,13 @@ table td:hover {
   /*width: 180px !important;*/
   margin-right: 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.progressBar {
+  float: left;
+  height: 100%;
+  width: 0;
+  line-height: 40px;
+  text-align: center;
+}
 
 
 
@@ -898,6 +897,23 @@ table td:hover {
 	height: 100%;
 	width: 100%;
 }
+.codeEditor {
+  height: 300px;
+  overflow: auto;
+}
+.codeEditorLoding {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+  background: url("/images/loading.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #262626;
+}
 
 /* 可视化样式 */
 .go {
@@ -912,6 +928,11 @@ table td:hover {
   margin-top: 30%;
   text-align: center;
   font-size: 40px;
+}
+.bigText {
+  margin-top: 30%;
+  text-align: center;
+  font-size: 25px;
 }
 .smallText {
   text-align: center;
@@ -933,6 +954,20 @@ table td:hover {
 .tinyFont {
   font-size: 12px;
 }
+.bgSuccess {
+  background-color: #618FFF;
+}
+.bgFailed {
+  background-color: #FF3640;
+}
+.bgUnreachable {
+  background-color: #ACA7AF;
+}
+.bgSkipped {
+  background-color: #5FFF5D;
+}
+
+
 .bgBlue {
 	background-color: #A1C8DF;
 }

@@ -3,7 +3,7 @@
 var promise = angular.module('promise');
 
 // locate是一个递归函数，找到object体中key对应的值，可以从多层object中寻找，将所有同名key结果压入数组里传出。
-function locate(node, key, result = []){
+function locate(node, key, result){
   for (var k in node) {
     // hit!
     if (k == key) {
@@ -69,7 +69,8 @@ promise.filter('hostFilter', function(){
           // init
           var name = Vfilters[j].filterName;
           var bool = Vfilters[j].filterBool;
-          var value = locate(input[i], name);
+          var value = []
+          value = locate(input[i], name, value);
           var content = Vfilters[j].filterContent;
           var re = new RegExp(content);
 

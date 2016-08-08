@@ -11,13 +11,6 @@ promise.factory('SuserService', function($resource){
 	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/user/';
 
 	return {
-		// FsignIn: function(token) {
-		// 	var signInRestApi = $resource(url+'/api/'+ver+'/tokens/:username', {}, {
-		// 		'get': {method:'GET', headers: {'Authorization': token}},
-		// 		// 'save': {method:'POST', headers: {'Authorization': 'Token token='xxxxxxxxx ''}}
-		// 	});
-		// 	return signInRestApi;
-		// },
 		FsignIn: function() {
 			// $resource(url, [paramDefaults], [actions], options);
 			var VsignInRestApi = $resource(VuserUrl+'login', {}, {
@@ -70,25 +63,69 @@ promise.factory('ShostService', function($resource){
 	};
 });
 
-promise.factory('SshellService', function($resource){
+promise.factory('SscriptService', function($resource){
 	var VbaseUrl = 'http://192.168.182.3';
 	// var VbaseUrl = 'http://localhost:5000';
 	var Vversion = 'v0.0';
-	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/shellwalker/';
+	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/script/';
 
 	return {
-		FcreateWalker: function(Vtoken) {
+		Fcreate: function(Vtoken) {
 			// $resource(url, [paramDefaults], [actions], options);
-			var VshellRestApi = $resource(VuserUrl, {}, {
+			var VscriptRestApi = $resource(VuserUrl, {}, {
 				'post': {method:'POST', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
 			});
-			return VshellRestApi;
+			return VscriptRestApi;
 		},
-		FqueryWalker: function(Vtoken) {
-			var VshellQueryRestApi = $resource(VuserUrl, {}, {
+		Fget: function(Vtoken, VscriptId) {
+			var VscriptRestApi = $resource(VuserUrl, {'script_id': VscriptId}, {
 				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken}}
 			});
-			return VshellQueryRestApi;
+			return VscriptRestApi;
+		},
+		FgetList: function(Vtoken) {
+			var VscriptRestApi = $resource(VuserUrl, {}, {
+				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+			});
+			return VscriptRestApi;
+		},
+		Fmodify: function(Vtoken, VscriptId) {
+			var VscriptRestApi = $resource(VuserUrl, {'script_id': VscriptId}, {
+				'put': {method:'PUT', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+			});
+			return VscriptRestApi;
+		},
+	};
+});
+
+promise.factory('SwalkerService', function($resource){
+	var VbaseUrl = 'http://192.168.182.3';
+	// var VbaseUrl = 'http://localhost:5000';
+	var Vversion = 'v0.0';
+	var VuserUrl = VbaseUrl+'/api/'+Vversion;
+
+	return {
+		FcreateWalker: function(Vtoken, VmoduleName){
+			// $resource(url, [paramDefaults], [actions], options);
+			var Vurl = VuserUrl + '/' + VmoduleName + 'walker';
+			var VwalkerRestApi = $resource(Vurl, {}, {
+				'post': {method:'POST', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+			});
+			return VwalkerRestApi;
+		},
+		FqueryWalker: function(Vtoken, VmoduleName){
+			var Vurl = VuserUrl + '/' + VmoduleName + 'walker';
+			var VwalkerRestApi = $resource(Vurl, {}, {
+				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+			});
+			return VwalkerRestApi;
+		},
+		FinfoWalker: function(Vtoken, VmoduleName, VwalkerId){
+			var Vurl = VuserUrl + '/' + VmoduleName + 'walker';
+			var VwalkerRestApi = $resource(Vurl, {'walkerid': VwalkerId}, {
+				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+			});
+			return VwalkerRestApi;
 		},
 	};
 });

@@ -36,9 +36,9 @@
               <option value="100">每页100项</option>
               <option value="0">多到数不完</option>
             </select>
-            <div class="toolbarNode label pageFlip" ng-click="FprevPage()"><</div>
+            <div class="toolbarNode label pageFlip" ng-click="FprevPage()">&lt;</div>
             <input class="toolbarNode pageGo" type="text" placeholder="{{MpageOptions.currentPage}}/{{MpageOptions.totalPage}}" ng-keyup="FgoPage($event,MinputPage)" ng-model="MinputPage">
-            <div class="toolbarNode label pageFlip" ng-click="FnextPage()">></div>
+            <div class="toolbarNode label pageFlip" ng-click="FnextPage()">&gt;</div>
           </div>
         </div>
 
@@ -63,9 +63,9 @@
       <!-- bottom -->
       <div class="nodeBottom">
         <div class="toolbar middlePageControl">
-          <div class="toolbarNode label pageFlip" ng-click="FprevPage()"><</div>
+          <div class="toolbarNode label pageFlip" ng-click="FprevPage()">&lt;</div>
           <input class="toolbarNode pageGo" type="text" placeholder="{{MpageOptions.currentPage}}/{{MpageOptions.totalPage}}" ng-keyup="FgoPage($event,MinputPage)" ng-model="MinputPage">
-          <div class="toolbarNode label pageFlip" ng-click="FnextPage()">></div>
+          <div class="toolbarNode label pageFlip" ng-click="FnextPage()">&gt;</div>
         </div>
       </div>
 

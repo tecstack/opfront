@@ -17,17 +17,17 @@
           </table>
         </div>
         <!-- right -->
-        <div class="nodeContentRight" ng-click="FshowDetailDiv('hosts')">
+        <div class="nodeContentRight" ng-click="FshowRightNode('hosts')">
           <div class="bigNumber">{{MhostsSelected.length}}</div>
           <div class="smallText">已选机器</div>
         </div>
       </div>
 
       <!-- judgement -->
-      <div class="nodeBottom errorContent" ng-show="!MshowJudge.hosts">
+      <div class="nodeBottom errorContent" ng-show="!MshowBottomSuccess.hosts">
         还没有选取目标机器
       </div>
-      <div class="nodeBottom successContent" ng-show="MshowJudge.hosts">
+      <div class="nodeBottom successContent" ng-show="MshowBottomSuccess.hosts">
         <i class="iconfont">&#xe67c;</i>
       </div>
     </div>
@@ -35,30 +35,31 @@
     <!-- script scan -->
     <div class="leftNodeScript">
       <!-- title -->
-      <div class="nodeTitle">指定命令</div>
+      <div class="nodeTitle">指定模块</div>
 
       <!-- content -->
       <div class="nodeContent">
         <!-- left -->
         <div class="nodeContentLeft">
           <table>
-            <tr class="trAnimate" ng-model="MshellSelected">
-              <td>{{MshellSelected.shell}}</td>
+            <tr class="trAnimate" ng-repeat="(key, value) in MmoduleSelected.content">
+              <td>{{key}}</td>
+              <td>{{value}}</td>
             </tr>
           </table>
         </div>
         <!-- right -->
-        <div class="nodeContentRight" ng-click="FshowDetailDiv('shell')">
-          <div class="bigNumber">shell</div>
-          <div class="smallText">已选指令</div>
+        <div class="nodeContentRight" ng-click="FshowRightNode('module')">
+          <div class="bigText">{{MmoduleSelected.name}}</div>
+          <div class="smallText">已选模块</div>
         </div>
       </div>
 
       <!-- judgement -->
-      <div class="nodeBottom errorContent" ng-show="!MshowJudge.shell">
-        还没有定义指令
+      <div class="nodeBottom errorContent" ng-show="!MshowBottomSuccess.module">
+        还没有定义模块
       </div>
-      <div class="nodeBottom successContent" ng-show="MshowJudge.shell">
+      <div class="nodeBottom successContent" ng-show="MshowBottomSuccess.module">
         <i class="iconfont">&#xe67c;</i>
       </div>
     </div>
@@ -76,10 +77,10 @@
     </div>
 
     <!-- hosts detail -->
-    <div class="row" ng-show="MshowDetail.hosts">
+    <div class="row" ng-show="MshowRightNode.hosts">
       <div class="bigNode">
         <!-- title -->
-        <div class="nodeTitle">机器列表</div>
+        <div class="nodeTitle">Hosts Selector</div>
         <!-- content -->
         <div class="nodeContent">
           <!-- toolbar -->
@@ -129,26 +130,64 @@
       </div>
     </div>
 
-    <!-- shell detail -->
-    <div class="row" ng-show="MshowDetail.shell">
+    <!-- module detail -->
+    <div class="row" ng-show="MshowRightNode.module">
       <div class="bigNode">
         <!-- title -->
-        <div class="nodeTitle">指令编辑器</div>
+        <div class="nodeTitle">Module Editor {{MmoduleSelected.name}}</div>
         <!-- content -->
         <div class="nodeContent">
-          <!-- toolbar -->
+
+          <!-- module selector -->
           <div class="tableContent">
             <div class="toolbar">
-              <select class="toolbarNode" ng-model="Mosuser">
-                <option value="root" selected="true">root</option>
-              </select>
-              <div class="toolbarNode label" ng-click="FsaveShell()">保存</div>
+              <div class="toolbarNode">选择模块：</div>
+              <div class="toolbarNode" ng-repeat="(key, value) in Mmodules" ng-click="FselectModule(key)">{{key}}</div>
             </div>
           </div>
-          <!-- code editor -->
-          <div class="tableContent">
-            <div ui-codemirror="MeditorOptions" ng-model="Mshell"></div>
+
+          <!-- ！！！！！！！！！！！！！！！shell module！！！！！！！！！！！！！！！！！！！ -->
+          <div ng-show="Mmodules.shell">
+            <!-- toolbar -->
+            <div class="tableContent">
+              <div class="toolbar">
+                <div class="toolbarNode">执行用户：</div>
+                <select class="toolbarNode" ng-model="MshellContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+              </div>
+            </div>
+            <!-- code editor -->
+            <div class="tableContent">
+              <div ui-codemirror="MeditorOptions.shell" ng-model="MshellContent.shell"></div>
+            </div>
+            <div class="tableContent">
+              <div class="toolbar">
+                <div class="toolbarNode" ng-click="MselectContent(MshellContent)">确定</div>
+              </div>
+            </div>
           </div>
+
+          <!-- ！！！！！！！！！！！！！！！script module！！！！！！！！！！！！！！！！！！！ -->
+          <div ng-show="Mmodules.script">
+            <div class="tableContent">
+              <div class="toolbar">
+                <div class="toolbarNode" ng-click="FshowScripts()">选取脚本</div>
+                <div class="toolbarNode">执行用户：</div>
+                <select class="toolbarNode" ng-model="MscriptContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+                <div class="toolbarNode">{{Mscript.script_name}}</div>
+                <div class="toolbarNode">{{Mscript.script_lang}}</div>
+              </div>
+            </div>
+            <!-- code editor -->
+            <div class="tableContent">
+              <div ui-codemirror="MeditorOptions.script" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
+            </div>
+            <div class="tableContent">
+              <div class="toolbar">
+                <div class="toolbarNode" ng-click="MselectContent(MscriptContent)">确定</div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -163,19 +202,33 @@
       <div class="bigNode">
         <div class="nodeTitle">执行结果</div>
         <div class="nodeContent">
-          <div class="toolbar">
-            <div class="toolbarNode label" ng-click="Fback()">返回</div>
-          </div>
-          <div class="nodeContentLeft">
-            <div ui-codemirror="MeditorOptions" ng-model="Mstdout"></div>
-          </div>
-          <div class="nodeContentRight">
-            <table>
-              <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)">
-                <td>{{key}}</td>
-                <td>{{value|trailsFilter}}</td>
-              </tr>
-            </table>
+          <div class="tableContent">
+            <div class="toolbar">
+              <div class="toolbarNode label" ng-click="Fback()">返回</div>
+              <div class="toolbarNode" ng-click="FinfoWalker(MmoduleSelected.name, MwalkerId)">测试刷新</div>
+              <div class="toolbarNode" ng-click="FstopInfoWalker()">停止轮询</div>
+            </div>
+            <!-- Result dashboard -->
+            <div class="nodeContentLeft">
+              <div ui-codemirror="MeditorOptions.executor" ng-model="Mstdout" ui-refresh="Mstdout"></div>
+              <div class="codeEditorLoding" ng-show="MshowLoading"></div>
+            </div>
+            <!-- Hosts list -->
+            <div class="nodeContentRight codeEditor">
+              <table>
+                <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
+                  <td>{{key}}</td>
+                  <td>{{value|trailsFilter}}</td>
+                </tr>
+              </table>
+            </div>
+            <!-- Progress bar -->
+            <div class="toolbar">
+              <div class="progressBar bgSuccess" progress="Mprogress" kind="success"></div>
+              <div class="progressBar bgFailed" progress="Mprogress" kind="failed"></div>
+              <div class="progressBar bgUnreachable" progress="Mprogress" kind="unreachable"></div>
+              <div class="progressBar bgSkipped" progress="Mprogress" kind="skipped"></div>
+            </div>
           </div>
         </div>
         <div class="nodeBottom">{{MerrInfo}}</div>
