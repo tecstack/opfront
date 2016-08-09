@@ -355,6 +355,23 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
       }
     );
   };
+  $scope.FdeleteScript = function(Vscript){
+    var VscriptId = Vscript.script_id;
+    SscriptService.Fdelete($rootScope.Mtoken, VscriptId).delete(
+      {},
+      function successCallback(callbackdata){
+        $scope.MscriptInfo.getList = callbackdata.message;
+        $timeout(function () {
+          $scope.Mshow.list = true;
+          $rootScope.FgetScriptList();
+        }, 500);
+      },
+      function errorCallback(callbackdata){
+        $scope.MscriptInfo.getList = callbackdata.data.message;
+      }
+    );
+  };
+
 
   // 监控区
   $scope.Mshow = {
@@ -396,6 +413,9 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
 
 });
 
+promise.controller('CscriptHelper', function($rootScope){
+
+});
 
 // --------------------------Module---------------------------
 promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, SscriptService, SwalkerService){

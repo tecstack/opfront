@@ -16,17 +16,23 @@
             <tr>
               <th ng-repeat="data in MscriptTh track by $index">{{data}}</th>
             </tr>
-            <tr ng-repeat="script in Mscripts track by $index">
+            <tr ng-repeat="script in Mscripts track by $index" class="scriptNode">
               <td>{{script.script_name}}</td>
               <td>{{script.script_lang}}</td>
               <td>{{script.is_public}}</td>
               <td>{{script.owner_name}}</td>
               <td>{{script.time_last_edit | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td>
-                <a href="" ng-click="FupdateAction(script)">编辑</a>
-                <a href="">克隆</a>
-                <a href="">删除</a>
-                <a href="">执行</a>
+                <div ng-show="MshowAction">
+                  <a href="" ng-click="FupdateAction(script)">编辑</a>
+                  <a href="">克隆</a>
+                  <a href="" class="delete">删除</a>
+                  <a href="">执行</a>
+                </div>
+                <div ng-show="!MshowAction">
+                  <a href="" class="confirm" ng-click="FdeleteScript(script)">确定</a>
+                  <a href="" class="cancel">取消</a>
+                </div>
               </td>
             </tr>
           </table>

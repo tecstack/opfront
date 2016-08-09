@@ -1,7 +1,7 @@
 'use strict';
 
 var promise = angular.module('promise');
-
+var timeout = 10000;
 promise.factory('SinfoService', function($rootScope, $timeout){
 	var FaddInfo = function(Vinfo){
 		$rootScope.Minfos.push(Vinfo);
@@ -44,7 +44,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 	// 手动登录服务
 	var FsignIn = function(VuserInfo, VisKeep){
 		var VsignInApi = $resource(VuserUrl+'login', {}, {
-			'post': {method:'POST', isArray:false, timeout:5000, headers:{'Content-Type': 'application/json'}}
+			'post': {method:'POST', isArray:false, timeout:timeout, headers:{'Content-Type': 'application/json'}}
 		});
 		VsignInApi.post(
 			{},
@@ -93,7 +93,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 		var Vtoken = $cookies.get('token');
 		if (Vtoken) {
 			var VtokenSignInApi = $resource(VuserUrl+'tokenauth', {}, {
-				'post': {method:'POST', isArray:false, timeout:5000, headers:{'Content-Type': 'application/json', 'token': Vtoken}}
+				'post': {method:'POST', isArray:false, timeout:timeout, headers:{'Content-Type': 'application/json', 'token': Vtoken}}
 			});
 			VtokenSignInApi.post(
 	      {},
@@ -125,7 +125,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 		var Vrftoken = $cookies.get('rftoken');
 		if (Vrftoken) {
 			var VtokenRefreshApi = $resource(VuserUrl+'tokenrefresh', {}, {
-				'post': {method:'POST', isArray:false, timeout:5000, headers:{'Content-Type': 'application/json'}}
+				'post': {method:'POST', isArray:false, timeout:timeout, headers:{'Content-Type': 'application/json'}}
 			});
 			VtokenRefreshApi.post(
 	      {},
@@ -167,13 +167,13 @@ promise.factory('ShostService', function($resource){
 		Fhost: function(Vtoken) {
 			// $resource(url, [paramDefaults], [actions], options);
 			var VhostRestApi = $resource(VuserUrl, {}, {
-				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
 			});
 			return VhostRestApi;
 		},
 		FhostId: function(Vtoken, VhostId) {
 			var VhostIdRestApi = $resource(VuserUrl+VhostId, {}, {
-				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
 			});
 			return VhostIdRestApi;
 		},
@@ -182,7 +182,7 @@ promise.factory('ShostService', function($resource){
 
 promise.factory('SscriptService', function($resource){
 	var VbaseUrl = 'http://192.168.182.3';
-	// var VbaseUrl = 'http://localhost:5000';
+	// var VbaseUrl = 'http://localhost:timeout';
 	var Vversion = 'v0.0';
 	var VuserUrl = VbaseUrl+'/api/'+Vversion+'/script/';
 
@@ -190,25 +190,31 @@ promise.factory('SscriptService', function($resource){
 		Fcreate: function(Vtoken) {
 			// $resource(url, [paramDefaults], [actions], options);
 			var VscriptRestApi = $resource(VuserUrl, {}, {
-				'post': {method:'POST', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+				'post': {method:'POST', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
 			});
 			return VscriptRestApi;
 		},
 		Fget: function(Vtoken, VscriptId) {
 			var VscriptRestApi = $resource(VuserUrl, {'script_id': VscriptId}, {
-				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
 			});
 			return VscriptRestApi;
 		},
 		FgetList: function(Vtoken) {
 			var VscriptRestApi = $resource(VuserUrl, {}, {
-				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
 			});
 			return VscriptRestApi;
 		},
 		Fmodify: function(Vtoken, VscriptId) {
 			var VscriptRestApi = $resource(VuserUrl, {'script_id': VscriptId}, {
-				'put': {method:'PUT', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+				'put': {method:'PUT', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+			});
+			return VscriptRestApi;
+		},
+		Fdelete: function(Vtoken, VscriptId) {
+			var VscriptRestApi = $resource(VuserUrl, {'script_id': VscriptId}, {
+				'delete': {method:'DELETE', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
 			});
 			return VscriptRestApi;
 		},
@@ -217,7 +223,7 @@ promise.factory('SscriptService', function($resource){
 
 promise.factory('SwalkerService', function($resource){
 	var VbaseUrl = 'http://192.168.182.3';
-	// var VbaseUrl = 'http://localhost:5000';
+	// var VbaseUrl = 'http://localhost:timeout';
 	var Vversion = 'v0.0';
 	var VuserUrl = VbaseUrl+'/api/'+Vversion;
 
@@ -226,21 +232,21 @@ promise.factory('SwalkerService', function($resource){
 			// $resource(url, [paramDefaults], [actions], options);
 			var Vurl = VuserUrl + '/' + VmoduleName + 'walker';
 			var VwalkerRestApi = $resource(Vurl, {}, {
-				'post': {method:'POST', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+				'post': {method:'POST', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
 			});
 			return VwalkerRestApi;
 		},
 		FqueryWalker: function(Vtoken, VmoduleName){
 			var Vurl = VuserUrl + '/' + VmoduleName + 'walker';
 			var VwalkerRestApi = $resource(Vurl, {}, {
-				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
 			});
 			return VwalkerRestApi;
 		},
 		FinfoWalker: function(Vtoken, VmoduleName, VwalkerId){
 			var Vurl = VuserUrl + '/' + VmoduleName + 'walker';
 			var VwalkerRestApi = $resource(Vurl, {'walkerid': VwalkerId}, {
-				'get': {method:'GET', isArray:false, timeout:5000, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
 			});
 			return VwalkerRestApi;
 		},

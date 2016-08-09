@@ -12,7 +12,7 @@ promise.directive('sidebarNode',function(){
 					element.siblings().children(".sidebarSubnode").removeClass("show");
 					element.children(".sidebarSubnode").addClass("show");
 				}
-		});
+			});
 		}
 	};
 });
@@ -26,7 +26,37 @@ promise.directive('dashboard',function($rootScope){
 					$rootScope.MshowMenu = false;
 					scope.$apply();
 				}
-		});
+			});
+		}
+	};
+});
+// script项，操作控制指令
+promise.directive('scriptNode',function($rootScope){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			scope.MshowAction = true;
+			// 删除键，点击后提示用户确认
+			element.find('.delete').bind({
+				'click': function(){
+					scope.MshowAction = false;
+					scope.$apply();
+				}
+			});
+			// 确认删除
+			element.find('.confirm').bind({
+				'click': function(){
+					scope.MshowAction = true;
+					scope.$apply();
+				}
+			});
+			// 取消删除
+			element.find('.cancel').bind({
+				'click': function(){
+					scope.MshowAction = true;
+					scope.$apply();
+				}
+			});
 		}
 	};
 });
