@@ -408,6 +408,36 @@ table a:hover {
 	text-align: center;
 	border-left: 1px solid #4C6377;
 }
+.infoBar {
+  /* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	display: block;
+	overflow: visible;
+	z-index: 10;
+	/* box model: border / margin / padding / width / height / ... */
+	width: 400px;
+	border: 0;
+	margin: 0px;
+	padding: 0px;
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+  background-color: transparent;
+}
+.infoNode {
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+  margin: 5px 0;
+  padding: 10px;
+  text-align: left;
+  font-size: 18px;
+  line-height: 20px;
+  background-color: rgba(155,155,155,0.3);
+}
 
 /* Helper */
 .helperTrigger {
@@ -434,7 +464,7 @@ table a:hover {
 	position: fixed;
 	top: 50px;
 	bottom: 0;
-	right: -360px;
+	right: 0;
 	display: block;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -732,6 +762,12 @@ table a:hover {
   background-color: transparent;
   width: calc(100% - 40px - 10px);
 }
+.formContent>.signBar {
+  padding: 0 10px;
+  border-bottom: 1px solid #E9E9E9;
+  font-size: 15px;
+  line-height: 40px;
+}
 .formContent>select {
   border-bottom: 1px solid #E9E9E9;
 }
@@ -791,7 +827,7 @@ table a:hover {
   background-color: transparent;
 }
 .toolbarNode:first-child {
-  border-left: 1px solid #E9E9E9 !important;
+  /*border-left: 1px solid #E9E9E9 !important;*/
 }
 .toolbarNode:hover, select:hover {
   background-color: rgba(100, 100, 100, 0.5);

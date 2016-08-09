@@ -11,81 +11,18 @@
 var promise = angular.module('promise');
 
 // angular init
-promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, ShostService, SwalkerService){
-  // --------------------------pre-init---------------------------
+promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, SuserService, ShostService, SscriptService){
+  // charjs 初始设置
+  Chart.defaults.global.defaultFontColor = '#fff';
+  Chart.defaults.global.scaleFontColor = '#fff';
 
-  // -----------------------Sign--------------------------
-  // cookies-token-delay
-  $rootScope.FtokenDelay = function(){
-    if ($rootScope.Mtoken){
-      var now = new Date();
-      var expire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+2, now.getMinutes(), now.getSeconds());
-      $cookies.put('token', $rootScope.Mtoken, {expires: expire});
-    };
-  };
-  // cookies-rftoken-autodelay
-  $rootScope.FrftokenDelay = function(){
-    var Vrftoken = $cookies.get('rftoken');
-    if (Vrftoken){
-      var now = new Date();
-      var expire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+2, now.getMinutes(), now.getSeconds());
-      $cookies.put('rftoken', Vrftoken, {expires: expire});
-    }
-    else {
-      $rootScope.Mrftoken = null;
-    };
-  };
-  // cookies-rftoken-refresh
-  $rootScope.FtokenRefresh = function(Vrftoken){
-    SuserService.FtokenRefresh().post(
-      {},
-      {'granttype': 'refreshtoken', 'refreshtoken': Vrftoken},
-      function successCallback(callbackdata){
-        $rootScope.Mtoken = callbackdata.token;
-        $rootScope.FtokenDelay();
-        $rootScope.FrftokenDelay();
-        $rootScope.FtokenSignIn($rootScope.Mtoken);
-      },
-      function errorCallback(callbackdata){
-        $rootScope.MsignErrorInfos = callbackdata.data.message;
-        $rootScope.MsignError = false;
-        $rootScope.MisSign = false;
-      }
-    );
-  };
-  // cookies-token-signin
-  $rootScope.FtokenSignIn = function(Vtoken){
-    SuserService.FtokenSignIn(Vtoken).post(
-      {},
-      {},
-      function successCallback(callbackdata){
-        $rootScope.MisSign = true;
-        $rootScope.MsignError = false;
-        $rootScope.FrftokenDelay();
-      },
-      function errorCallback(callbackdata){
-        console.log(callbackdata);
-        $rootScope.MsignErrorInfos = callbackdata.data.message;
-        $rootScope.MsignError = true;
-        $rootScope.MisSign = false;
-      }
-    );
-  };
-  // cookies-auth-main
-  $rootScope.FcookieAuth = function(){
-    var Vrftoken = $cookies.get('rftoken');
-    if (!Vrftoken){
-      // token expire, turn to web auth
-      $rootScope.MsignError = false;
-      $rootScope.MisSign = false;
-    }
-    else {
-      // token not expire, token auth and auto delay
-      $rootScope.FtokenRefresh(Vrftoken);
-    }
+  // 消息队列，用于消息区临时提示
+  $rootScope.Minfos = [];
+  $rootScope.FaddInfo = function(node){
+    SinfoService.FaddInfo(node);
   };
 
-  // ----------------------hosts------------------------
+  // 主机信息服务，包含所有hosts相关信息
   $rootScope.MhostsData = [];
   $rootScope.MhostsSelected = [];
   $rootScope.MhostsDataFilter = [];
@@ -106,7 +43,6 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
     'totalPage': 1,
     'currentPage': 1
   };
-
   $rootScope.FaddFilter = function(){
     $rootScope.Mfilters.push({filterName:'', filterBool:'', filterContent:''});
   };
@@ -125,16 +61,17 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
       function successCallback(callbackdata){
         $rootScope.MhostsData = callbackdata.data;
         $rootScope.MpageOptions.totalPage = callbackdata.totalpage;
+        $rootScope.MhostsNum = $rootScope.MhostsData.length;
         for (var index in $rootScope.MhostsData) {
           $rootScope.MhostsData[index].select = false;
         };
+        SinfoService.FaddInfo('已同步' + $rootScope.MhostsNum + '条主机信息');
       },
       function errorCallback(callbackdata){
-        console.log(callbackdata.message);
+        SinfoService.FaddInfo('获取主机信息失败:' + callbackdata.message);
       }
     );
   };
-
   $rootScope.FprevPage = function(){
     if ($rootScope.MpageOptions.currentPage > 1) {
       $rootScope.MpageOptions.currentPage --;
@@ -151,7 +88,6 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
     };
   };
   $rootScope.FgoPage($rootScope.MpageOptions.currentPage);
-
   $rootScope.FchangeSelect = function(node){
     if (node.select == true) {
       $rootScope.MhostsSelected.push(node);
@@ -160,11 +96,9 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
       $rootScope.MhostsSelected.splice($rootScope.MhostsSelected.indexOf(node), 1);
     };
   };
-
   $rootScope.McheckAll = {
     'status': false
   };
-
   $rootScope.FcheckAll = function(checkAll){
     // {"select":false, "available": "0", "groups": [{"groupid": "4", "name": "Zabbix servers"}], "host": "Zabbix server", "hostid": "10084", "interfaces": [{"interfaceid": "1", "ip": "127.0.0.1"}], "status": "1"},
     var bool = checkAll.status;
@@ -192,17 +126,43 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
     $rootScope.MhostsSelected = oldArray;
   };
 
-  // ---------------------auto token login---------------------
-  $rootScope.FcookieAuth();
-  $timeout(
-    function(){
-      $rootScope.FgetHost();
-      // $rootScope.MisSign = true;
-    },
-    1000
-  );
+  // 脚本信息服务
+  $rootScope.FgetScriptList = function(){
+    SscriptService.FgetList($rootScope.Mtoken).get(
+      {},
+      function successCallback(callbackdata){
+        $rootScope.Mscripts = callbackdata.scripts;
+        $rootScope.MscriptsNum = $rootScope.Mscripts.length;
+        SinfoService.FaddInfo('已同步' + $rootScope.MscriptsNum + '条脚本信息');
+      },
+      function errorCallback(callbackdata){
+        SinfoService.FaddInfo('获取脚本信息失败:' + callbackdata.message);
+      }
+    );
+  };
 
-  // ---------------------watch---------------------
+  // 自动登录，使用cookie保存token
+  $rootScope.FtokenSignIn = SuserService.FtokenSignIn;
+  // token刷新，包含一次自动登录
+  $rootScope.FtokenRefresh = SuserService.FtokenRefresh;
+  // 自动登录逻辑
+  $rootScope.FcookieAuth = function(){
+    var Vrftoken = $cookies.get('rftoken');
+    if (!Vrftoken){
+      // rftoken已过期或者未保持登录，不刷新，只尝试token自动登录
+      $rootScope.MsignError = false;
+      $rootScope.MisSign = false;
+      $rootScope.FtokenSignIn();
+    }
+    else {
+      // rftoken未过期，尝试刷新并自动登录
+      $rootScope.FtokenRefresh();
+    }
+  };
+  // 初始化自动登录
+  $rootScope.FcookieAuth();
+
+  // 监控区
   $rootScope.$watchGroup(['MpageOptions.currentPage','MpageOptions.pp'], function(newValue, oldValue){
     if ($rootScope.Mtoken) {
       $rootScope.FgetHost();
@@ -222,10 +182,6 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SuserService, Shos
   });
 });
 
-// charjs default config
-Chart.defaults.global.defaultFontColor = '#fff';
-Chart.defaults.global.scaleFontColor = '#fff';
-
 // navbar
 promise.controller('Cnavbar', function($scope, $rootScope){
   $scope.FtoggleMenu = function(){
@@ -242,46 +198,16 @@ promise.controller('ChelperTrigger', function($scope,$rootScope){
 
 // sign
 promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
-  // --------------------------pre-init---------------------------
-
-  // web-auth-main
-  $scope.FsignIn = function(VuserInfo){
-    SuserService.FsignIn().post(
-      {},
-      VuserInfo,
-      function successCallback(callbackdata){
-        // logic
-        $rootScope.Mtoken = callbackdata.token;
-        $rootScope.Mrftoken = callbackdata.rftoken;
-        $rootScope.MisSign = true;
-        $rootScope.MsignError = false;
-        // cookies storage for 2 hours
-        var now = new Date();
-        var expire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+2, now.getMinutes(), now.getSeconds());
-        $cookies.put('token', $rootScope.Mtoken, {expires: expire});
-        $cookies.put('rftoken', $rootScope.Mrftoken, {expires: expire});
-      },
-      function errorCallback(callbackdata){
-        $rootScope.MsignErrorInfos = callbackdata.data.message;
-        $rootScope.MsignError = true;
-        $rootScope.MisSign = false;
-      }
-    );
-  };
-
-  // web-auth-via-key-press
-  $scope.FsignInEnter = function(event,VuserInfo){
+  // 手动登录
+  $scope.FsignIn = SuserService.FsignIn;
+  // 回车判定登陆
+  $scope.FsignInEnter = function(event, VuserInfo, VisKeep){
     if (event.keyCode == 13){
-      $scope.FsignIn(VuserInfo);
+      $scope.FsignIn(VuserInfo, VisKeep);
     };
   };
-
-  // web-auth-signout
-  $rootScope.FsignOut = function(){
-    $cookies.remove('token');
-    $cookies.remove('rftoken');
-    $rootScope.MisSign = false;
-  };
+  // 手动登出
+  $rootScope.FsignOut = SuserService.FsignOut;
 });
 
 // index
@@ -290,7 +216,7 @@ promise.controller('Cindex', function($scope,$rootScope){
 
 // ui
 promise.controller('Cui', function($scope,$rootScope){
-  // --------------------------pre-init---------------------------
+  // 初始化
   $scope.indexDataLine = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
@@ -366,15 +292,21 @@ promise.controller('ChostHelper', function($scope, $rootScope){
 
 // ------------------------------Script----------------------------
 promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService){
-  // --------------------------pre-init---------------------------
+  // 初始化
   $scope.MisPublicOptions = [
     {'label':'仅自己', 'value':0},
     {'label':'所有人', 'value':1}
   ];
+  $scope.MscriptTh = ['名称','语言','公开','创建人','最后更新时间','操作'];
+  $scope.MeditorOptions = {
+    lineNumbers: true,
+    theme:'dracula',
+    // readOnly: 'nocursor',
+    lineWrapping : false,
+    mode: 'python',
+  };
 
-
-  // ---------------------script service---------------------
-  $rootScope.Mscripts = [];
+  // 接口服务
   $scope.Mscript = {
     'script_name': '',
     'script_text': '',
@@ -398,7 +330,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
         $timeout(function () {
           $scope.Mshow.list = true;
           $scope.Mshow.editor = false;
-          $scope.FgetScriptList();
+          $rootScope.FgetScriptList();
         }, 500);
       },
       function errorCallback(callbackdata){
@@ -415,7 +347,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
         $timeout(function () {
           $scope.Mshow.list = true;
           $scope.Mshow.editor = false;
-          $scope.FgetScriptList();
+          $rootScope.FgetScriptList();
         }, 500);
       },
       function errorCallback(callbackdata){
@@ -423,32 +355,8 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
       }
     );
   };
-  $scope.FgetScript = function(){};
-  $scope.FgetScriptList = function(){
-    SscriptService.FgetList($rootScope.Mtoken).get(
-      {},
-      function successCallback(callbackdata){
-        $scope.MscriptInfo.getList = callbackdata.message;
-        $rootScope.Mscripts = callbackdata.scripts;
-      },
-      function errorCallback(callbackdata){
-        $scope.MscriptInfo.getList = callbackdata.data.message;
-      }
-    );
-  };
 
-
-  $scope.MscriptTh = ['名称','语言','公开','创建人','最后更新时间','操作'];
-  $scope.MeditorOptions = {
-    lineNumbers: true,
-    theme:'dracula',
-    // readOnly: 'nocursor',
-    lineWrapping : false,
-    mode: 'python',
-  };
-
-
-  // ---------------------watch && show---------------------
+  // 监控区
   $scope.Mshow = {
     'list': true,
     'editor': false,
@@ -486,26 +394,12 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
     $scope.MeditorOptions.mode = $scope.Mscript.script_lang;
   });
 
-  // --------------------------after-init---------------------------
-  $scope.FgetScriptList();
 });
-
 
 
 // --------------------------Module---------------------------
 promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, SscriptService, SwalkerService){
-  // ---------------------script service---------------------
-  $scope.FgetScriptList = function(){
-    SscriptService.FgetList($rootScope.Mtoken).get(
-      {},
-      function successCallback(callbackdata){
-        $rootScope.Mscripts = callbackdata.scripts;
-      },
-      function errorCallback(callbackdata){
-      }
-    );
-  };
-  // ---------------------walker service---------------------
+  // walker接口服务
   $scope.FcreateWalker = function(VmoduleName, VmoduleVars){
     SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
       {},
@@ -612,7 +506,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     },
     'executor': {
       lineNumbers: true,
-      theme:'material',
+      theme:'monokai',
       readOnly: 'nocursor',
       lineWrapping : false,
       mode: 'shell',
@@ -640,7 +534,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       $rootScope.MshowHelperNode[key] = false;
     }
     $rootScope.MshowHelperNode.script = true;
-    $scope.FgetScriptList();
+    $rootScope.FgetScriptList();
   };
 
   // ---------------------Executor---------------------

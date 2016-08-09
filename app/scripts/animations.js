@@ -30,12 +30,53 @@ promise.animation('.sidebar', function(){
   };
 });
 
+promise.animation('.infoNode', function(){
+  return{
+    leave: function(element){
+      element.animate(
+        {
+          'opacity': '0',
+          'margin': '0',
+          'padding': '0',
+          'font-size': '0',
+          'line-height': '0',
+        },
+        150,
+        function(){$(this).css('display', 'none')}
+      );
+    },
+    enter: function(element){
+      element.css({
+        'opacity': '0',
+        'margin': '0',
+        'padding': '0',
+        'font-size': '0',
+        'line-height': '0',
+      });
+      element.animate(
+        {
+          'opacity': '1',
+          'margin': '5px 0',
+          'padding': '10px',
+          'font-size': '18px',
+          'line-height': '20px',
+        },
+        400
+      );
+    }
+  };
+});
+
 promise.animation('.helper', function(){
   return{
     addClass: function(element){
       element.animate({'opacity': '0', 'right': '-360px'}, 100);
     },
     removeClass: function(element){
+      element.css({
+        'right': '-360px',
+        'opacity': '0',
+      });
       element.animate({'opacity': '1', 'right': '0px'}, 100);
     }
   };

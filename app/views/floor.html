@@ -11,13 +11,13 @@
         </div>
         <div class="sidebarSubnode">
           <div class="sidebarSubnodeContent">
-            <a href="#/host">主机<div class="nodeNumber">534</div></a>
+            <a href="#/host">主机<div class="nodeNumber">{{MhostsNum}}</div></a>
           </div>
           <div class="sidebarSubnodeContent">
-            <a href="">系统<div class="nodeNumber">8</div></a>
+            <a href="">系统<div class="nodeNumber">0</div></a>
           </div>
           <div class="sidebarSubnodeContent">
-            <a href="">组件<div class="nodeNumber">17</div></a>
+            <a href="">组件<div class="nodeNumber">0</div></a>
           </div>
         </div>
       </div>
@@ -28,19 +28,16 @@
         </div>
         <div class="sidebarSubnode">
           <div class="sidebarSubnodeContent">
-            <a href="#/module">封装指令<div class="nodeNumber">20</div></a>
+            <a href="#/module">功能模块<div class="nodeNumber">2</div></a>
           </div>
           <div class="sidebarSubnodeContent">
-            <a href="#/script">脚本调度<div class="nodeNumber">108</div></a>
+            组件管理<div class="nodeNumber">0</div>
           </div>
           <div class="sidebarSubnodeContent">
-            组件管理<div class="nodeNumber">17</div>
+            配置管理<div class="nodeNumber">0</div>
           </div>
           <div class="sidebarSubnodeContent">
-            配置管理<div class="nodeNumber">1038</div>
-          </div>
-          <div class="sidebarSubnodeContent">
-            日志管理<div class="nodeNumber">786</div>
+            日志管理<div class="nodeNumber">0</div>
           </div>
         </div>
       </div>
@@ -51,7 +48,7 @@
         </div>
         <div class="sidebarSubnode">
           <div class="sidebarSubnodeContent">
-            <a href="#/script">脚本管理<div class="nodeNumber">20</div></a>
+            <a href="#/script">脚本管理<div class="nodeNumber">{{MscriptsNum}}</div></a>
           </div>
         </div>
       </div>
@@ -61,8 +58,8 @@
           <i class="iconfont">&#xe676;</i>
         </div>
         <div class="sidebarSubnode">
-          <div class="sidebarSubnodeContent">问题<div class="nodeNumber">304</div></div>
-          <div class="sidebarSubnodeContent">故障<div class="nodeNumber">178</div></div>
+          <div class="sidebarSubnodeContent">问题<div class="nodeNumber">0</div></div>
+          <div class="sidebarSubnodeContent">故障<div class="nodeNumber">0</div></div>
         </div>
       </div>
     </div>
@@ -88,6 +85,14 @@
 
   <!-- Settings -->
   <div class="navbarIconAnti"><a href="#/"><i class="iconfont">&#xe66d;</i></a></div>
+
+  <!-- Info -->
+  <div class="navbarIconAnti">
+    <a href="#/"><i class="iconfont">&#xe67e;</i></a>
+    <div class="infoBar">
+      <div class="infoNode" ng-repeat="info in Minfos track by $index">{{info}}</div>
+    </div>
+  </div>
 
   <!-- Search -->
   <div class="navbarInput"><input type="text" placeholder="Search..."></div>
@@ -121,10 +126,11 @@
           </div>
           <div class="formInputWraper">
             <i class="iconfont">&#xe61b;</i>
-            <input type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event,MuserInfo)">
+            <input type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event, MuserInfo, MisKeep)">
           </div>
+          <div class="signBar"><input type="checkbox" ng-model="MisKeep">保持登录</div>
           <div class="signError" ng-show="MsignError">{{MsignErrorInfos}}</div>
-          <button type="button" name="button" ng-click="FsignIn(MuserInfo)">
+          <button type="button" name="button" ng-click="FsignIn(MuserInfo, MisKeep)">
             <span>登录</span>
           </button>
           <button type="button" name="button">
