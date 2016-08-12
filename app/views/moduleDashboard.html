@@ -1,207 +1,131 @@
 <div ng-controller="Cmodule">
-  <!-- left dashboard-->
-  <div class="dashboardLeft">
-    <!-- hosts scan -->
-    <div class="leftNodeScript">
-      <!-- title -->
-      <div class="nodeTitle">指定目标</div>
-
-      <!-- content -->
-      <div class="nodeContent">
-        <!-- left -->
-        <div class="nodeContentLeft">
-          <table>
-            <tr class="trAnimate" ng-repeat="node in MhostsSelected">
-              <td>{{node.interfaces[0].ip}}</td>
-            </tr>
-          </table>
-        </div>
-        <!-- right -->
-        <div class="nodeContentRight" ng-click="FshowRightNode('hosts')">
-          <div class="bigNumber">{{MhostsSelected.length}}</div>
-          <div class="smallText">已选机器</div>
+  <div class="row" ng-show="MshowRight.detail">
+    <div class="thirdCol">
+      <!-- Host Selector -->
+      <div class="node">
+        <div class="nodeTitle">执行</div>
+        <div class="tableContent">
+          <div class="toolbar" ng-show="MshowGo">
+            <div class="toolbarNode" ng-click="Fexecute()">执行</div>
+          </div>
         </div>
       </div>
-
-      <!-- judgement -->
-      <div class="nodeBottom errorContent" ng-show="!MshowBottomSuccess.hosts">
-        还没有选取目标机器
-      </div>
-      <div class="nodeBottom successContent" ng-show="MshowBottomSuccess.hosts">
-        <i class="iconfont">&#xe67c;</i>
-      </div>
-    </div>
-
-    <!-- script scan -->
-    <div class="leftNodeScript">
-      <!-- title -->
-      <div class="nodeTitle">指定模块</div>
-
-      <!-- content -->
-      <div class="nodeContent">
-        <!-- left -->
-        <div class="nodeContentLeft">
-          <table>
-            <tr class="trAnimate" ng-repeat="(key, value) in MmoduleSelected.content">
-              <td>{{key}}</td>
-              <td>{{value}}</td>
-            </tr>
-          </table>
-        </div>
-        <!-- right -->
-        <div class="nodeContentRight" ng-click="FshowRightNode('module')">
-          <div class="bigText">{{MmoduleSelected.name}}</div>
-          <div class="smallText">已选模块</div>
+      <div class="node">
+        <div class="nodeTitle">已选模块</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarNode" ng-click="FshowRightNode('module')">选取模块</div>
+            <div class="toolbarErrorNode" ng-show="!MshowBottomSuccess.module">还没有定义模块</div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbarNode">Ansible模块: {{MmoduleSelected.name}}</div>
+            <div class="toolbarNode">执行用户: {{MmoduleSelected.content.osuser}}</div>
+            <div class="toolbarNode">内容: {{MmoduleSelected.content.name}}</div>
+          </div>
         </div>
       </div>
-
-      <!-- judgement -->
-      <div class="nodeBottom errorContent" ng-show="!MshowBottomSuccess.module">
-        还没有定义模块
-      </div>
-      <div class="nodeBottom successContent" ng-show="MshowBottomSuccess.module">
-        <i class="iconfont">&#xe67c;</i>
-      </div>
-    </div>
-  </div>
-
-  <!-- right dashboard detail -->
-  <div class="dashboardRight" ng-show="MshowRight.detail">
-    <!-- create walker! -->
-    <div class="row" ng-show="MshowGo" ng-click="Fexecute()">
-      <div class="flatBigNode go">
-        <div class="nodeContent">
-          <div>执行！</div>
+      <div class="node">
+        <div class="nodeTitle">已选机器</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarNode" ng-click="FshowRightNode('hosts')">选取机器</div>
+            <div class="toolbarErrorNode" ng-show="!MshowBottomSuccess.hosts">还没有选取目标机器</div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbarNode">机器数量：{{MhostsSelected.length}}</div>
+          </div>
+          <div class="toolbarNode" ng-repeat="node in MhostsSelected">{{node.interfaces[0].ip}}</div>
         </div>
       </div>
     </div>
 
-    <!-- hosts detail -->
-    <div class="row" ng-show="MshowRightNode.hosts">
-      <div class="bigNode">
-        <!-- title -->
-        <div class="nodeTitle">Hosts Selector</div>
-        <!-- content -->
-        <div class="nodeContent">
-          <!-- toolbar -->
-          <div class="tableContent">
-            <div class="toolbar">
-              <div class="toolbarNode label">
-                筛选
-                <div class="filterBox">
-                  <div class="toolbar" ng-repeat="filter in Mfilters">
-                    <i class="toolbarNode iconfont" ng-click="FremoveFilter(filter)">&#xe67f;</i>
-                    <select class="toolbarNode filterName" name="filters" ng-model="filter.filterName">
-                      <option ng-repeat="option in MhostsDataTh" value="{{option.filterName}}">{{option.th}}</option>
-                    </select>
-                    <select class="toolbarNode filterBool" name="bool" ng-model="filter.filterBool">
-                      <option value="=">=</option>
-                      <option value="!=">!=</option>
-                    </select>
-                    <input class="toolbarNode filterContent" type="text" ng-model="filter.filterContent">
-                  </div>
-                  <div class="toolbar">
-                    <i class="toolbarNode iconfont" ng-click="FaddFilter()">&#xe649;</i>
-                    <div class="toolbarNode">匹配数：{{MhostsDataFilter.length}}</div>
-                  </div>
+    <div class="twoThirdCol">
+      <!-- Host Detail -->
+      <div class="node" ng-show="MshowRightNode.hosts">
+        <div class="nodeTitle">主机选择</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarNode label">
+              筛选
+              <div class="filterBox">
+                <div class="toolbar" ng-repeat="filter in Mfilters">
+                  <i class="toolbarNode iconfont" ng-click="FremoveFilter(filter)">&#xe67f;</i>
+                  <select class="toolbarNode filterName" name="filters" ng-model="filter.filterName">
+                    <option ng-repeat="option in MhostsDataTh" value="{{option.filterName}}">{{option.th}}</option>
+                  </select>
+                  <select class="toolbarNode filterBool" name="bool" ng-model="filter.filterBool">
+                    <option value="=">=</option>
+                    <option value="!=">!=</option>
+                  </select>
+                  <input class="toolbarNode filterContent" type="text" ng-model="filter.filterContent">
+                </div>
+                <div class="toolbar">
+                  <i class="toolbarNode iconfont" ng-click="FaddFilter()">&#xe649;</i>
+                  <div class="toolbarNode">匹配数：{{MhostsDataFilter.length}}</div>
                 </div>
               </div>
-              <div class="label toolbarNode">已选：{{MhostsSelected.length}}</div>
             </div>
+            <div class="label toolbarNode">已选：{{MhostsSelected.length}}</div>
           </div>
-          <!-- hosts table -->
-          <div class="tableContent">
-            <table>
-              <tr>
-                <th><input type="checkbox" ng-model="McheckAll.status" ng-change="FcheckAll(McheckAll)"></th>
-                <th ng-repeat="data in MhostsDataTh">{{data.th}}</th>
-              </tr>
-              <tr class="trAnimate" ng-repeat="node in MhostsDataFilter">
-                <td><input class="checkNode" type="checkbox" ng-model="node.select" ng-change="FchangeSelect(node)"></td>
-                <td>{{node.hostid}}</td>
-                <td>{{node.interfaces[0].ip}}</td>
-                <td>{{node.host}}</td>
-                <td>{{node.groups | groupsFilter}}</td>
-              </tr>
-            </table>
-          </div>
-
+          <table>
+            <tr>
+              <th><input type="checkbox" ng-model="McheckAll.status" ng-change="FcheckAll(McheckAll)"></th>
+              <th ng-repeat="data in MhostsDataTh">{{data.th}}</th>
+            </tr>
+            <tr class="trAnimate" ng-repeat="node in MhostsDataFilter">
+              <td><input class="checkNode" type="checkbox" ng-model="node.select" ng-change="FchangeSelect(node)"></td>
+              <td>{{node.hostid}}</td>
+              <td>{{node.interfaces[0].ip}}</td>
+              <td>{{node.host}}</td>
+              <td>{{node.groups | groupsFilter}}</td>
+            </tr>
+          </table>
         </div>
       </div>
-    </div>
 
-    <!-- module detail -->
-    <div class="row" ng-show="MshowRightNode.module">
-      <div class="bigNode">
-        <!-- title -->
-        <div class="nodeTitle">Module Editor {{MmoduleSelected.name}}</div>
-        <!-- content -->
-        <div class="nodeContent">
-
-          <!-- module selector -->
-          <div class="tableContent">
-            <div class="toolbar">
-              <div class="toolbarNode">选择模块：</div>
-              <div class="toolbarNode" ng-repeat="(key, value) in Mmodules" ng-click="FselectModule(key)">{{key}}</div>
-            </div>
-          </div>
-
-          <!-- ！！！！！！！！！！！！！！！shell module！！！！！！！！！！！！！！！！！！！ -->
-          <div ng-show="Mmodules.shell">
-            <!-- toolbar -->
-            <div class="tableContent">
-              <div class="toolbar">
-                <div class="toolbarNode">执行用户：</div>
-                <select class="toolbarNode" ng-model="MshellContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
-              </div>
-            </div>
-            <!-- code editor -->
-            <div class="tableContent">
-              <div ui-codemirror="MeditorOptions.shell" ng-model="MshellContent.shell"></div>
-            </div>
-            <div class="tableContent">
-              <div class="toolbar">
-                <div class="toolbarNode" ng-click="MselectContent(MshellContent)">确定</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ！！！！！！！！！！！！！！！script module！！！！！！！！！！！！！！！！！！！ -->
-          <div ng-show="Mmodules.script">
-            <div class="tableContent">
-              <div class="toolbar">
-                <div class="toolbarNode" ng-click="FshowScripts()">选取脚本</div>
-                <div class="toolbarNode">执行用户：</div>
-                <select class="toolbarNode" ng-model="MscriptContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
-                <div class="toolbarNode">{{Mscript.script_name}}</div>
-                <div class="toolbarNode">{{Mscript.script_lang}}</div>
-              </div>
-            </div>
-            <!-- code editor -->
-            <div class="tableContent">
-              <div ui-codemirror="MeditorOptions.script" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
-            </div>
-            <div class="tableContent">
-              <div class="toolbar">
-                <div class="toolbarNode" ng-click="MselectContent(MscriptContent)">确定</div>
-              </div>
-            </div>
-          </div>
-
+      <!-- Module Detail -->
+      <div class="node" ng-show="MshowRightNode.module">
+        <div class="nodeTitle">模块选择</div>
+        <div class="toolbar">
+          <div class="toolbarNode">选择模块：</div>
+          <div class="toolbarNode" ng-repeat="(key, value) in Mmodules" ng-click="FselectModule(key)">{{key}}</div>
         </div>
+
+        <!-- ！！！！！！！！！！！！！！！shell module！！！！！！！！！！！！！！！！！！！ -->
+        <div ng-show="Mmodules.shell">
+          <div class="toolbar">
+            <select class="toolbarNode" ng-model="MshellContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+          </div>
+          <div ui-codemirror="MeditorOptions.shell" ng-model="MshellContent.shell"></div>
+          <div class="toolbar">
+            <div class="toolbarNode" ng-click="MselectContent(MshellContent)">确定</div>
+          </div>
+        </div>
+
+        <!-- ！！！！！！！！！！！！！！！script module！！！！！！！！！！！！！！！！！！！ -->
+        <div ng-show="Mmodules.script">
+          <div class="toolbar">
+            <div class="toolbarNode" ng-click="FshowScripts()">选取脚本</div>
+            <select class="toolbarNode" ng-model="MscriptContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+            <div class="toolbarNode">{{Mscript.script_name}}</div>
+            <div class="toolbarNode">{{Mscript.script_lang}}</div>
+          </div>
+          <!-- code editor -->
+          <div ui-codemirror="MeditorOptions.script" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
+          <div class="toolbar">
+            <div class="toolbarNode" ng-click="MselectContent(MscriptContent)">确定</div>
+          </div>
+        </div>
+
       </div>
     </div>
-
   </div>
 
-
-
-  <!-- right dashboard executor -->
-  <div class="dashboardRight" ng-show="MshowRight.executor">
-    <div class="row">
-      <div class="bigNode">
-        <div class="nodeTitle">执行结果</div>
-        <div class="nodeContent">
+  <!-- executor -->
+    <div class="row" ng-show="MshowRight.executor">
+      <div class="fullCol">
+        <div class="node">
+          <div class="nodeTitle">执行结果</div>
           <div class="tableContent">
             <div class="toolbar">
               <div class="toolbarNode label" ng-click="Fback()">返回</div>
@@ -209,12 +133,13 @@
               <div class="toolbarNode" ng-click="FstopInfoWalker()">停止轮询</div>
             </div>
             <!-- Result dashboard -->
-            <div class="nodeContentLeft">
+            <div class="threeQuarterCol">
               <div ui-codemirror="MeditorOptions.executor" ng-model="Mstdout" ui-refresh="Mstdout"></div>
               <div class="codeEditorLoding" ng-show="MshowLoading"></div>
             </div>
             <!-- Hosts list -->
-            <div class="nodeContentRight codeEditor">
+            <div class="quarterCol">
+              <div class="progressbar" option="pro.result"></div>
               <table>
                 <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
                   <td>{{key}}</td>
@@ -222,19 +147,9 @@
                 </tr>
               </table>
             </div>
-            <!-- Progress bar -->
-            <div class="toolbar">
-              <div class="progressBar bgSuccess" progress="Mprogress" kind="success"></div>
-              <div class="progressBar bgFailed" progress="Mprogress" kind="failed"></div>
-              <div class="progressBar bgUnreachable" progress="Mprogress" kind="unreachable"></div>
-              <div class="progressBar bgSkipped" progress="Mprogress" kind="skipped"></div>
-            </div>
           </div>
+          <div class="nodeBottom">{{MerrInfo}}</div>
         </div>
-        <div class="nodeBottom">{{MerrInfo}}</div>
       </div>
     </div>
-
-  </div>
-
 </div>

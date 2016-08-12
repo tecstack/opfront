@@ -242,37 +242,42 @@ promise.controller('Cui', function($scope,$rootScope){
         }
     ]
   };
-  $scope.indexDataPie = [
-    {
-        value: 300,
-        color:"RGBA(255, 102, 0, 0.8)",
-        highlight: "RGBA(255, 102, 0, 1)",
-        label: "Red"
-    },
-    {
-        value: 50,
-        color: "rgba(255, 255, 255, 0.8)",
-        highlight: "rgba(255,255,255,1)",
-        label: "White"
-    },
-    {
-        value: 100,
-        color: "RGBA(69, 129, 218, 0.8)",
-        highlight: "RGBA(69, 129, 218, 1)",
-        label: "Blue"
-    }
+
+  $scope.MuserOptions = [
+    {value: '001', label: '小明'},
+    {value: '002', label: '小暗'},
+    {value: '003', label: '小美'},
   ];
-  $scope.tableDataTh = ['ID','名称','来源','年龄','爱好','特长','座右铭','书籍','植物','上周二的早餐','对第二次世界大战的看法','有钱以后想干什么'];
+  $scope.tableDataTh = ['ID','名称','来源','年龄','爱好','特长','返回值'];
   $scope.tableData = [
-    ['0','azrael','中国南方基地','28','没啥爱好','胳膊和腿比较长','整什么幺蛾子','克苏鲁神话','捕虫瑾','好像忘了吃了','正义终将会取得胜利','先懵逼一会儿'],
-    ['89757','Null','Null','Null','Null','Null','414FAS#%IO','Null','Null','壳牌机油','Null','升级一下芯片'],
-    ['1','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
-    ['2','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
-    ['3','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
-    ['4','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null'],
-    ['5','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null','Null']
+    ['0','小明','海岸线','29','琴棋书画','无','200'],
+    ['1','小暗','山脉','25','花草走兽','无','404'],
+    ['2','小美','科技城','21','山珍海味','无','304'],
+    ['3','Null','Null','Null','Null','Null','Null']
   ];
 
+  $scope.pro = {
+    'xiaomin': {
+      'name': '小明个人成就',
+      'max': 100,
+      'current': 76,
+    },
+    'xiaoan': {
+      'name': '小暗收集图鉴',
+      'max': 3065,
+      'current': 798,
+    },
+    'xiaomei': {
+      'name': '小美游历奖牌',
+      'max': 1000,
+      'current': 357,
+    },
+    'ant': {
+      'name': '码蚁里程碑',
+      'max': 10,
+      'current': 2,
+    },
+  }
 });
 
 // ------------------------------Host----------------------------
@@ -293,9 +298,15 @@ promise.controller('ChostHelper', function($scope, $rootScope){
 // ------------------------------Script----------------------------
 promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService){
   // 初始化
+  $scope.MlangOptions = [
+    {'label': '选择语言', 'value': ''},
+    {'label': 'Python', 'value': 'python'},
+    {'label': 'Shell', 'value': 'shell'}
+  ]
   $scope.MisPublicOptions = [
-    {'label':'仅自己', 'value':0},
-    {'label':'所有人', 'value':1}
+    {'label': '是否公开', 'value': ''},
+    {'label': '仅自己', 'value': 0},
+    {'label': '所有人', 'value': 1}
   ];
   $scope.MscriptTh = ['名称','语言','公开','创建人','最后更新时间','操作'];
   $scope.MeditorOptions = {
@@ -381,7 +392,8 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
     'update': false
   };
   $scope.FnewAction = function(){
-    $scope.Mscript = {'script_lang': $scope.MeditorOptions.mode};
+    $scope.MeditorOptions.mode = '';
+    $scope.Mscript = {'script_lang': $scope.MeditorOptions.mode, 'is_public': ''};
     $scope.Mshow.list = false;
     $scope.Mshow.editor = true;
     $scope.Mshow.create = true;
@@ -418,8 +430,10 @@ promise.controller('CscriptHelper', function($rootScope){
 });
 
 // --------------------------Module---------------------------
-promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, SscriptService, SwalkerService){
+promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, SscriptService, SwalkerService, SinfoService){
   // walker接口服务
+  // 轮询集，里面存放了当前页面的所有walker轮询任务
+  $scope.MinfoWalkerPromise = {};
   $scope.FcreateWalker = function(VmoduleName, VmoduleVars){
     SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
       {},
@@ -427,7 +441,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       function successCallback(callbackdata){
         $scope.MwalkerId = callbackdata.walker_id;
         $scope.MerrInfo = callbackdata.message;
-        $scope.MinfoWalkerPromise = $interval(
+        $scope.MinfoWalkerPromise[$scope.MwalkerId] = $interval(
           function (){
             $scope.FinfoWalker($scope.MmoduleSelected.name, $scope.MwalkerId);
           },
@@ -474,6 +488,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
           }
         };
         $scope.Mprogress.success = Vsuccess;
+        $scope.pro.result.current = $scope.Mprogress.success;
         $scope.Mprogress.failed = Vfailed;
         $scope.Mprogress.unreachable = Vunreachable;
         $scope.Mprogress.skipped = Vskipped;
@@ -485,10 +500,16 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       }
     );
   };
+  // 停止所有轮询
   $scope.FstopInfoWalker = function(){
-    if (angular.isDefined($scope.MinfoWalkerPromise)) {
-      $interval.cancel($scope.MinfoWalkerPromise);
-      $scope.MinfoWalkerPromise = undefined;
+    if (!jQuery.isEmptyObject($scope.MinfoWalkerPromise)) {
+      var Vnum = Object.keys($scope.MinfoWalkerPromise).length;
+      for (var walkerId in $scope.MinfoWalkerPromise) {
+        $interval.cancel($scope.MinfoWalkerPromise[walkerId]);
+        delete $scope.MinfoWalkerPromise[walkerId];
+      }
+      SinfoService.FaddInfo('已停止' + Vnum + '个轮询任务');
+      $scope.MshowLoading = false;
     };
   };
   $scope.$on('$destroy', function() {
@@ -505,10 +526,12 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     'skipped': 0,
     'total': 0,
   };
-
   $scope.MosuserOptions = [
+    {'label':'选取执行用户', 'value':''},
     {'label':'ROOT', 'value':'root'},
   ];
+  // codemirror 结构体
+  $scope.Meditor = {};
   $scope.MeditorOptions = {
     'shell': {
       lineNumbers: true,
@@ -516,6 +539,9 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       // readOnly: 'nocursor',
       lineWrapping : false,
       mode: 'shell',
+      onLoad: function(_cm){
+        $scope.Meditor.shell = _cm;
+      },
     },
     'script': {
       lineNumbers: true,
@@ -523,6 +549,9 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       readOnly: 'nocursor',
       lineWrapping : false,
       mode: 'python',
+      onLoad: function(_cm){
+        $scope.Meditor.script = _cm;
+      },
     },
     'executor': {
       lineNumbers: true,
@@ -530,8 +559,15 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       readOnly: 'nocursor',
       lineWrapping : false,
       mode: 'shell',
+      onLoad: function(_cm){
+        $scope.Meditor.executor = _cm;
+        $scope.Meditor.executor.setSize(null, '500px');
+      },
     },
   };
+
+  // $scope.Meditor.script.setSize('500px','1000px');
+
   $scope.MselectContent = function(Vcontent){
     $scope.MmoduleSelected.content = Vcontent;
     $rootScope.MshowHelper = false;
@@ -540,13 +576,13 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   // shell editor
   $scope.MshellContent = {
     'shell': '',
-    'osuser': 'root'
+    'osuser': ''
   };
 
   // script editor
   $scope.MscriptContent = {
     'scriptid': '',
-    'osuser': 'root'
+    'osuser': ''
   };
   $scope.FshowScripts = function(){
     $rootScope.MshowHelper = true;
@@ -554,13 +590,25 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       $rootScope.MshowHelperNode[key] = false;
     }
     $rootScope.MshowHelperNode.script = true;
-    $rootScope.FgetScriptList();
   };
 
   // ---------------------Executor---------------------
+  // 用来存放进度条数据
+  $scope.pro = {
+    'result': {
+      'name': '成功个数',
+      'max': 0,
+      'current': 0,
+    },
+  };
   $scope.MpostWalkerInfo = {};
   $scope.Mresult = {};
   $scope.Fexecute = function(){
+    $scope.pro.result = {
+      'name': '成功个数',
+      'max': 0,
+      'current': 0,
+    };
     $scope.MshowRight.detail = false;
     $scope.MshowRight.executor = true;
     $scope.MshowLoading = true;
@@ -576,6 +624,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       var ip = $rootScope.MhostsSelected[node].interfaces[0].ip;
       $scope.MpostWalkerInfo.iplist.push(ip);
       $scope.Mresult[ip] = {};
+      $scope.pro.result.max += 1;
     }
     $scope.FcreateWalker($scope.MmoduleSelected.name, $scope.MpostWalkerInfo);
   };
@@ -640,6 +689,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     if ($rootScope.Mscript) {
       $scope.MeditorOptions.script.mode = $rootScope.Mscript.script_lang;
       $scope.MscriptContent.scriptid = $rootScope.Mscript.script_id;
+      $scope.MscriptContent.name = $rootScope.Mscript.script_name;
     };
   });
   // 监控是否选定了模块内容，变更判定状态和字段
@@ -660,10 +710,9 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       for (var node in newValue) {
         if (newValue[node].sum_ok || newValue[node].sum_changed || newValue[node].sum_failures || newValue[node].sum_unreachable || newValue[node].sum_skipped) {
           $scope.FstopInfoWalker();
-          $scope.MshowLoading = false;
           break;
-        }
-      }
+        };
+      };
     };
   });
 

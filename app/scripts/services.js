@@ -1,7 +1,7 @@
 'use strict';
 
 var promise = angular.module('promise');
-var timeout = 10000;
+var timeout = 30000;
 promise.factory('SinfoService', function($rootScope, $timeout){
 	var FaddInfo = function(Vinfo){
 		$rootScope.Minfos.push(Vinfo);
@@ -167,13 +167,13 @@ promise.factory('ShostService', function($resource){
 		Fhost: function(Vtoken) {
 			// $resource(url, [paramDefaults], [actions], options);
 			var VhostRestApi = $resource(VuserUrl, {}, {
-				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
 			});
 			return VhostRestApi;
 		},
 		FhostId: function(Vtoken, VhostId) {
 			var VhostIdRestApi = $resource(VuserUrl+VhostId, {}, {
-				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
 			});
 			return VhostIdRestApi;
 		},
@@ -196,7 +196,7 @@ promise.factory('SscriptService', function($resource){
 		},
 		Fget: function(Vtoken, VscriptId) {
 			var VscriptRestApi = $resource(VuserUrl, {'script_id': VscriptId}, {
-				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
+				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
 			});
 			return VscriptRestApi;
 		},

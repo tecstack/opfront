@@ -60,6 +60,22 @@ promise.directive('scriptNode',function($rootScope){
 		}
 	};
 });
+// progressBar
+promise.directive('progressbar',function(){
+	return{
+		restrict: 'C',
+		scope: {
+			option: '=option'
+		},
+		templateUrl: 'views/progressBar.html',
+		link: function(scope,element,attrs){
+			scope.$watchCollection('option', function(){
+				scope.rate = parseFloat(scope.option.current)/parseFloat(scope.option.max)*100 + '%';
+			});
+		}
+	};
+});
+
 // chartjs line
 promise.directive('chartLine',function(){
 	return{

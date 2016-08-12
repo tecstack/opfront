@@ -1,78 +1,74 @@
 <div ng-controller="Cscript">
   <div class="row" ng-show="Mshow.list">
-    <div class="bigNode">
-      <div class="nodeTitle">Script List</div>
-      <div class="nodeContent">
-        <div class="tableContent">
-          <div class="toolbar">
-            <input type="text" class="toolbarNode" placeholder="Search...">
-            <div class="toolbarNode label" ng-click="FgetScriptList()">刷新</div>
-            <div class="toolbarNode label" ng-click="FnewAction()">新建</div>
+    <div class="bigCol">
+      <div class="node">
+        <div class="nodeTitle">Script List</div>
+        <div class="nodeContent">
+          <div class="tableContent">
+            <div class="toolbar">
+              <input type="text" class="toolbarNode" placeholder="Search...">
+              <div class="toolbarNode label" ng-click="FgetScriptList()">刷新</div>
+              <div class="toolbarNode label" ng-click="FnewAction()">新建</div>
+            </div>
+          </div>
+
+          <div class="tableContent">
+            <table>
+              <tr>
+                <th ng-repeat="data in MscriptTh track by $index">{{data}}</th>
+              </tr>
+              <tr ng-repeat="script in Mscripts track by $index" class="scriptNode">
+                <td>{{script.script_name}}</td>
+                <td>{{script.script_lang}}</td>
+                <td>{{script.is_public}}</td>
+                <td>{{script.owner_name}}</td>
+                <td>{{script.time_last_edit | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                  <div ng-show="MshowAction">
+                    <a href="" ng-click="FupdateAction(script)">编辑</a>
+                    <a href="">克隆</a>
+                    <a href="" class="delete">删除</a>
+                    <a href="">执行</a>
+                  </div>
+                  <div ng-show="!MshowAction">
+                    <a href="" class="confirm" ng-click="FdeleteScript(script)">确定</a>
+                    <a href="" class="cancel">取消</a>
+                  </div>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
-
-        <div class="tableContent">
-          <table>
-            <tr>
-              <th ng-repeat="data in MscriptTh track by $index">{{data}}</th>
-            </tr>
-            <tr ng-repeat="script in Mscripts track by $index" class="scriptNode">
-              <td>{{script.script_name}}</td>
-              <td>{{script.script_lang}}</td>
-              <td>{{script.is_public}}</td>
-              <td>{{script.owner_name}}</td>
-              <td>{{script.time_last_edit | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-              <td>
-                <div ng-show="MshowAction">
-                  <a href="" ng-click="FupdateAction(script)">编辑</a>
-                  <a href="">克隆</a>
-                  <a href="" class="delete">删除</a>
-                  <a href="">执行</a>
-                </div>
-                <div ng-show="!MshowAction">
-                  <a href="" class="confirm" ng-click="FdeleteScript(script)">确定</a>
-                  <a href="" class="cancel">取消</a>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </div>
+        <div class="nodeBottom">{{MscriptInfo.getList}}</div>
       </div>
-      <div class="nodeBottom">{{MscriptInfo.getList}}</div>
     </div>
   </div>
 
   <div class="row" ng-show="Mshow.editor">
-    <div class="bigNode">
-      <div class="nodeTitle">Script Editor</div>
-      <div class="nodeContent">
-        <div class="tableContent">
-          <div class="toolbar">
-            <div class="toolbarNode label">命名：</div>
-            <input type="text" class="toolbarNode" ng-model="Mscript.script_name">
-            <div class="toolbarNode label">语言：</div>
-            <select class="toolbarNode" name="" ng-model="MeditorOptions.mode">
-              <option value="python">Python</option>
-              <option value="shell">Shell</option>
-            </select>
-            <div class="toolbarNode label">公开：</div>
-            <select class="toolbarNode" name="" ng-model="Mscript.is_public" ng-options="item.value as item.label for item in MisPublicOptions">
-            </select>
+    <div class="bigCol">
+      <div class="node">
+        <div class="nodeTitle">Script Editor</div>
+        <div class="nodeContent">
+          <div class="tableContent">
+            <div class="toolbar">
+              <input type="text" class="toolbarNode" ng-model="Mscript.script_name" placeholder="命名...">
+              <select class="toolbarNode" name="" ng-model="MeditorOptions.mode" ng-options="item.value as item.label for item in MlangOptions"></select>
+              <select class="toolbarNode" name="" ng-model="Mscript.is_public" ng-options="item.value as item.label for item in MisPublicOptions"></select>
+            </div>
+          </div>
+          <div class="tableContent">
+            <div ui-codemirror="MeditorOptions" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
+          </div>
+          <div class="tableContent">
+            <div class="toolbar">
+              <div class="toolbarNode label" ng-show="Mshow.create" ng-click="FcreateScript(Mscript)">保存</div>
+              <div class="toolbarNode label" ng-show="Mshow.update" ng-click="FupdateScript(Mscript)">更新</div>
+              <div class="toolbarNode label" ng-click="FbackAction()">返回</div>
+            </div>
           </div>
         </div>
-        <div class="tableContent">
-          <div ui-codemirror="MeditorOptions" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
-        </div>
-        <div class="tableContent">
-          <div class="toolbar">
-            <div class="toolbarNode label" ng-show="Mshow.create" ng-click="FcreateScript(Mscript)">保存</div>
-            <div class="toolbarNode label" ng-show="Mshow.update" ng-click="FupdateScript(Mscript)">更新</div>
-            <div class="toolbarNode label" ng-click="FbackAction()">返回</div>
-          </div>
-        </div>
+        <div class="nodeBottom">{{MscriptInfo.create}}</div>
       </div>
-      <div class="nodeBottom">{{MscriptInfo.create}}</div>
     </div>
   </div>
-
 </div>

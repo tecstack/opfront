@@ -163,36 +163,6 @@ promise.animation('.codeEditorLoding', function(){
   };
 });
 
-promise.directive('progressBar',function(){
-	return{
-		restrict: 'C',
-    scope: {
-      progress: '='
-    },
-		link: function(scope,element,attrs){
-      scope.$watchCollection('progress', function(newValue, oldValue) {
-        if (newValue) {
-          var Vkind = attrs.kind;
-          var Vnumber = newValue[Vkind];
-          var Vtotal = newValue.total;
-          if (Vtotal) {
-            var Vprogress = parseFloat(Vnumber)/parseFloat(Vtotal)*100;
-            element.animate({'width': Vprogress + '%'}, 150);
-            if (Vnumber) {
-              element.html(Vnumber);
-            } else {
-              element.empty();
-            };
-          } else {
-            element.empty();
-            element.animate({'width': '0'}, 150);
-          };
-        };
-      });
-		}
-	};
-});
-
 // promise.animation('.trAnimate', function(){
 //   return{
 //     enter: function(element, parent){

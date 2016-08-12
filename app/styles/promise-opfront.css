@@ -42,10 +42,9 @@ input:focus, select:focus, button:focus {
 }
 input[type="text"],input[type="password"] {
 	border: 0;
-	/*margin: 0;*/
-	padding: 0 5px;
-	font-size: 15px;
-	line-height: 40px;
+	padding: 0 15px;
+	font-size: 16px;
+	line-height: 35px;
 	text-align: left;
   color: #fff;
 }
@@ -62,63 +61,44 @@ input::-webkit-input-placeholder {
   color: #fff;
 }
 select {
+  position: relative;
   appearance:none;
   -moz-appearance:none;
   -webkit-appearance:none;
-  margin-bottom: 5px;
-  width: 100%;
   border: 0;
-  border-radius: 0;
   text-align: center;
   text-align-last: center;
-  line-height: 40px;
-  font-size: 20px;
+  line-height: 35px;
+  font-size: 16px;
   color: #fff;
-  background-color: transparent;
-  cursor: pointer;
-  /*background-color: #95A7EE;*/
 }
 table {
 	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
 	/* box model: border / margin / padding / width / height / ... */
 	/*margin-bottom: 5px;*/
 	padding: 0;
-	border: 1px solid #E9E9E9;
 	width: 100%;
 	border-collapse: collapse;
   /*table-layout: fixed;*/
 	/* typographic: font / line-height / text-align / word-wrap / ... */
-	font-size: 16px;
-	text-align: center;
+	font-size: 18px;
+	text-align: left;
 	/* visual: background / color / transition / list-style / shadows / ... */
 	cursor: pointer;
 }
 table tr {
 	margin: 0;
 	padding: 0;
-  border-bottom: 1px solid #E9E9E9;
 	line-height: 35px;
-}
-table tr:last-child {
-  border-bottom: 0;
 }
 table tr:hover {
 	/* visual: background / color / transition / list-style / shadows / ... */
-  background-color: rgba(100, 100, 100, 0.5);
+  color: #9FB5FF;
+  background-color: rgba(38, 41, 40, 0.8);
 	/*background-color: #AFBFF7;*/
 }
 table td, table th {
-	margin: 0;
-	padding: 0;
-  border-right: 1px solid #E9E9E9;
-	/*border-right: 1px solid #948E93;*/
-	text-align: center;
-}
-table td:last-child, table th:last-child {
-  border-right: 0;
-}
-table td:hover {
-	/*background-color: #77829C;*/
+	padding-left: 10px;
 }
 table a {
 	display: inline-block;
@@ -149,9 +129,18 @@ table a:hover {
   background: url('/images/night.jpg');
   background-size: 100% 100%;
 }
+.signNode {
+  width: 400px;
+  margin: auto;
+  margin-top: 200px;
+}
+.signBar {
+  width: 253px !important;
+  margin: auto !important;
+}
 .signTitle {
   display: block;
-  margin-top: 220px;
+  margin-top: 20px;
   margin-bottom: 20px;
   font-size: 60px;
   font-weight: 800;
@@ -163,39 +152,11 @@ table a:hover {
   margin-top: 0;
 }
 .signError {
-  /*margin-bottom: 10px;*/
-  width: 100%;
-  border-bottom: 1px solid #E9E9E9;
-  line-height: 40px;
-  color: #FF0002;
+  width: calc(100% - 35px);
+  color: #FF6284;
   text-align: center;
 }
-/*.signInputWraper {
-	width: 100%;
-	margin-bottom: 15px;
-	padding: 0;
-}
-.signInputWraper>.iconfont {
-	float: left;
-	border-right: 2px solid #95A7EE;
-	padding-right: 5px;
-  color: #95A7EE;
-	font-size: 25px;
-  font-weight: 900;
-	line-height: 35px;
-	text-align: center;
-	cursor: default;
-}
-.signInputWraper>input[type="text"],.signInputWraper>input[type="password"] {
-	display: inline-block;
-	padding: 5px 10px;
-	width: calc(100% - 36px - 20px);
-	font-size: 16px;
-	line-height: 25px;
-	text-align: left;
-  background-color: transparent;
-  color: #fff;
-}*/
+
 
 /* Navbar */
 .navbar {
@@ -454,6 +415,7 @@ table a:hover {
 	margin: 0px;
 	/* typographic: font / line-height / text-align / word-wrap / ... */
 	/* visual: background / color / transition / list-style / shadows / ... */
+  color: #fff;
 	cursor: pointer;
 }
 .helperTrigger:hover {
@@ -534,23 +496,7 @@ table a:hover {
 	/* typographic: font / line-height / text-align / word-wrap / ... */
 	/* visual: background / color / transition / list-style / shadows / ... */
 }
-.dashboardLeft {
-  position: fixed;
-  top: 50px;
-  left: 0;
-  bottom: 0;
-  width: 20%;
-  z-index: 2;
-}
-.dashboardRight {
-  position: fixed;
-  overflow: auto;
-  top: 50px;
-  left: 20%;
-  bottom: 0;
-  width: 80%;
-  z-index: 2;
-}
+
 .row {
   float: left;
   position: relative;
@@ -560,111 +506,170 @@ table a:hover {
   padding: 0;
   margin: 15px 15px 0 15px;
   width: calc(100% - 30px);
+  color: #fff;
   font-size: 18px;
 }
 .row:last-child {
   margin-bottom: 15px;
 }
+.fullCol {
+  position: relative;
+	float: left;
+	overflow: hidden;
+	width: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+.halfCol {
+  position: relative;
+	float: left;
+	overflow: hidden;
+	width: calc((100% - 15px) / 2);
+	border: 0;
+	margin-right: 15px;
+	padding: 0;
+}
+.thirdCol {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  width: calc((100% - 30px) / 3);
+  border: 0;
+  margin-right: 15px;
+  padding: 0;
+}
+.twoThirdCol {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  width: calc((100% - 30px) / 3 * 2);
+  border: 0;
+  margin-right: 15px;
+  padding: 0;
+}
+.quarterCol {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  width: calc((100% - 45px) / 4);
+  border: 0;
+  margin-right: 15px;
+  padding: 0;
+}
+.threeQuarterCol {
+  position: relative;
+  float: left;
+  overflow: hidden;
+  width: calc((100% - 45px) / 4 * 3);
+  border: 0;
+  margin-right: 15px;
+  padding: 0;
+}
+.halfCol:last-child, .thirdCol:last-child, .twoThirdCol:last-child, .quarterCol:last-child, .threeQuarterCol:last-child {
+  margin-right: 0;
+}
+.node {
+  display: block;
+  position: relative;
+	overflow: hidden;
+	z-index: 2;
+	margin-bottom: 15px;
+	padding: 15px;
+  background-color: rgba(38, 41, 40, 0.5);
+}
+.node:last-child {
+  margin-bottom: 0;
+}
+.nodeTitle {
+  display: block;
+  clear: both;
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 600;
+}
+.nodeContent {
+
+}
+.nodeBottom {
+  line-height: 25px;
+  text-align: center;
+}
 
 /* Node */
-.tinyNode {
-	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+/*.tinyNode {
   position: relative;
 	float: left;
 	overflow: hidden;
 	z-index: 2;
-	/* box model: border / margin / padding / width / height / ... */
 	width: calc((100% - 30px) / 3);
 	min-height: 200px;
 	border: 0;
 	margin-right: 15px;
 	padding: 0;
-	/* typographic: font / line-height / text-align / word-wrap / ... */
-	/* visual: background / color / transition / list-style / shadows / ... */
   color: #fff;
-  /*background-color: #95A7EE;*/
   background-color: rgba(38, 41, 40, 0.65);
 }
 .row .tinyNode:last-child {
   margin-right: 0;
 }
 .smallNode {
-	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
   position: relative;
 	float: left;
 	overflow: hidden;
 	z-index: 2;
-	/* box model: border / margin / padding / width / height / ... */
 	width: calc((100% - 15px) / 2);
 	min-height: 350px;
 	border: 0;
 	margin-right: 15px;
 	padding: 0;
-	/* typographic: font / line-height / text-align / word-wrap / ... */
-	/* visual: background / color / transition / list-style / shadows / ... */
   color: #fff;
-  /*background-color: #95A7EE;*/
   background-color: rgba(38, 41, 40, 0.65);
 }
 .row .smallNode:last-child {
   margin-right: 0;
 }
 .bigNode {
-	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
   position: relative;
 	float: left;
 	overflow: hidden;
 	z-index: 2;
-	/* box model: border / margin / padding / width / height / ... */
 	width: 100%;
   min-height: 500px;
 	border: 0;
 	margin: 0;
 	padding: 0;
-	/* typographic: font / line-height / text-align / word-wrap / ... */
-	/* visual: background / color / transition / list-style / shadows / ... */
   color: #fff;
-  /*background-color: #95A7EE;*/
   background-color: rgba(38, 41, 40, 0.65);
 }
 .leftNodeScript {
-  /* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
   position: relative;
 	overflow: hidden;
   z-index: 2;
   clear: both;
-	/* box model: border / margin / padding / width / height / ... */
 	height: calc((100% - 60px) / 3);
 	border: 0;
 	margin: 15px;
 	padding: 0;
-	/* typographic: font / line-height / text-align / word-wrap / ... */
   color: #fff;
-	/* visual: background / color / transition / list-style / shadows / ... */
   background-color: rgba(38, 41, 40, 0.65);
-  /*box-shadow: 0px 0px 5px #8697DA;*/
 }
 .flatBigNode {
-  /* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
   position: relative;
 	float: left;
 	overflow: hidden;
 	z-index: 2;
-	/* box model: border / margin / padding / width / height / ... */
 	width: 100%;
   min-height: 80px;
 	border: 0;
 	margin: 0;
 	padding: 0;
-	/* typographic: font / line-height / text-align / word-wrap / ... */
-	/* visual: background / color / transition / list-style / shadows / ... */
   color: #fff;
-  /*background-color: #95A7EE;*/
   background-color: rgba(38, 41, 40, 0.65);
-}
+}*/
 
 /* Node inside */
-.nodeTitle {
+/*.nodeTitle {
   position: absolute;
   left: 0;
   top: 0;
@@ -689,8 +694,9 @@ table a:hover {
   position: relative;
   width: 100%;
   margin: 40px 0;
-}
-.leftNodeScript .nodeContent {
+}*/
+
+/*.leftNodeScript .nodeContent {
   height: calc(100% - 80px);
 }
 .nodeContentLeft {
@@ -720,13 +726,12 @@ table a:hover {
 }
 .nodeContentRight:hover {
   background-color: rgba(100, 100, 100, 0.5);
-}
+}*/
 
 /* Content */
 .textContent {
 	text-align: center;
-  padding: 0 10%;
-  margin-top: 80px;
+  margin: 35px;
 }
 .textTitle {
   display: block;
@@ -737,6 +742,7 @@ table a:hover {
   text-align: center;
   /*color: #95A7EE;*/
 }
+
 .formContent {
   width: 350px;
   margin: auto;
@@ -808,48 +814,42 @@ table a:hover {
   clear: both;
   position: relative;
   /*box-sizing: border-box;*/
-  width: calc(100% - 2px);
-  height: 40px;
-  margin: 0;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 35px;
   padding: 0;
-  border: 1px solid #E9E9E9;
 }
 .toolbarNode {
   float: left;
   position: relative;
-  margin: 0;
-  padding: 0 5px;
-  border-right: 1px solid #E9E9E9 !important;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  padding: 0 15px;
   text-align: center;
-  line-height: 40px;
-  font-size: 18px;
+  line-height: 35px;
+  font-size: 16px;
   cursor: pointer;
-  background-color: transparent;
+  border-radius: 2px;
+  background-color: rgba(110, 147, 188, 0.3);
 }
-.toolbarNode:first-child {
-  /*border-left: 1px solid #E9E9E9 !important;*/
+.toolbarNode:hover {
+  background-color: rgba(110, 147, 188, 0.8);
 }
-.toolbarNode:hover, select:hover {
-  background-color: rgba(100, 100, 100, 0.5);
-  /*background-color: #A5BFF7;*/
+.toolbarNode:active {
+  background-color: rgba(200, 200, 200, 1);
 }
 .toolbar .iconfont {
-  width: 30px;
-	font-size: 30px;
   font-weight: 900;
-	cursor: pointer;
 }
-.toolbar input[type="text"] {
-  width: 10%;
+.toolbarErrorNode {
+  float: left;
+  line-height: 35px;
+  background-color: transparent;
+  color: rgba(255, 74, 69, 1.00);
 }
-.toolbar select {
-  width: 10%;
-}
-.label {
-  cursor: pointer;
-}
+.label {}
 .middlePageControl {
-  width: calc(40px + 50px + 40px + 4px);
+  width: 185px;
   margin: auto;
 }
 .pageFlip {
@@ -868,15 +868,9 @@ table a:hover {
   z-index: 4;
   border: 2px solid #fff;
   padding: 10px;
-  width: 405px;
+  width: 450px;
   background-color: #262928;
   cursor: default;
-}
-.filterBox .toolbar:first-child {
-  border-top: 1px solid #E9E9E9;
-}
-.filterBox .toolbar {
-  border-right: 1px solid #E9E9E9;
 }
 .filterName {
   width: 110px !important;
@@ -885,20 +879,14 @@ table a:hover {
   width: 40px !important;
 }
 .filterContent {
-  width: calc(100% - 42px - 110px - 40px - 11px) !important;
+  width: calc(100% - 46px - 110px - 40px - 50px) !important;
   /*width: 180px !important;*/
   margin-right: 0;
 }
-.progressBar {
-  float: left;
-  height: 100%;
-  width: 0;
-  line-height: 40px;
-  text-align: center;
-}
 
 
 
+.progressBar {}
 
 
 
@@ -933,10 +921,6 @@ table a:hover {
 	height: 100%;
 	width: 100%;
 }
-.codeEditor {
-  height: 300px;
-  overflow: auto;
-}
 .codeEditorLoding {
   position: absolute;
   left: 0;
@@ -952,15 +936,15 @@ table a:hover {
 }
 
 /* 可视化样式 */
-.go {
+/*.go {
   text-align: center;
   font-size: 30px;
   cursor: pointer;
 }
 .go:hover {
   color: #F9515C;
-}
-.bigNumber {
+}*/
+/*.bigNumber {
   margin-top: 30%;
   text-align: center;
   font-size: 40px;
@@ -973,7 +957,7 @@ table a:hover {
 .smallText {
   text-align: center;
   font-size: 15px;
-}
+}*/
 .errorContent {
   color: #E16169;
 }
@@ -1011,4 +995,8 @@ table a:hover {
   background-color: #E4EDFF;
 }
 
-/* 测试样式 */
+/* 外部插件样式 */
+.CodeMirror {
+  font-size: 16px;
+  line-height: 16px;
+}

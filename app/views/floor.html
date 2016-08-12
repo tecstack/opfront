@@ -117,25 +117,27 @@
 <div class="signBg" ng-show="MshowSign">
   <div ng-controller="Csign">
     <div class="row">
-      <div class="bigNode transparent">
-        <div class="signTitle">Promise・Sign</div>
-        <div class="formContent">
-          <div class="formInputWraper">
-            <i class="iconfont">&#xe636;</i>
-            <input type="text" placeholder="用户名" ng-model="MuserInfo.username">
+      <div class="fullCol">
+        <div class="node signNode">
+          <div class="signTitle">Promise・Sign</div>
+          <div class="toolbar signBar">
+            <div class="toolbarNode"><i class="iconfont">&#xe636;</i></div>
+            <input class="toolbarNode" type="text" placeholder="用户名" ng-model="MuserInfo.username">
           </div>
-          <div class="formInputWraper">
-            <i class="iconfont">&#xe61b;</i>
-            <input type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event, MuserInfo, MisKeep)">
+          <div class="toolbar signBar">
+            <div class="toolbarNode"><i class="iconfont">&#xe61b;</i></div>
+            <input class="toolbarNode" type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event, MuserInfo, MisKeep)">
           </div>
-          <div class="signBar"><input type="checkbox" ng-model="MisKeep">保持登录</div>
-          <div class="signError" ng-show="MsignError">{{MsignErrorInfos}}</div>
-          <button type="button" name="button" ng-click="FsignIn(MuserInfo, MisKeep)">
-            <span>登录</span>
-          </button>
-          <button type="button" name="button">
-            <span>注册</span>
-          </button>
+          <div class="toolbar signBar">
+            <div class="toolbarNode"><input type="checkbox" ng-model="MisKeep">保持登录</div>
+            <div class="toolbarNode" ng-click="FsignIn(MuserInfo, MisKeep)">登录</div>
+            <div class="toolbarNode">注册</div>
+          </div>
+          <div class="toolbar signBar" ng-show="MsignError">
+            <div class="toolbarNode signError">
+              {{MsignErrorInfos}}
+            </div>
+          </div>
         </div>
       </div>
     </div>
