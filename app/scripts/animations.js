@@ -107,7 +107,7 @@ promise.animation('.toolbar', function(){
         'display': 'block',
         'height': '0'
       });
-      element.animate({'opacity': '1', 'height': '40px'}, 100);
+      element.animate({'opacity': '1', 'height': '35px'}, 100);
     },
     leave: function(element){
       element.animate({'opacity': '0', 'height': '0'}, 100, function(){$(this).css('display', 'none')});

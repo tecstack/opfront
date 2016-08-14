@@ -129,7 +129,11 @@
             <input class="toolbarNode" type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event, MuserInfo, MisKeep)">
           </div>
           <div class="toolbar signBar">
-            <div class="toolbarNode"><input type="checkbox" ng-model="MisKeep">保持登录</div>
+            <div class="toolbarNode" ng-click="FtoggleIsKeep()">
+              <i class="iconfont" ng-show="MisKeep">&#xe67c;</i>
+              <i class="iconfont" ng-show="!MisKeep">&#xe67d;</i>
+              保持登录
+            </div>
             <div class="toolbarNode" ng-click="FsignIn(MuserInfo, MisKeep)">登录</div>
             <div class="toolbarNode">注册</div>
           </div>

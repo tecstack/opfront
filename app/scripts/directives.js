@@ -36,6 +36,11 @@ promise.directive('scriptNode',function($rootScope){
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			scope.MshowAction = true;
+			// if (scope.script.is_public == 0) {
+			//
+			// } else {
+			//
+			// }
 			// 删除键，点击后提示用户确认
 			element.find('.delete').bind({
 				'click': function(){
@@ -73,6 +78,14 @@ promise.directive('progressbar',function(){
 				scope.rate = parseFloat(scope.option.current)/parseFloat(scope.option.max)*100 + '%';
 			});
 		}
+	};
+});
+// must option
+promise.directive('must',function(){
+	return{
+		restrict: 'E',
+		replace: true,
+		template: '<span style="color:#FF3640; font-size: 20px;">*</span>',
 	};
 });
 

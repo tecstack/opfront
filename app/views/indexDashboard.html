@@ -1,9 +1,74 @@
 <div ng-controller="Cindex">
   <div class="row">
-    <div class="bigNode transparent">
-      <div class="signTitle">Promise・Index</div>
-      <div class="textContent">
-        <div>Promise是移动云南方基地运维团队自主研发的自动运维平台</div>
+    <div class="fullCol">
+      <div class="node">
+        <div class="nodeTitle">Promise・Index</div>
+        <div class="tableContent">
+          <div>欢迎来到Promise {{MuserName}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="thirdCol">
+      <div class="node">
+        <div class="nodeTitle">用户信息</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">账号名称：</div>
+          <div class="toolbarNode"></div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">上次登陆时间：</div>
+          <div class="toolbarNode"></div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">角色：</div>
+          <div class="toolbarNode"></div>
+        </div>
+      </div>
+      <div class="node">
+        <div class="nodeTitle">待办事项</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">待审批：</div>
+          <div class="toolbarNode"></div>
+        </div>
+      </div>
+    </div>
+    <div class="thirdCol">
+      <div class="node">
+        <div class="nodeTitle">主机信息</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">纳管数量：</div>
+          <a href="#/host"><div class="toolbarNode">{{MhostsNum}}</div></a>
+        </div>
+      </div>
+      <div class="node">
+        <div class="nodeTitle">脚本信息</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">可用数量：</div>
+          <a href="#/script"><div class="toolbarNode">{{MscriptsNum}}</div></a>
+        </div>
+      </div>
+    </div>
+    <div class="thirdCol">
+      <div class="node">
+        <div class="nodeTitle">数据记录</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">模块调用次数：</div>
+          <div class="toolbarNode"></div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">组件推送次数：</div>
+          <div class="toolbarNode"></div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">审批次数：</div>
+          <div class="toolbarNode"></div>
+        </div>
+      </div>
+      <div class="node">
+        <div class="nodeTitle">脚本贡献</div>
       </div>
     </div>
   </div>

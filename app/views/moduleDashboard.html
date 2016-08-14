@@ -6,6 +6,7 @@
         <div class="nodeTitle">执行</div>
         <div class="tableContent">
           <div class="toolbar" ng-show="MshowGo">
+            <div class="toolbarLabel">执行：</div>
             <div class="toolbarNode" ng-click="Fexecute()">执行</div>
           </div>
         </div>
@@ -14,13 +15,17 @@
         <div class="nodeTitle">已选模块</div>
         <div class="tableContent">
           <div class="toolbar">
+            <div class="toolbarLabel">请选择模块<must></must>：</div>
             <div class="toolbarNode" ng-click="FshowRightNode('module')">选取模块</div>
             <div class="toolbarErrorNode" ng-show="!MshowBottomSuccess.module">还没有定义模块</div>
           </div>
           <div class="toolbar">
-            <div class="toolbarNode">Ansible模块: {{MmoduleSelected.name}}</div>
-            <div class="toolbarNode">执行用户: {{MmoduleSelected.content.osuser}}</div>
-            <div class="toolbarNode">内容: {{MmoduleSelected.content.name}}</div>
+            <div class="toolbarLabel">已选信息：</div>
+            <div class="toolbarContent">
+              <div class="toolbar"><div class="toolbarNode">Ansible模块: {{MmoduleSelected.name}}</div></div>
+              <div class="toolbar"><div class="toolbarNode">执行用户: {{MmoduleSelected.content.osuser}}</div></div>
+              <div class="toolbar"><div class="toolbarNode">内容: {{MmoduleSelected.content.name}}</div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -28,13 +33,17 @@
         <div class="nodeTitle">已选机器</div>
         <div class="tableContent">
           <div class="toolbar">
+            <div class="toolbarLabel">请选择机器<must></must>：</div>
             <div class="toolbarNode" ng-click="FshowRightNode('hosts')">选取机器</div>
             <div class="toolbarErrorNode" ng-show="!MshowBottomSuccess.hosts">还没有选取目标机器</div>
           </div>
           <div class="toolbar">
-            <div class="toolbarNode">机器数量：{{MhostsSelected.length}}</div>
+            <div class="toolbarLabel">已选信息：</div>
+            <div class="toolbarContent">
+              <div class="toolbar"><div class="toolbarNode">机器数量：{{MhostsSelected.length}}</div></div>
+              <div class="toolbar" ng-repeat="node in MhostsSelected"><div class="toolbarNode">{{node.interfaces[0].ip}}</div></div>
+            </div>
           </div>
-          <div class="toolbarNode" ng-repeat="node in MhostsSelected">{{node.interfaces[0].ip}}</div>
         </div>
       </div>
     </div>
@@ -72,8 +81,10 @@
               <th><input type="checkbox" ng-model="McheckAll.status" ng-change="FcheckAll(McheckAll)"></th>
               <th ng-repeat="data in MhostsDataTh">{{data.th}}</th>
             </tr>
-            <tr class="trAnimate" ng-repeat="node in MhostsDataFilter">
-              <td><input class="checkNode" type="checkbox" ng-model="node.select" ng-change="FchangeSelect(node)"></td>
+            <tr class="trAnimate" ng-repeat="node in MhostsDataFilter" ng-click="FchangeSelect(node)">
+              <td>
+                <i class="iconfont" ng-show="node.select">&#xe67c;</i>
+              </td>
               <td>{{node.hostid}}</td>
               <td>{{node.interfaces[0].ip}}</td>
               <td>{{node.host}}</td>
@@ -87,36 +98,50 @@
       <div class="node" ng-show="MshowRightNode.module">
         <div class="nodeTitle">模块选择</div>
         <div class="toolbar">
-          <div class="toolbarNode">选择模块：</div>
+          <div class="toolbarLabel">选择模块<must></must>：</div>
           <div class="toolbarNode" ng-repeat="(key, value) in Mmodules" ng-click="FselectModule(key)">{{key}}</div>
         </div>
 
-        <!-- ！！！！！！！！！！！！！！！shell module！！！！！！！！！！！！！！！！！！！ -->
-        <div ng-show="Mmodules.shell">
-          <div class="toolbar">
-            <select class="toolbarNode" ng-model="MshellContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
-          </div>
-          <div ui-codemirror="MeditorOptions.shell" ng-model="MshellContent.shell"></div>
-          <div class="toolbar">
-            <div class="toolbarNode" ng-click="MselectContent(MshellContent)">确定</div>
-          </div>
-        </div>
 
-        <!-- ！！！！！！！！！！！！！！！script module！！！！！！！！！！！！！！！！！！！ -->
-        <div ng-show="Mmodules.script">
-          <div class="toolbar">
-            <div class="toolbarNode" ng-click="FshowScripts()">选取脚本</div>
-            <select class="toolbarNode" ng-model="MscriptContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
-            <div class="toolbarNode">{{Mscript.script_name}}</div>
-            <div class="toolbarNode">{{Mscript.script_lang}}</div>
-          </div>
-          <!-- code editor -->
-          <div ui-codemirror="MeditorOptions.script" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
-          <div class="toolbar">
-            <div class="toolbarNode" ng-click="MselectContent(MscriptContent)">确定</div>
-          </div>
-        </div>
 
+
+
+      </div>
+
+      <!-- ！！！！！！！！！！！！！！！shell module！！！！！！！！！！！！！！！！！！！ -->
+      <div class="node" ng-show="Mmodules.shell">
+        <div class="nodeTitle">Shell</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">选取执行用户<must></must>：</div>
+          <select class="toolbarNode" ng-model="MshellContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+        </div>
+        <div ui-codemirror="MeditorOptions.shell" ng-model="MshellContent.shell"></div>
+        <div class="toolbar">
+          <div class="toolbarNode" ng-click="MselectContent(MshellContent)">确定</div>
+        </div>
+      </div>
+
+      <!-- ！！！！！！！！！！！！！！！script module！！！！！！！！！！！！！！！！！！！ -->
+      <div class="node" ng-show="Mmodules.script">
+        <div class="nodeTitle">Script</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">选取脚本<must></must>：</div>
+          <div class="toolbarNode" ng-click="FshowScripts()">选取脚本</div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">选取执行用户<must></must>：</div>
+          <select class="toolbarNode" ng-model="MscriptContent.osuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">脚本信息：</div>
+          <div class="toolbarNode">{{Mscript.script_name}}</div>
+          <div class="toolbarNode">{{Mscript.script_lang}}</div>
+        </div>
+        <!-- code editor -->
+        <div ui-codemirror="MeditorOptions.script" ng-model="Mscript.script_text" ui-refresh="Mscript.script_text"></div>
+        <div class="toolbar">
+          <div class="toolbarNode" ng-click="MselectContent(MscriptContent)">确定</div>
+        </div>
       </div>
     </div>
   </div>
@@ -129,7 +154,6 @@
           <div class="tableContent">
             <div class="toolbar">
               <div class="toolbarNode label" ng-click="Fback()">返回</div>
-              <div class="toolbarNode" ng-click="FinfoWalker(MmoduleSelected.name, MwalkerId)">测试刷新</div>
               <div class="toolbarNode" ng-click="FstopInfoWalker()">停止轮询</div>
             </div>
             <!-- Result dashboard -->
@@ -148,7 +172,7 @@
               </table>
             </div>
           </div>
-          <div class="nodeBottom">{{MerrInfo}}</div>
+          <div class="nodeBottom red">{{MerrInfo}}</div>
         </div>
       </div>
     </div>

@@ -24,7 +24,6 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 
 	// 初始化动作，在登录成功后执行
 	var FinitAction = function(){
-		SinfoService.FaddInfo('初始化....');
 		$rootScope.FgetHost();
 		$rootScope.FgetScriptList();
 	};
