@@ -67,6 +67,23 @@ promise.animation('.infoNode', function(){
   };
 });
 
+promise.animation('.dashboardMask', function(){
+  return{
+    addClass: function(element){
+      element.animate({'opacity': '0'}, 300, function(){
+        $(this).css({'display': 'none'});
+      });
+    },
+    removeClass: function(element){
+      element.css({
+        'display': 'block',
+        'opacity': '0',
+      });
+      element.animate({'opacity': '1'}, 300);
+    }
+  };
+});
+
 promise.animation('.helper', function(){
   return{
     addClass: function(element){
@@ -111,20 +128,6 @@ promise.animation('.toolbar', function(){
     },
     leave: function(element){
       element.animate({'opacity': '0', 'height': '0'}, 100, function(){$(this).css('display', 'none')});
-    }
-  };
-});
-
-promise.animation('.dashboardRight', function(){
-  return{
-    addClass: function(element){
-      element.animate({'opacity': '0', 'left': '100%'}, 300);
-    },
-    removeClass: function(element){
-      element.css({
-        'left': '100%'
-      });
-      element.animate({'opacity': '1', 'left': '20%'}, 300);
     }
   };
 });

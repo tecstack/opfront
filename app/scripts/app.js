@@ -49,12 +49,28 @@ var promise = angular.module('promise', [
         'dashboardView@user': {templateUrl: 'views/userDashboard.html'}
       }
     })
+    .state('setting', {
+      url: '/setting',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@setting': {templateUrl: 'views/settingHelper.html'},
+        'dashboardView@setting': {templateUrl: 'views/settingDashboard.html'}
+      }
+    })
     .state('host', {
       url: '/host',
       views: {
         '': {templateUrl: 'views/floor.html'},
         'helperView@host': {templateUrl: 'views/hostHelper.html'},
         'dashboardView@host': {templateUrl: 'views/hostDashboard.html'}
+      }
+    })
+    .state('network', {
+      url: '/network',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@network': {templateUrl: 'views/networkHelper.html'},
+        'dashboardView@network': {templateUrl: 'views/networkDashboard.html'}
       }
     })
     .state('module', {

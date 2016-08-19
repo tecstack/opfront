@@ -1,0 +1,40 @@
+<div class="tableContent">
+  <div class="toolbar">
+    <div class="toolbarNode">每页</div>
+    <input type="text" class="toolbarNode" placeholder="Num per page..." ng-model="Mpp" style="width:3%;">
+    <div class="toolbarNode">匹配：{{MfilterDatas.length}}</div>
+    <input type="text" class="toolbarNode" placeholder="Search..." ng-model="Mfil" style="width:7%;">
+    <!-- <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(Mpages)">&gt;|</div> -->
+    <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(Mpage+1)">&gt;</div>
+    <input class="toolbarNode pageGo reverse" type="text" ng-model="Mpage" placeholder="" >
+    <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(Mpage-1)">&lt;</div>
+    <!-- <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(1)">|&lt;</div> -->
+    <div class="toolbarNode reverse">当前：{{Mpage}}/{{Mpages}}</div>
+  </div>
+</div>
+
+<div class="tableContent">
+  <table>
+    <tr>
+      <th><input type="checkbox" ng-model="Mall" ng-change="FcheckAll(Mall)"></th>
+      <th ng-repeat="th in Mth">{{th}}</th>
+    </tr>
+    <tr class="trAnimate" ng-repeat="node in MshowDatas track by $index" ng-click="FtrClick(node)" ng-dbclick="FtrDbClick(node)">
+      <td>
+        <i class="iconfont" ng-show="node.select">&#xe67c;</i>
+      </td>
+      <td ng-repeat="td in node track by $index">{{td}}</td>
+    </tr>
+  </table>
+</div>
+
+<div class="tableContent">
+  <div class="toolbar">
+    <!-- <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(Mpages)">&gt;|</div> -->
+    <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(Mpage+1)">&gt;</div>
+    <input class="toolbarNode pageGo reverse" type="text" ng-model="Mpage" placeholder="" >
+    <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(Mpage-1)">&lt;</div>
+    <!-- <div class="toolbarNode pageFlip reverse" ng-click="FchangePage(1)">|&lt;</div> -->
+    <div class="toolbarNode reverse">当前：{{Mpage}}/{{Mpages}}</div>
+  </div>
+</div>

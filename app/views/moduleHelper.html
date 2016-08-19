@@ -1,24 +1,3 @@
 <div ng-controller="CmoduleHelper">
-  <div class="row" ng-show="MshowHelperNode.script">
-    <div class="bigNode">
-      <div class="nodeTitle">脚本列表</div>
-      <div class="nodeContent">
-        <div class="tableContent">
-          <table>
-            <tr>
-              <th>名称</th>
-              <th>语言</th>
-              <th>创建者</th>
-            </tr>
-            <tr ng-repeat="script in Mscripts track by $index" ng-click="FselectScript(script)">
-              <td>{{script.script_name}}</td>
-              <td>{{script.script_lang}}</td>
-              <td>{{script.owner_name}}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>

@@ -43,6 +43,7 @@ input:focus, select:focus, button:focus {
 input[type="text"],input[type="password"] {
 	border: 0;
 	padding: 0 15px;
+  width: 167px;
 	font-size: 16px;
 	line-height: 35px;
 	text-align: left;
@@ -503,6 +504,19 @@ table a:hover {
 	color: #fff;
 	text-decoration:none;
 }
+.dashboardMask {
+  display: block;
+  position: fixed;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  z-index: 11;
+  overflow: auto;
+  width: 100%;
+  opacity: 1;
+  background-color: RGBA(0, 0, 0, 0.8);
+  color: #fff;
+}
 
 .row {
   float: left;
@@ -689,9 +703,9 @@ table a:hover {
   clear: both;
   position: relative;
   /*box-sizing: border-box;*/
-  margin-bottom: 5px;
+  /*margin-bottom: 5px;*/
   /*width: 100%;*/
-  height: 35px;
+  height: 40px;
   padding: 0;
 }
 .toolbarLabel {
@@ -703,11 +717,13 @@ table a:hover {
 }
 .toolbarContent {
   float: left;
+  width: calc(100% - 140px);
 }
 .toolbarNode {
   float: left;
   position: relative;
   margin-right: 5px;
+  margin-bottom: 5px;
   padding: 0 15px;
   text-align: center;
   line-height: 35px;
@@ -722,8 +738,17 @@ table a:hover {
 .toolbarNode:active {
   background-color: rgba(200, 200, 200, 1);
 }
+.toolbarNodeSelected {
+  background-color: rgba(110, 147, 188, 1);
+}
 .toolbar .iconfont {
   font-weight: 900;
+}
+.toolbarFullNode {
+  width: calc(100% - 30px);
+}
+select.toolbarFullNode {
+  width: 100%;
 }
 .toolbarErrorNode {
   float: left;
@@ -732,44 +757,23 @@ table a:hover {
   background-color: transparent;
   color: rgba(255, 74, 69, 1.00);
 }
-.label {}
-.middlePageControl {
-  width: 185px;
-  margin: auto;
+.toolbarShowNode {
+  float: left;
+  position: relative;
+  margin-right: 5px;
+  padding: 0 15px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 17px;
 }
+.label {}
 .pageFlip {
   width: 30px !important;
 }
 .pageGo {
-  padding: 0 !important;
-  width: 50px !important;
+  width: 30px !important;
   text-align: center !important;
 }
-.filterBox {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 45px;
-  z-index: 4;
-  border: 2px solid #fff;
-  padding: 10px;
-  width: 450px;
-  background-color: #262928;
-  cursor: default;
-}
-.filterName {
-  width: 110px !important;
-}
-.filterBool {
-  width: 40px !important;
-}
-.filterContent {
-  width: calc(100% - 46px - 110px - 40px - 50px) !important;
-  /*width: 180px !important;*/
-  margin-right: 0;
-}
-
-
 
 .progressBar {}
 
@@ -778,6 +782,9 @@ table a:hover {
 /* 位置样式 */
 .clear {
   clear: both;
+}
+.reverse {
+  float: right !important;
 }
 .vetical {
 	position: absolute;
@@ -788,10 +795,6 @@ table a:hover {
 	text-align: center;
 }
 .button-close {
-	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
-	/* box model: border / margin / padding / width / height / ... */
-	/* typographic: font / line-height / text-align / word-wrap / ... */
-	/* visual: background / color / transition / list-style / shadows / ... */
 	position: absolute;
 	right: 6px;
 	top: 6px;
@@ -805,6 +808,30 @@ table a:hover {
 .full {
 	height: 100%;
 	width: 100%;
+}
+.node-half {
+  float: left;
+  width: 50%;
+}
+.node-2-10 {
+  float: left;
+  width: 20%;
+}
+.node-3-10 {
+  float: left;
+  width: 30%;
+}
+.node-4-10 {
+  float: left;
+  width: 40%;
+}
+.node-6-10 {
+  float: left;
+  width: 60%;
+}
+.node-8-10 {
+  float: left;
+  width: 80%;
 }
 .codeEditorLoding {
   position: absolute;
@@ -861,7 +888,12 @@ table a:hover {
 
 /* 外部插件样式 */
 .CodeMirror {
+  clear: both;
   margin-bottom: 5px;
   font-size: 16px;
   line-height: 16px;
+}
+.resultBox {
+  height: 500px;
+  overflow: auto;
 }

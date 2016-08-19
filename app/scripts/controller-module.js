@@ -11,10 +11,16 @@
 var promise = angular.module('promise');
 
 // --------------------------Module---------------------------
-promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, SscriptService, SwalkerService, SinfoService){
-  // walker接口服务
-  // 轮询集，里面存放了当前页面的所有walker轮询任务
+promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, $filter, SscriptService, SwalkerService, SinfoService){
+  // walker service
   $scope.MinfoWalkerPromise = {};
+  $scope.Mprogress = {
+    'success': 0,
+    'failed': 0,
+    'unreachable': 0,
+    'skipped': 0,
+    'total': 0,
+  };
   $scope.FcreateWalker = function(VmoduleName, VmoduleVars){
     SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
       {},
@@ -22,6 +28,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       function successCallback(callbackdata){
         $scope.MwalkerId = callbackdata.walker_id;
         $scope.MerrInfo = callbackdata.message;
+        SinfoService.FaddInfo($scope.MerrInfo);
         $scope.MinfoWalkerPromise[$scope.MwalkerId] = $interval(
           function (){
             $scope.FinfoWalker($scope.MmoduleSelected.name, $scope.MwalkerId);
@@ -82,7 +89,6 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       }
     );
   };
-  // 停止所有轮询
   $scope.FstopInfoWalker = function(){
     if (!jQuery.isEmptyObject($scope.MinfoWalkerPromise)) {
       var Vnum = Object.keys($scope.MinfoWalkerPromise).length;
@@ -99,20 +105,37 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     $scope.FstopInfoWalker();
   });
 
-  // ---------------------Module Editor---------------------
-  // init
-  $scope.Mprogress = {
-    'success': 0,
-    'failed': 0,
-    'unreachable': 0,
-    'skipped': 0,
-    'total': 0,
+  // hosts data
+  $scope.MhostsDatasTh = ['ID','IP','主机名','组'];
+  $scope.MhostsDatasTd = [];
+  // $rootScope.MhostsSelected = [];
+  $scope.FhostsDatasInit = function(){
+    for (var index in $rootScope.Mhosts) {
+      var tempNode = [];
+      tempNode.push($rootScope.Mhosts[index].hostid);
+      tempNode.push($rootScope.Mhosts[index].interfaces[0].ip);
+      tempNode.push($rootScope.Mhosts[index].host);
+      var groups = $filter('groupsFilter')($rootScope.Mhosts[index].groups);
+      tempNode.push(groups);
+      $scope.MhostsDatasTd.push(tempNode);
+    };
   };
-  $scope.MosuserOptions = [
-    {'label':'选取执行用户', 'value':''},
-    {'label':'ROOT', 'value':'root'},
-  ];
-  // codemirror 结构体
+
+  // script data
+  $scope.MscriptsDatasTh = ['名称','语言','创建者','创建时间'];
+  $scope.MscriptsDatasTd = [];
+  $scope.FscriptsDatasInit = function(){
+    for (var index in $rootScope.Mscripts) {
+      var tempNode = [];
+      tempNode.push($rootScope.Mscripts[index].script_name);
+      tempNode.push($rootScope.Mscripts[index].script_lang);
+      tempNode.push($rootScope.Mscripts[index].owner_name);
+      tempNode.push($rootScope.Mscripts[index].time_create);
+      $scope.MscriptsDatasTd.push(tempNode);
+    };
+  };
+
+  // Code Mirror
   $scope.Meditor = {};
   $scope.MeditorOptions = {
     'shell': {
@@ -123,22 +146,24 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       mode: 'shell',
       onLoad: function(_cm){
         $scope.Meditor.shell = _cm;
+        $scope.Meditor.shell.setSize(null, '65px');
       },
     },
     'script': {
       lineNumbers: true,
       theme:'monokai',
-      readOnly: 'nocursor',
+      readOnly: true,
       lineWrapping : false,
       mode: 'python',
       onLoad: function(_cm){
         $scope.Meditor.script = _cm;
+        $scope.Meditor.script.setSize(null, '400px');
       },
     },
     'executor': {
       lineNumbers: true,
       theme:'monokai',
-      readOnly: 'nocursor',
+      readOnly: true,
       lineWrapping : false,
       mode: 'shell',
       onLoad: function(_cm){
@@ -148,30 +173,84 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     },
   };
 
-  // $scope.Meditor.script.setSize('500px','1000px');
-
-  $scope.MselectContent = function(Vcontent){
-    $scope.MmoduleSelected.content = Vcontent;
-    $rootScope.MshowHelper = false;
+  // Module select
+  $scope.MmoduleSelected = {
+    'name': '',
+    'content': {},
+  };
+  $scope.FselectModule = function(Vmodule){
+    $scope.MmoduleSelected.content = {};
+    for (var key in $scope.MshowNode) {
+      if ($scope.MshowNode.hasOwnProperty(key)) {
+        if (key == Vmodule) {
+          $scope.MshowNode[key] = true;
+          $scope.MmoduleSelected.name = Vmodule;
+        } else {
+          $scope.MshowNode[key] = false;
+        };
+      };
+    };
+    $scope.MscriptSelected = {'scriptid': ''};
+    $scope.MshellSelected = {'shell': ''};
+    $scope.MscriptShow = {};
+    if (Vmodule == 'shell') {
+      $scope.MmoduleSelected.content = $scope.MshellSelected;
+    } else {
+      $scope.MmoduleSelected.content = $scope.MscriptSelected;
+    };
   };
 
-  // shell editor
-  $scope.MshellContent = {
-    'shell': '',
-    'osuser': ''
-  };
-
-  // script editor
-  $scope.MscriptContent = {
-    'scriptid': '',
-    'osuser': ''
-  };
-  $scope.FshowScripts = function(){
-    $rootScope.MshowHelper = true;
-    for (var key in $rootScope.MshowHelperNode) {
-      $rootScope.MshowHelperNode[key] = false;
+  $scope.FshowSelector = function(Vselector){
+    for (var key in $scope.MshowSelector) {
+      if ($scope.MshowSelector.hasOwnProperty(key)) {
+        $scope.MshowSelector[key] = (key == Vselector)?true:false;
+      }
     }
-    $rootScope.MshowHelperNode.script = true;
+  };
+
+  // Shell module detail
+
+  // Script module detail
+
+  // Go
+  $scope.MosuserOptions = [
+    {'label':'选取执行用户', 'value':''},
+    {'label':'ROOT', 'value':'root'},
+  ];
+  $scope.Mosuser = 'root';
+
+  // Hosts Selector
+  $scope.MhostsSelected = [];
+  $scope.FselectHost = function(Vnode){
+    var Vip = Vnode[1];
+    if (jQuery.inArray(Vip, $scope.MhostsSelected) == -1) {
+      $scope.MhostsSelected.push(Vip);
+    };
+  };
+  $scope.FunSelectHost = function(Vnode){
+    var Vip = Vnode[1];
+    var Vindex = jQuery.inArray(Vip, $scope.MhostsSelected);
+    if (Vindex != -1) {
+      $scope.MhostsSelected.splice(Vindex, 1);
+    };
+  };
+
+  // Scripts Selector
+  $scope.MscriptShow = {};
+  $scope.MscriptSelected = {};
+  $scope.FselectScript = function(Vnode){
+    var Vtime = Vnode[3];
+    for (var index in $rootScope.Mscripts) {
+      if ($rootScope.Mscripts.hasOwnProperty(index)) {
+        if ($rootScope.Mscripts[index].time_create == Vtime) {
+          $scope.MscriptShow = $rootScope.Mscripts[index];
+          $scope.MscriptSelected.scriptid = $scope.MscriptShow.script_id;
+          $scope.MeditorOptions.script.mode = $scope.MscriptShow.script_lang;
+          $scope.MshowSelector.scripts = false;
+          break;
+        };
+      };
+    };
   };
 
   // ---------------------Executor---------------------
@@ -185,34 +264,56 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   };
   $scope.MpostWalkerInfo = {};
   $scope.Mresult = {};
-  $scope.Fexecute = function(){
-    $scope.pro.result = {
-      'name': '成功个数',
-      'max': 0,
-      'current': 0,
+  $scope.Fjudge = function(){
+    if ($scope.MhostsSelected.length == 0) {
+      SinfoService.FaddInfo('请先选择目标主机！');
+      return false;
     };
-    $scope.MshowRight.detail = false;
-    $scope.MshowRight.executor = true;
-    $scope.MshowLoading = true;
-    $scope.Mresult = {};
-    $scope.MpostWalkerInfo = {};
-    jQuery.extend($scope.MpostWalkerInfo,$scope.MmoduleSelected.content);
-    $scope.MpostWalkerInfo.iplist = [];
-    $scope.Mstdout = '';
-    for (var kind in $scope.Mprogress) {
-      $scope.Mprogress[kind] = 0;
-    }
-    for (var node in $rootScope.MhostsSelected) {
-      var ip = $rootScope.MhostsSelected[node].interfaces[0].ip;
-      $scope.MpostWalkerInfo.iplist.push(ip);
-      $scope.Mresult[ip] = {};
-      $scope.pro.result.max += 1;
-    }
-    $scope.FcreateWalker($scope.MmoduleSelected.name, $scope.MpostWalkerInfo);
+    if ($scope.MmoduleSelected.content.hasOwnProperty('shell')){
+      if ($scope.MmoduleSelected.content.shell == '') {
+        SinfoService.FaddInfo('请填写下发指令！');
+        return false;
+      };
+    };
+    if ($scope.MmoduleSelected.content.hasOwnProperty('scriptid')){
+      if ($scope.MmoduleSelected.content.scriptid == '') {
+        SinfoService.FaddInfo('请选取脚本！');
+        return false;
+      };
+    };
+    return true;
+  };
+  $scope.Fexecute = function(){
+    if ($scope.Fjudge()) {
+      $scope.pro.result = {
+        'name': '成功个数',
+        'max': 0,
+        'current': 0,
+      };
+      $scope.MshowExecutor = true;
+      $scope.MshowLoading = true;
+      $scope.Mresult = {};
+      $scope.MpostWalkerInfo = {};
+      // iplist [] , osuser '', xx
+      jQuery.extend($scope.MpostWalkerInfo,$scope.MmoduleSelected.content);
+      $scope.MpostWalkerInfo.iplist = $scope.MhostsSelected;
+      $scope.MpostWalkerInfo.osuser = $scope.Mosuser;
+
+      $scope.Mstdout = '';
+      $scope.MerrInfo = '';
+      for (var kind in $scope.Mprogress) {
+        $scope.Mprogress[kind] = 0;
+      };
+      for (var index in $scope.MhostsSelected) {
+        var ip = $scope.MhostsSelected[index];
+        $scope.Mresult[ip] = {};
+        $scope.pro.result.max += 1;
+      };
+      $scope.FcreateWalker($scope.MmoduleSelected.name, $scope.MpostWalkerInfo);
+    };
   };
   $scope.Fback = function(){
-    $scope.MshowRight.detail = true;
-    $scope.MshowRight.executor = false;
+    $scope.MshowExecutor = false;
   };
   $scope.FshowStdout = function(node){
     if (node.stdout) {
@@ -225,72 +326,14 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
 
 
   // ---------------------watch & show---------------------
-  // 用来决定detail->module->?页面里对应模块编辑器的显示
-  $scope.Mmodules = {
+  $scope.MshowNode = {
     'shell': false,
-    'script': false
+    'script': true,
   };
-  // 当前选择进行编辑的模块，name是名称，content是左侧显示栏的内容，也是后续发往createWalker的内容之一
-  $scope.MmoduleSelected = {
-    'name': '',
-    'content': {}
-  };
-  // 选择模块，显示对应的编辑器，屏蔽其他模块编辑器，更改MmoduleSelected内容
-  $scope.FselectModule = function(VmoduleName){
-    $rootScope.MshowHelper = false;
-    $scope.MmoduleSelected.name = VmoduleName;
-    $scope.MmoduleSelected.content = {};
-    for (var key in $scope.Mmodules) {
-      $scope.Mmodules[key] = (VmoduleName == key)?true:false;
-    };
-    // 特殊逻辑：当选择script模块时自动弹出script列表
-    if (VmoduleName == 'script') {
-      $scope.FshowScripts();
-    };
-  };
-  // 决定是否显示执行标志，只有选择了主机和编辑了模块内容后才会显示
-  $scope.MshowGo = false;
-  // 决定右侧的界面显示，detail代表选定编辑页面，executor代表执行过程页面，执行execute()之后便会跳转到executor
-  $scope.MshowRight = {
-    'detail': true,
-    'executor': false,
-  };
-  // 决定detail编辑页面里的内容显示，hosts代表主机列表选取页面，module代表模块编辑器
-  $scope.MshowRightNode = {
+  $scope.MshowSelector = {
     'hosts': false,
-    'module': false,
+    'scripts': false,
   };
-  // 用来决定显示哪一种条件判定结果，是否选择了主机，是否选定了模块
-  $scope.MshowBottomSuccess = {
-    'hosts': false,
-    'module': false
-  };
-  // 切换右侧node显示，在主机列表页面和模块编辑器之间切换
-  $scope.FshowRightNode = function(name){
-    for (var key in $scope.MshowRightNode) {
-      $scope.MshowRightNode[key] = (key === name)?true:false;
-    };
-  };
-  // 监控rootScope中的script变量（一般是从helper或者其他页面触发），根据语言变更编辑器的样式，更新scriptid。
-  $scope.$watch('Mscript', function(newValue, oldValue){
-    if ($rootScope.Mscript) {
-      $scope.MeditorOptions.script.mode = $rootScope.Mscript.script_lang;
-      $scope.MscriptContent.scriptid = $rootScope.Mscript.script_id;
-      $scope.MscriptContent.name = $rootScope.Mscript.script_name;
-    };
-  });
-  // 监控是否选定了模块内容，变更判定状态和字段
-  $scope.$watch('MmoduleSelected.content', function(newValue, oldValue){
-    $scope.MshowBottomSuccess.module = (jQuery.isEmptyObject(newValue))?false:true;
-  });
-  // 监控是否选定了hosts内容，变更判定状态和字段
-  $scope.$watchCollection('MhostsSelected',function(newValue, oldValue){
-    $scope.MshowBottomSuccess.hosts = ($rootScope.MhostsSelected.length > 0)?true:false;
-  });
-  // 监控两个判定状态，主机和模块，都选定之后出现执行按钮
-  $scope.$watchCollection('MshowBottomSuccess', function(newValue, oldValue){
-    $scope.MshowGo = ($scope.MshowBottomSuccess.hosts == true && $scope.MshowBottomSuccess.module == true)?true:false;
-  });
   // 监控walker结果信息，如果成功更新了状态(ok/change/failed/unreachable/skipped)，则停止轮询
   $scope.$watchCollection('Mresult', function(newValue, oldValue){
     if (!jQuery.isEmptyObject(newValue)) {
@@ -302,19 +345,15 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       };
     };
   });
-
+  $scope.$watchCollection('Mhosts', function(newValue, oldValue){
+    $scope.FhostsDatasInit();
+  });
+  $scope.$watchCollection('Mscripts', function(newValue, oldValue){
+    $scope.FscriptsDatasInit();
+  });
+  $scope.FselectModule('script');
 });
 
 // --------------------------Module Helper---------------------------
 promise.controller('CmoduleHelper', function($scope, $rootScope){
-  // pre-init
-  $rootScope.MshowHelperNode = {
-    'shell': false,
-    'script': false
-  };
-
-  // action
-  $scope.FselectScript = function(Vscript){
-    $rootScope.Mscript = Vscript;
-  };
 });

@@ -1,0 +1,58 @@
+<div ng-controller="Cnetwork">
+  <div class="row">
+    <div class="fullCol">
+      <div class="node">
+        <!-- title -->
+        <div class="nodeTitle">网络设备检视</div>
+        <!-- content -->
+        <div class="nodeContent">
+          <div class="tableContent">
+            <div class="toolbar">
+              <input class="toolbarNode" type="text" placeholder="Search...">
+              <i class="toolbarNode iconfont">&#xe629;</i>
+              <div class="toolbarNode">刷新</div>
+              <select class="toolbarNode" name="pp" ng-model="MpageOptions.pp">
+                <option value="20">每页20项</option>
+                <option value="50">每页50项</option>
+                <option value="100">每页100项</option>
+                <option value="0">无上限</option>
+              </select>
+              <div class="toolbarNode label pageFlip" ng-click="FprevPage()">&lt;</div>
+              <input class="toolbarNode pageGo" type="text" placeholder="{{MpageOptions.currentPage}}/{{MpageOptions.totalPage}}" ng-keyup="FgoPage($event,MinputPage)" ng-model="MinputPage">
+              <div class="toolbarNode label pageFlip" ng-click="FnextPage()">&gt;</div>
+            </div>
+          </div>
+
+          <div class="tableContent">
+            <table>
+              <tr>
+                <th><input type="checkbox" ng-model="McheckAll.status" ng-change="FcheckAll(McheckAll)"></th>
+                <th ng-repeat="data in MhostsDataTh">{{data.th}}</th>
+              </tr>
+              <tr class="trAnimate" ng-repeat="node in MhostsDataFilter" ng-click="FchangeSelect(node)" ng-dblclick="FshowPmHelper(node)">
+                <td>
+                  <i class="iconfont" ng-show="node.select">&#xe67c;</i>
+                </td>
+                <td>{{node.hostid}}</td>
+                <td>{{node.interfaces[0].ip}}</td>
+                <td>{{node.host}}</td>
+                <td>{{node.groups | groupsFilter}}</td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <!-- bottom -->
+        <div class="nodeBottom">
+          <div class="toolbar middlePageControl">
+            <div class="toolbarNode label pageFlip" ng-click="FprevPage()">&lt;</div>
+            <input class="toolbarNode pageGo" type="text" placeholder="{{MpageOptions.currentPage}}/{{MpageOptions.totalPage}}" ng-keyup="FgoPage($event,MinputPage)" ng-model="MinputPage">
+            <div class="toolbarNode label pageFlip" ng-click="FnextPage()">&gt;</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

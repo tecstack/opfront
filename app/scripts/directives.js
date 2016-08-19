@@ -36,11 +36,6 @@ promise.directive('scriptNode',function($rootScope){
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			scope.MshowAction = true;
-			// if (scope.script.is_public == 0) {
-			//
-			// } else {
-			//
-			// }
 			// 删除键，点击后提示用户确认
 			element.find('.delete').bind({
 				'click': function(){
@@ -80,6 +75,96 @@ promise.directive('progressbar',function(){
 		}
 	};
 });
+// ng-table
+promise.directive('ngTable',function($filter){
+	return{
+		restrict: 'E',
+		scope: {
+			Mth: '=th',
+			Mdata: '=data',
+			Fselect: '=select',
+			FunSelect: '=unselect',
+			FdbClick: '=dbclick',
+		},
+		templateUrl: 'views/ng-table.html',
+		link: function(scope, element, attrs){
+			// showdatas
+			scope.Mpp = 100;
+			scope.Mpage = 1;
+			scope.FinitData = function(){
+				scope.MfilterDatas = $filter('filter')(scope.Mdata, scope.Mfil);
+			};
+			scope.FinitShow = function(){
+				if (scope.MfilterDatas.length && scope.Mpp){
+					scope.Mpages = Math.ceil(parseFloat(scope.MfilterDatas.length)/parseFloat(scope.Mpp));
+				} else if (scope.MfilterDatas.length == 0){
+					scope.Mpages = 0;
+				} else if (scope.Mpp == 0){
+					scope.Mpages = 1;
+				};
+				if (scope.Mpage > scope.Mpages && scope.Mpage != 1){
+					scope.Mpage = scope.Mpages;
+				} else if (scope.Mpage < 0){
+					scope.Mpage = 0;
+				}
+				scope.MshowDatas = scope.MfilterDatas.slice(scope.Mpp*(scope.Mpage-1),scope.Mpp*scope.Mpage);
+			};
+			scope.FchangePage = function(Vpage){
+				scope.Mpage = Vpage;
+			};
+
+			// event binding
+			scope.FcheckAll = function(Vstatus){
+				for (var index in scope.MfilterDatas){
+					if (scope.MfilterDatas.hasOwnProperty(index)){
+						if (scope.MfilterDatas[index].select !== true && Vstatus == true) {
+							if (scope.Fselect) {
+								scope.Fselect(scope.MfilterDatas[index]);
+							};
+						} else if (scope.MfilterDatas[index].select == true && Vstatus == false) {
+							if (scope.FunSelect) {
+								scope.FunSelect(scope.MfilterDatas[index]);
+							};
+						};
+						scope.MfilterDatas[index].select = Vstatus;
+					};
+				};
+			};
+			scope.FtrClick = function(Vnode){
+				Vnode.select = (Vnode.select == undefined)?true:!Vnode.select;
+				if (Vnode.select == true) {
+					if (scope.Fselect) {
+						scope.Fselect(Vnode);
+					};
+				} else if (Vnode.select == false) {
+					if (scope.FunSelect) {
+						scope.FunSelect(Vnode);
+					};
+				}
+			};
+			scope.FtrDbClick = function(Vnode){
+				if (scope.FdbClick) {
+					scope.FdbClick(Vnode);
+				};
+			};
+
+			// init & watch
+			scope.FinitData();
+			scope.FinitShow();
+			scope.$watch('Mfil', function(){
+				scope.FinitData();
+				scope.FinitShow();
+			});
+			scope.$watchGroup(['Mpp','Mpage'], function(){
+				scope.FinitShow();
+			});
+			scope.$watchCollection('Mdata', function(){
+				scope.FinitData();
+				scope.FinitShow();
+			});
+		}
+	};
+});
 // must option
 promise.directive('must',function(){
 	return{
@@ -102,12 +187,16 @@ promise.directive('chartLine',function(){
 });
 // chartjs bar
 promise.directive('chartBar',function(){
+	var options = {
+		scaleShowHorizontalLines: false,
+	  scaleShowVerticalLines: false,
+	};
 	return{
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
 			var chartData = jQuery.parseJSON(attrs.data)
-		  var myChart = new Chart(chartDom).Bar(chartData);
+		  var myChart = new Chart(chartDom).Bar(chartData, options);
 		}
 	};
 });
@@ -156,20 +245,7 @@ promise.directive('chartPie',function(){
 
 
 
-//
-// promise.directive('add',function(){
-// 	return{
-// 		restrict: 'E',
-// 		link: function(scope,element,attrs,ngModel){
-// 			element.bind('click',function(){
-// 				scope.$apply(function(){
-// 					scope.showAdd = false;
-// 				});
-// 			});
-// 		}
-// 	};
-// });
-//
+
 // promise.directive('edit',function(){
 // 	return{
 // 		restrict: 'E',
@@ -217,44 +293,6 @@ promise.directive('chartPie',function(){
 // 		}
 // 	};
 // });
-//
-// promise.directive('cancel',function(){
-// 	return{
-// 		restrict: 'E',
-// 		require: 'ngModel',
-// 		link: function(scope,element,attrs,ngModel){
-// 			element.bind('click',function(){
-// 				var id = ngModel.$modelValue.vm_id;
-// 				var obj = $('#'+id);
-//
-// 				scope.$apply(function(){
-// 					angular.copy(scope.vm_infos_bak,ngModel.$modelValue);
-// 				});
-//
-// 				scope.$apply(function(){
-// 					scope.showEdit = true;
-// 				});
-// 			});
-// 		}
-// 	};
-// });
-//
-// promise.directive('delete',function(){
-// 	return{
-// 		restrict:'E',
-// 		require: 'ngModel',
-// 		link:function(scope,element,attrs,ngModel,vmInfos){
-// 			element.bind('click',function(){
-// 				var id = ngModel.$modelValue.vm_id;
-//
-// 				console.log('delete item where vm_id:'+id);
-//
-// 				scope.$apply(function(){
-// 				});
-// 			});
-// 		}
-// 	};
-// });
 
 // promise.directive('',function(){
 // 	return{
@@ -266,6 +304,3 @@ promise.directive('chartPie',function(){
 // 		}
 // 	}
 // });
-
-// obj.prevAll().removeAttr('contentEditable').removeClass('b-a');
-// obj.nextAll().removeAttr('contentEditable').removeClass('b-a');
