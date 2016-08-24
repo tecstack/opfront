@@ -633,9 +633,9 @@ table a:hover {
   /*color: #95A7EE;*/
 }
 .formContent {
-  width: 350px;
+  width: 500px;
   margin: auto;
-  border: 1px solid #E9E9E9;
+  /*border: 1px solid #E9E9E9;*/
   margin-top: 100px;
 }
 .formInputWraper {
@@ -710,6 +710,7 @@ table a:hover {
 }
 .toolbarLabel {
   float: left;
+  position: relative;
   width: 140px;
   line-height: 35px;
   font-size: 17px;
@@ -717,6 +718,7 @@ table a:hover {
 }
 .toolbarContent {
   float: left;
+  position: relative;
   width: calc(100% - 140px);
 }
 .toolbarNode {
@@ -777,7 +779,48 @@ select.toolbarFullNode {
 
 .progressBar {}
 
-
+.nameCard {
+  height:180px;
+  /*box-shadow: 0 0 2px #000;*/
+  /*background-color: RGBA(38, 72, 99, 1.00);*/
+}
+name-card .node:last-child {
+  margin-bottom: 15px;
+}
+.nameCardLeft {
+  position:absolute;
+  left:0;
+  top:0;
+  border-right: solid 1px #fff;
+  width:25%;
+  height:100%;
+}
+.nameCardLeftPortrait {
+  width:100px;
+  height:100px;
+  margin:20px auto 5px auto;
+  border:solid 7px RGBA(152, 80, 84, 1.00);
+  border-radius:100px;
+  background:url('/images/portrait.jpg');
+  background-size:100% 100%;
+}
+.nameCardLeftName {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 600;
+}
+.nameCardRight {
+  position:absolute;
+  left:25%;
+  top:0;
+  width:75%;
+  height:100%;
+}
+.nameCardRightNode {
+  line-height: 20px;
+  font-size: 18px;
+  margin: 10px 20px;
+}
 
 /* 位置样式 */
 .clear {

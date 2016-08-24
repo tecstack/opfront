@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 /**
@@ -14,7 +15,7 @@ var promise = angular.module('promise');
 promise.controller('Cnavbar', function($scope, $rootScope){
   $rootScope.MshowHelper = false;
   $scope.FtoggleMenu = function(){
-    $rootScope.MshowMenu = !$rootScope.MshowMenu
+    $rootScope.MshowMenu = !$rootScope.MshowMenu;
   };
 });
 
@@ -37,9 +38,9 @@ promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
   $scope.FsignIn = SuserService.FsignIn;
   // 回车判定登陆
   $scope.FsignInEnter = function(event, VuserInfo, VisKeep){
-    if (event.keyCode == 13){
+    if (event.keyCode === 13){
       $scope.FsignIn(VuserInfo, VisKeep);
-    };
+    }
   };
   // 手动登出
   $rootScope.FsignOut = SuserService.FsignOut;

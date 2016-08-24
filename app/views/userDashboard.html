@@ -1,33 +1,17 @@
 <div ng-controller="Cuser">
   <div class="row">
-    <div class="fullCol">
-      <div class="node">
-        <div class="nodeTitle">用户信息</div>
-        <div class="tableContent">用户详情，账号设置，管理等</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
     <div class="quarterCol">
       <div class="node">
-        <div class="nodeTitle">账户详情</div>
-        <div class="toolbar">
-          <div class="toolbarLabel">用户名：</div>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">注册时间：</div>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">上次登陆：</div>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">角色：</div>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">拥有权限：</div>
+        <div class="nodeTitle">个人账户</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarNode toolbarFullNode">{{Mself.username}}</div>
+          </div>
         </div>
       </div>
+    </div>
+    <div class="twoQuarterCol">
+      <name-card userinfo="Mself"></name-card>
     </div>
   </div>
 </div>

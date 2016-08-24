@@ -10,7 +10,3 @@
  */
 
 var promise = angular.module('promise');
-
-promise.controller('Cuser', function($scope, $rootScope, SinfoService){
-
-});

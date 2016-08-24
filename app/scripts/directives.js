@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 var promise = angular.module('promise');
@@ -9,8 +10,8 @@ promise.directive('sidebarNode',function(){
 		link: function(scope,element,attrs){
 			element.children().first().bind({
 				'mouseenter': function(){
-					element.siblings().children(".sidebarSubnode").removeClass("show");
-					element.children(".sidebarSubnode").addClass("show");
+					element.siblings().children('.sidebarSubnode').removeClass('show');
+					element.children('.sidebarSubnode').addClass('show');
 				}
 			});
 		}
@@ -64,10 +65,11 @@ promise.directive('scriptNode',function($rootScope){
 promise.directive('progressbar',function(){
 	return{
 		restrict: 'C',
+		replace: true,
 		scope: {
 			option: '=option'
 		},
-		templateUrl: 'views/progressBar.html',
+		templateUrl: 'views/directives/progressBar.html',
 		link: function(scope,element,attrs){
 			scope.$watchCollection('option', function(){
 				scope.rate = parseFloat(scope.option.current)/parseFloat(scope.option.max)*100 + '%';
@@ -86,7 +88,7 @@ promise.directive('ngTable',function($filter){
 			FunSelect: '=unselect',
 			FdbClick: '=dbclick',
 		},
-		templateUrl: 'views/ng-table.html',
+		templateUrl: 'views/directives/ng-table.html',
 		link: function(scope, element, attrs){
 			// showdatas
 			scope.Mpp = 100;
@@ -97,12 +99,12 @@ promise.directive('ngTable',function($filter){
 			scope.FinitShow = function(){
 				if (scope.MfilterDatas.length && scope.Mpp){
 					scope.Mpages = Math.ceil(parseFloat(scope.MfilterDatas.length)/parseFloat(scope.Mpp));
-				} else if (scope.MfilterDatas.length == 0){
+				} else if (scope.MfilterDatas.length === 0){
 					scope.Mpages = 0;
-				} else if (scope.Mpp == 0){
+				} else if (scope.Mpp === 0){
 					scope.Mpages = 1;
-				};
-				if (scope.Mpage > scope.Mpages && scope.Mpage != 1){
+				}
+				if (scope.Mpage > scope.Mpages && scope.Mpage !== 1){
 					scope.Mpage = scope.Mpages;
 				} else if (scope.Mpage < 0){
 					scope.Mpage = 0;
@@ -117,35 +119,35 @@ promise.directive('ngTable',function($filter){
 			scope.FcheckAll = function(Vstatus){
 				for (var index in scope.MfilterDatas){
 					if (scope.MfilterDatas.hasOwnProperty(index)){
-						if (scope.MfilterDatas[index].select !== true && Vstatus == true) {
+						if (scope.MfilterDatas[index].select !== true && Vstatus === true) {
 							if (scope.Fselect) {
 								scope.Fselect(scope.MfilterDatas[index]);
-							};
-						} else if (scope.MfilterDatas[index].select == true && Vstatus == false) {
+							}
+						} else if (scope.MfilterDatas[index].select === true && Vstatus === false) {
 							if (scope.FunSelect) {
 								scope.FunSelect(scope.MfilterDatas[index]);
-							};
-						};
+							}
+						}
 						scope.MfilterDatas[index].select = Vstatus;
-					};
-				};
+					}
+				}
 			};
 			scope.FtrClick = function(Vnode){
-				Vnode.select = (Vnode.select == undefined)?true:!Vnode.select;
-				if (Vnode.select == true) {
+				Vnode.select = (Vnode.select === undefined)?true:!Vnode.select;
+				if (Vnode.select === true) {
 					if (scope.Fselect) {
 						scope.Fselect(Vnode);
-					};
-				} else if (Vnode.select == false) {
+					}
+				} else if (Vnode.select === false) {
 					if (scope.FunSelect) {
 						scope.FunSelect(Vnode);
-					};
+					}
 				}
 			};
 			scope.FtrDbClick = function(Vnode){
 				if (scope.FdbClick) {
 					scope.FdbClick(Vnode);
-				};
+				}
 			};
 
 			// init & watch
@@ -165,12 +167,42 @@ promise.directive('ngTable',function($filter){
 		}
 	};
 });
+// nameCard
+promise.directive('nameCard',function(){
+	return{
+		restrict: 'E',
+		scope: {
+			MuserInfo: '=userinfo',
+		},
+		templateUrl: 'views/directives/name-card.html',
+		link: function(scope, element, attrs){
+			// showdatas
+			// event binding
+			// init & watch
+		}
+	};
+});
 // must option
 promise.directive('must',function(){
 	return{
 		restrict: 'E',
 		replace: true,
 		template: '<span style="color:#FF3640; font-size: 20px;">*</span>',
+	};
+});
+// roleNode
+promise.directive('roleNode',function($rootScope){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			scope.Mselected = false;
+			element.bind({
+				'click': function(){
+					$(this).toggleClass('toolbarNodeSelected');
+					scope.$apply();
+				}
+			});
+		}
 	};
 });
 
@@ -180,7 +212,7 @@ promise.directive('chartLine',function(){
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data)
+			var chartData = jQuery.parseJSON(attrs.data);
 		  var myChart = new Chart(chartDom).Line(chartData);
 		}
 	};
@@ -195,7 +227,7 @@ promise.directive('chartBar',function(){
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data)
+			var chartData = jQuery.parseJSON(attrs.data);
 		  var myChart = new Chart(chartDom).Bar(chartData, options);
 		}
 	};
@@ -206,7 +238,7 @@ promise.directive('chartRadar',function(){
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data)
+			var chartData = jQuery.parseJSON(attrs.data);
 		  var myChart = new Chart(chartDom).Radar(chartData);
 		}
 	};
@@ -217,7 +249,7 @@ promise.directive('chartPolar',function(){
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data)
+			var chartData = jQuery.parseJSON(attrs.data);
 		  var myChart = new Chart(chartDom).PolarArea(chartData);
 		}
 	};
@@ -228,7 +260,7 @@ promise.directive('chartPie',function(){
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data)
+			var chartData = jQuery.parseJSON(attrs.data);
 		  var myChart = new Chart(chartDom).Pie(chartData);
 		}
 	};

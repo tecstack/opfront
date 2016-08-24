@@ -1,0 +1,36 @@
+<div class="node nameCard">
+  <div class="nameCardLeft">
+    <div class="nameCardLeftPortrait"></div>
+    <div class="nameCardLeftName">{{MuserInfo.username}}</div>
+  </div>
+  <div class="nameCardRight">
+    <div class="nameCardRightNode">
+      <i class="iconfont">&#xe668;</i> 电话:
+      {{MuserInfo.tel}}
+    </div>
+    <div class="nameCardRightNode">
+      <i class="iconfont">&#xe61b;</i> 邮箱:
+      {{MuserInfo.email}}
+    </div>
+    <div class="nameCardRightNode">
+      <i class="iconfont">&#xe683;</i> 注册时间:
+      {{MuserInfo.sign_up_date | dateFilter}}
+    </div>
+    <div class="nameCardRightNode">
+      <i class="iconfont">&#xe683;</i> 最近登录:
+      {{MuserInfo.last_login | dateFilter}}
+    </div>
+    <div class="nameCardRightNode">
+      <i class="iconfont">&#xe636;</i> 角色:
+      <span ng-repeat="role in MuserInfo.role">{{role.name}}({{role.description}})&nbsp;</span>
+    </div>
+    <div class="nameCardRightNode">
+      <i class="iconfont">&#xe66d;</i> 权限:
+      <span ng-repeat="privelege in MuserInfo.privelege">{{privelege.name}}&nbsp;</span>
+    </div>
+  </div>
+  <!-- <div>
+    <i class="iconfont">&#xe67d;</i>
+    <i class="iconfont">&#xe683;</i>
+  </div> -->
+</div>

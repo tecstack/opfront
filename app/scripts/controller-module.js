@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 /**
@@ -75,7 +76,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
           } else if (node.sum_skipped) {
             Vskipped += 1;
           }
-        };
+        }
         $scope.Mprogress.success = Vsuccess;
         $scope.pro.result.current = $scope.Mprogress.success;
         $scope.Mprogress.failed = Vfailed;
@@ -98,7 +99,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       }
       SinfoService.FaddInfo('已停止' + Vnum + '个轮询任务');
       $scope.MshowLoading = false;
-    };
+    }
   };
   $scope.$on('$destroy', function() {
     // Make sure that the interval is destroyed too
@@ -118,7 +119,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       var groups = $filter('groupsFilter')($rootScope.Mhosts[index].groups);
       tempNode.push(groups);
       $scope.MhostsDatasTd.push(tempNode);
-    };
+    }
   };
 
   // script data
@@ -132,7 +133,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       tempNode.push($rootScope.Mscripts[index].owner_name);
       tempNode.push($rootScope.Mscripts[index].time_create);
       $scope.MscriptsDatasTd.push(tempNode);
-    };
+    }
   };
 
   // Code Mirror
@@ -182,28 +183,28 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     $scope.MmoduleSelected.content = {};
     for (var key in $scope.MshowNode) {
       if ($scope.MshowNode.hasOwnProperty(key)) {
-        if (key == Vmodule) {
+        if (key === Vmodule) {
           $scope.MshowNode[key] = true;
           $scope.MmoduleSelected.name = Vmodule;
         } else {
           $scope.MshowNode[key] = false;
-        };
-      };
-    };
+        }
+      }
+    }
     $scope.MscriptSelected = {'scriptid': ''};
     $scope.MshellSelected = {'shell': ''};
     $scope.MscriptShow = {};
-    if (Vmodule == 'shell') {
+    if (Vmodule === 'shell') {
       $scope.MmoduleSelected.content = $scope.MshellSelected;
     } else {
       $scope.MmoduleSelected.content = $scope.MscriptSelected;
-    };
+    }
   };
 
   $scope.FshowSelector = function(Vselector){
     for (var key in $scope.MshowSelector) {
       if ($scope.MshowSelector.hasOwnProperty(key)) {
-        $scope.MshowSelector[key] = (key == Vselector)?true:false;
+        $scope.MshowSelector[key] = (key === Vselector)?true:false;
       }
     }
   };
@@ -223,16 +224,16 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   $scope.MhostsSelected = [];
   $scope.FselectHost = function(Vnode){
     var Vip = Vnode[1];
-    if (jQuery.inArray(Vip, $scope.MhostsSelected) == -1) {
+    if (jQuery.inArray(Vip, $scope.MhostsSelected) === -1) {
       $scope.MhostsSelected.push(Vip);
-    };
+    }
   };
   $scope.FunSelectHost = function(Vnode){
     var Vip = Vnode[1];
     var Vindex = jQuery.inArray(Vip, $scope.MhostsSelected);
-    if (Vindex != -1) {
+    if (Vindex !== -1) {
       $scope.MhostsSelected.splice(Vindex, 1);
-    };
+    }
   };
 
   // Scripts Selector
@@ -242,15 +243,15 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     var Vtime = Vnode[3];
     for (var index in $rootScope.Mscripts) {
       if ($rootScope.Mscripts.hasOwnProperty(index)) {
-        if ($rootScope.Mscripts[index].time_create == Vtime) {
+        if ($rootScope.Mscripts[index].time_create === Vtime) {
           $scope.MscriptShow = $rootScope.Mscripts[index];
           $scope.MscriptSelected.scriptid = $scope.MscriptShow.script_id;
           $scope.MeditorOptions.script.mode = $scope.MscriptShow.script_lang;
           $scope.MshowSelector.scripts = false;
           break;
-        };
-      };
-    };
+        }
+      }
+    }
   };
 
   // ---------------------Executor---------------------
@@ -265,22 +266,22 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   $scope.MpostWalkerInfo = {};
   $scope.Mresult = {};
   $scope.Fjudge = function(){
-    if ($scope.MhostsSelected.length == 0) {
+    if ($scope.MhostsSelected.length === 0) {
       SinfoService.FaddInfo('请先选择目标主机！');
       return false;
-    };
+    }
     if ($scope.MmoduleSelected.content.hasOwnProperty('shell')){
-      if ($scope.MmoduleSelected.content.shell == '') {
+      if ($scope.MmoduleSelected.content.shell === '') {
         SinfoService.FaddInfo('请填写下发指令！');
         return false;
-      };
-    };
+      }
+    }
     if ($scope.MmoduleSelected.content.hasOwnProperty('scriptid')){
-      if ($scope.MmoduleSelected.content.scriptid == '') {
+      if ($scope.MmoduleSelected.content.scriptid === '') {
         SinfoService.FaddInfo('请选取脚本！');
         return false;
-      };
-    };
+      }
+    }
     return true;
   };
   $scope.Fexecute = function(){
@@ -303,14 +304,14 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       $scope.MerrInfo = '';
       for (var kind in $scope.Mprogress) {
         $scope.Mprogress[kind] = 0;
-      };
+      }
       for (var index in $scope.MhostsSelected) {
         var ip = $scope.MhostsSelected[index];
         $scope.Mresult[ip] = {};
         $scope.pro.result.max += 1;
-      };
+      }
       $scope.FcreateWalker($scope.MmoduleSelected.name, $scope.MpostWalkerInfo);
-    };
+    }
   };
   $scope.Fback = function(){
     $scope.MshowExecutor = false;
@@ -321,7 +322,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     }
     else if (node.stderr) {
       $scope.Mstdout = node.stderr;
-    };
+    }
   };
 
 
@@ -341,9 +342,9 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
         if (newValue[node].sum_ok || newValue[node].sum_changed || newValue[node].sum_failures || newValue[node].sum_unreachable || newValue[node].sum_skipped) {
           $scope.FstopInfoWalker();
           break;
-        };
-      };
-    };
+        }
+      }
+    }
   });
   $scope.$watchCollection('Mhosts', function(newValue, oldValue){
     $scope.FhostsDatasInit();

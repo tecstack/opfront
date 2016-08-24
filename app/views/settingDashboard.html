@@ -3,6 +3,12 @@
     <div class="quarterCol">
       <div class="node">
         <div class="nodeTitle">用户管理</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarNode toolbarFullNode" ng-click="FgetUserList()">刷新用户</div>
+            <div class="toolbarNode toolbarFullNode" ng-click="FshowUserForm()">新增用户</div>
+          </div>
+        </div>
       </div>
       <div class="node">
         <div class="nodeTitle">角色管理</div>
@@ -10,33 +16,60 @@
     </div>
 
     <div class="threeQuarterCol">
-      <div class="node">
-        <div class="nodeTitle">Admin</div>
+      <name-card ng-repeat="user in MuserInfos" userinfo="user"></name-card>
+    </div>
+  </div>
+
+  <div class="dashboardMask" ng-show="MshowUserForm">
+    <div class="formContent">
+      <div class="tableContent">
         <div class="toolbar">
-          <div class="toolbarLabel">电话：</div>
-          <div class="toolbarNode">138222000002</div>
-          <div class="toolbarLabel">邮箱：</div>
-          <div class="toolbarNode">notadmin@somewhere.com</div>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">角色：</div>
-          <div class="toolbarNode">Root</div>
-          <div class="toolbarNode">Admin</div>
-          <div class="toolbarNode">Guest</div>
-          <div class="toolbarNode">Apps</div>
-          <i class="iconfont toolbarNode">&#xe649;</i>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">权限：</div>
+          <div class="toolbarLabel">用户名<must></must>：</div>
           <div class="toolbarContent">
-            <div class="toolbarNode">get_hosts</div>
-            <div class="toolbarNode">get_scripts</div>
-            <div class="toolbarNode">shell_walker</div>
-            <div class="toolbarNode">script_walker</div>
-            <div class="toolbarNode">forward_walker</div>
+            <input type="text" class="toolbarNode" placeholder="Username..." ng-model="McreateUserInfo.username">
           </div>
         </div>
-
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">密码<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="password" class="toolbarNode" placeholder="Password..." ng-model="McreateUserInfo.password">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">电话<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="text" class="toolbarNode" placeholder="Telephone..." ng-model="McreateUserInfo.tel">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">邮箱<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="text" class="toolbarNode" placeholder="Email..." ng-model="McreateUserInfo.email">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">角色：</div>
+          <div class="toolbarContent">
+            <div class="toolbarNode roleNode" ng-repeat="role in MroleInfos" ng-click="FselectRole(role)">{{role.role_name}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">确认：</div>
+          <div class="toolbarContent">
+            <div class="toolbarNode" ng-click="FcreateUser(McreateUserInfo)">确认</div>
+            <div class="toolbarNode" ng-click="MshowUserForm=false;">取消</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

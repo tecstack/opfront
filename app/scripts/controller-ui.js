@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 /**
@@ -39,22 +40,22 @@ promise.controller('Cui', function($scope,$rootScope){
     ]
   };
   $scope.MbarDatas = {
-    labels: ["5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7", "5.8", "5.9", "6.0", "6.1", "6.2", "6.3", "6.4", "6.5"],
+    labels: ['5.1', '5.2', '5.3', '5.4', '5.5', '5.6', '5.7', '5.8', '5.9', '6.0', '6.1', '6.2', '6.3', '6.4', '6.5'],
     datasets: [
       {
-        label: "My First dataset",
-        fillColor: "#618FFF",
-        // strokeColor: "rgba(220,220,220,0.8)",
-        highlightFill: "#6291FF",
-        highlightStroke: "rgba(220,220,220,1)",
+        label: 'My First dataset',
+        fillColor: '#618FFF',
+        // strokeColor: 'rgba(220,220,220,0.8)',
+        highlightFill: '#6291FF',
+        highlightStroke: 'rgba(220,220,220,1)',
         data: [65, 59, 80, 81, 56, 55, 40, 59, 12, 100, 32, 72, 5, 15, 65]
       },
       {
-        label: "My Second dataset",
-        fillColor: "RGBA(255, 112, 118, 1.00)",
-        // strokeColor: "rgba(220,220,220,0.8)",
-        highlightFill: "RGBA(255, 132, 138, 1.00)",
-        highlightStroke: "rgba(220,220,220,1)",
+        label: 'My Second dataset',
+        fillColor: 'RGBA(255, 112, 118, 1.00)',
+        // strokeColor: 'rgba(220,220,220,0.8)',
+        highlightFill: 'RGBA(255, 132, 138, 1.00)',
+        highlightStroke: 'rgba(220,220,220,1)',
         data: [40, 59, 12, 100, 32, 72, 65, 59, 80, 81, 56, 55, 98, 54, 23]
       },
     ]
@@ -94,5 +95,5 @@ promise.controller('Cui', function($scope,$rootScope){
       'max': 10,
       'current': 2,
     },
-  }
+  };
 });

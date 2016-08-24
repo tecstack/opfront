@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 /**
@@ -17,7 +18,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
     {'label': '选择语言', 'value': ''},
     {'label': 'Python', 'value': 'python'},
     {'label': 'Shell', 'value': 'shell'}
-  ]
+  ];
   $scope.MisPublicOptions = [
     {'label': '是否公开', 'value': ''},
     {'label': '仅自己', 'value': 0},

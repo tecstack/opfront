@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 var promise = angular.module('promise');
@@ -6,7 +7,13 @@ promise.animation('.signBg', function(){
   return{
     addClass: function(element){
       // hide
-      element.animate({'opacity': '0'}, 300, function(){$(this).css('display', 'none')});
+      element.animate(
+        {'opacity': '0'},
+        300,
+        function(){
+          $(this).css('display', 'none');
+        }
+      );
     },
     removeClass: function(element){
       // show
@@ -20,7 +27,13 @@ promise.animation('.sidebar', function(){
   return{
     addClass: function(element){
       // hide
-      element.animate({'opacity': '0', 'left': '-100%'}, 100, function(){$(this).css('display', 'none')});
+      element.animate(
+        {'opacity': '0', 'left': '-100%'},
+        100,
+        function(){
+          $(this).css('display', 'none');
+        }
+      );
     },
     removeClass: function(element){
       // show
@@ -42,7 +55,9 @@ promise.animation('.infoNode', function(){
           'line-height': '0',
         },
         150,
-        function(){$(this).css('display', 'none')}
+        function(){
+          $(this).css('display', 'none');
+        }
       );
     },
     enter: function(element){
@@ -70,9 +85,13 @@ promise.animation('.infoNode', function(){
 promise.animation('.dashboardMask', function(){
   return{
     addClass: function(element){
-      element.animate({'opacity': '0'}, 300, function(){
-        $(this).css({'display': 'none'});
-      });
+      element.animate(
+        {'opacity': '0'},
+        300,
+        function(){
+          $(this).css({'display': 'none'});
+        }
+      );
     },
     removeClass: function(element){
       element.css({
@@ -103,14 +122,14 @@ promise.directive('label',function(){
 	return{
 		restrict: 'C',
 		link: function(scope,element,attrs){
-      element.children("div").bind({
+      element.children('div').bind({
         click: function(e){
           e.stopPropagation();
         }
       });
       element.bind({
         click: function(e){
-          element.children("div").toggle(100);
+          element.children('div').toggle(100);
         }
       });
 		}
@@ -127,7 +146,13 @@ promise.animation('.toolbar', function(){
       element.animate({'opacity': '1', 'height': '35px'}, 100);
     },
     leave: function(element){
-      element.animate({'opacity': '0', 'height': '0'}, 100, function(){$(this).css('display', 'none')});
+      element.animate(
+        {'opacity': '0', 'height': '0'},
+        100,
+        function(){
+          $(this).css('display', 'none');
+        }
+      );
     }
   };
 });
@@ -137,7 +162,13 @@ promise.animation('.row', function(){
     addClass: function(element){
       var marginLR = parseInt(element.css('margin-left')) + parseInt(element.css('margin-right'));
       var width = parseInt(element.css('width')) + marginLR;
-      element.animate({'left': width + 'px'}, 100, function(){$(this).css('display', 'none')});
+      element.animate(
+        {'left': width + 'px'},
+        100,
+        function(){
+          $(this).css('display', 'none');
+        }
+      );
     },
     removeClass: function(element){
       var marginLR = parseInt(element.css('margin-left')) + parseInt(element.css('margin-right'));
@@ -154,7 +185,13 @@ promise.animation('.row', function(){
 promise.animation('.codeEditorLoding', function(){
   return{
     addClass: function(element){
-      element.animate({'opacity': '0'}, 500, function(){$(this).css('display', 'none')});
+      element.animate(
+        {'opacity': '0'},
+        500,
+        function(){
+          $(this).css('display', 'none');
+        }
+      );
     },
     removeClass: function(element){
       element.css({

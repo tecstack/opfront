@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 /**
@@ -15,10 +16,11 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, Suse
   // charjs 初始设置
   Chart.defaults.global.defaultFontColor = '#fff';
   Chart.defaults.global.scaleFontColor = '#fff';
-  Chart.defaults.global.multiTooltipTemplate = "<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>",
+  Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>',
 
   // 消息队列，用于消息区临时提示
   $rootScope.Minfos = [];
+
   // $rootScope.FaddInfo = function(node){
   //   SinfoService.FaddInfo(node);
   // };
@@ -60,15 +62,15 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, Suse
   $rootScope.FtokenRefresh = SuserService.FtokenRefresh;
   // 自动登录逻辑
   $rootScope.FcookieAuth = function(){
-    var Vrftoken = $cookies.get('rftoken');
-    if (!Vrftoken){
-      // rftoken已过期或者未保持登录，不刷新，只尝试token自动登录
+    var Vrefreshtoken = $cookies.get('refreshtoken');
+    if (!Vrefreshtoken){
+      // refreshtoken已过期或者未保持登录，不刷新，只尝试token自动登录
       $rootScope.MsignError = false;
       $rootScope.MisSign = false;
       $rootScope.FtokenSignIn();
     }
     else {
-      // rftoken未过期，尝试刷新并自动登录
+      // refreshtoken未过期，尝试刷新并自动登录
       $rootScope.FtokenRefresh();
     }
   };

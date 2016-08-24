@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 /**
@@ -11,7 +12,7 @@
 var promise = angular.module('promise');
 
 // ------------------------------Host----------------------------
-promise.controller('Chost', function($scope, $rootScope, $filter, ShostService){
+promise.controller('Chost', function($scope, $rootScope, $filter){
   // 表头
   $scope.MhostsDatasTh = ['ID','IP','主机名','组'];
   // 展示内容
@@ -28,7 +29,7 @@ promise.controller('Chost', function($scope, $rootScope, $filter, ShostService){
       var groups = $filter('groupsFilter')($rootScope.Mhosts[index].groups);
       tempNode.push(groups);
       $scope.MhostsDatasTd.push(tempNode);
-    };
+    }
   };
 
   // 选中后的执行函数
@@ -37,13 +38,13 @@ promise.controller('Chost', function($scope, $rootScope, $filter, ShostService){
     var id = node[0];
     for (var index in $rootScope.Mhosts) {
       if ($rootScope.Mhosts.hasOwnProperty(index)) {
-        if (id == $rootScope.Mhosts[index].hostid) {
+        if (id === $rootScope.Mhosts[index].hostid) {
           $rootScope.MhostsDataHelper = $rootScope.Mhosts[index];
           $rootScope.MshowHelper = true;
           break;
-        };
-      };
-    };
+        }
+      }
+    }
   };
   // 取消选择后的执行函数
   $scope.FhideHostsHelper = function(node){

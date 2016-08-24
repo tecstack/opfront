@@ -22,7 +22,7 @@
                 <td>{{script.script_lang}}</td>
                 <td>{{script.is_public}}</td>
                 <td>{{script.owner_name}}</td>
-                <td>{{script.time_last_edit | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{script.time_last_edit | dateFilter}}</td>
                 <td>
                   <div ng-show="MshowAction">
                     <a href="" ng-click="FupdateAction(script)">编辑</a>

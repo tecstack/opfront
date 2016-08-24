@@ -1,3 +1,4 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 var promise = angular.module('promise');
@@ -18,6 +19,17 @@ var promise = angular.module('promise');
 //   return result;
 // };
 
+
+// date filter: 'Tue, 23 Aug 2016 00:50:12 GMT' - > '2016-08-23 00:50:12'
+promise.filter('dateFilter', function($filter){
+  return function(input){
+    var dateInput = new Date(input);
+    var dateOutput = new Date(dateInput.valueOf() + dateInput.getTimezoneOffset() * 60000);
+    var output = $filter('date')(dateOutput, 'yyyy-MM-dd HH:mm:ss');
+    return output;
+  };
+});
+
 // groups filter: [{xxx},{xxx}] - > 'group1,group2'
 promise.filter('groupsFilter', function(){
   return function(input){
@@ -29,7 +41,7 @@ promise.filter('groupsFilter', function(){
     }
     output = groupNameList.join();
     return output;
-  }
+  };
 });
 
 // walker result filter: [{xxx},{xxx}] - > 'OK' 'Change' 'fail' 'unreachable'
@@ -56,7 +68,6 @@ promise.filter('trailsFilter', function(){
     else {
       output = 'waiting';
     }
-    ;
     return output;
-  }
+  };
 });
