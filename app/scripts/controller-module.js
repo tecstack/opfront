@@ -21,6 +21,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     'unreachable': 0,
     'skipped': 0,
     'total': 0,
+    'complete': 0,
   };
   $scope.FcreateWalker = function(VmoduleName, VmoduleVars){
     SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
@@ -63,18 +64,23 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
         var Vfailed = 0;
         var Vunreachable = 0;
         var Vskipped = 0;
+        var Vcomplete = 0;
         for (var index in callbackdata.trails) {
           var node = callbackdata.trails[index];
           var ip = node.ip;
           $scope.Mresult[ip] = node;
           if (node.sum_changed || node.sum_ok) {
             Vsuccess += 1;
+            Vcomplete += 1;
           } else if (node.sum_failures) {
             Vfailed += 1;
+            Vcomplete += 1;
           } else if (node.sum_unreachable) {
             Vunreachable += 1;
+            Vcomplete += 1;
           } else if (node.sum_skipped) {
             Vskipped += 1;
+            Vcomplete += 1;
           }
         }
         $scope.Mprogress.success = Vsuccess;
@@ -83,6 +89,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
         $scope.Mprogress.unreachable = Vunreachable;
         $scope.Mprogress.skipped = Vskipped;
         $scope.Mprogress.total = VtotalHosts;
+        $scope.Mprogress.complete = Vcomplete;
         $scope.MerrInfo = callbackdata.message;
       },
       function errorCallback(callbackdata){
@@ -319,9 +326,10 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   $scope.FshowStdout = function(node){
     if (node.stdout) {
       $scope.Mstdout = node.stdout;
-    }
-    else if (node.stderr) {
+    } else if (node.stderr) {
       $scope.Mstdout = node.stderr;
+    } else if (node.msg) {
+      $scope.Mstdout = node.msg;
     }
   };
 
@@ -336,16 +344,14 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     'scripts': false,
   };
   // 监控walker结果信息，如果成功更新了状态(ok/change/failed/unreachable/skipped)，则停止轮询
-  $scope.$watchCollection('Mresult', function(newValue, oldValue){
-    if (!jQuery.isEmptyObject(newValue)) {
-      for (var node in newValue) {
-        if (newValue[node].sum_ok || newValue[node].sum_changed || newValue[node].sum_failures || newValue[node].sum_unreachable || newValue[node].sum_skipped) {
-          $scope.FstopInfoWalker();
-          break;
-        }
+  $scope.$watchCollection('Mprogress', function(newValue, oldValue){
+    if (!jQuery.isEmptyObject(newValue) && newValue.total !== 0) {
+      if (newValue.complete === newValue.total) {
+        $scope.FstopInfoWalker();
       }
     }
   });
+
   $scope.$watchCollection('Mhosts', function(newValue, oldValue){
     $scope.FhostsDatasInit();
   });
