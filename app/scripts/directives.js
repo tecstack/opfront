@@ -168,14 +168,77 @@ promise.directive('ngTable',function($filter){
 	};
 });
 // nameCard
-promise.directive('nameCard',function(){
+promise.directive('nameCard',function(SinfoService){
 	return{
 		restrict: 'E',
+		replace: true,
 		scope: {
 			MuserInfo: '=userinfo',
+			FdeleteFunction: '=delete',
 		},
 		templateUrl: 'views/directives/name-card.html',
 		link: function(scope, element, attrs){
+			scope.MshowDelete = false;
+			scope.FdeleteUser = function(){
+				if (typeof scope.FdeleteFunction === 'function') {
+					scope.FdeleteFunction(scope.MuserInfo);
+				} else {
+					SinfoService.FaddInfo('无指定删除动作，默认不作处理...');
+				}
+				scope.MshowDelete = false;
+			};
+			// showdatas
+			// event binding
+			// init & watch
+		}
+	};
+});
+// roleCard
+promise.directive('roleCard',function(){
+	return{
+		restrict: 'E',
+		replace: true,
+		scope: {
+			MroleInfo: '=roleinfo',
+			FdeleteFunction: '=delete',
+		},
+		templateUrl: 'views/directives/role-card.html',
+		link: function(scope, element, attrs){
+			scope.MshowDelete = false;
+			scope.FdeleteUser = function(){
+				if (typeof scope.FdeleteFunction === 'function') {
+					scope.FdeleteFunction(scope.MroleInfo);
+				} else {
+					SinfoService.FaddInfo('无指定删除动作，默认不作处理...');
+				}
+				scope.MshowDelete = false;
+			};
+			// showdatas
+			// event binding
+			// init & watch
+		}
+	};
+});
+// privilege Card
+promise.directive('privilegeCard',function(){
+	return{
+		restrict: 'E',
+		replace: true,
+		scope: {
+			MprivilegeInfo: '=privilegeinfo',
+			FdeleteFunction: '=delete',
+		},
+		templateUrl: 'views/directives/privilege-card.html',
+		link: function(scope, element, attrs){
+			scope.MshowDelete = false;
+			scope.FdeleteUser = function(){
+				if (typeof scope.FdeleteFunction === 'function') {
+					scope.FdeleteFunction(scope.MprivilegeInfo);
+				} else {
+					SinfoService.FaddInfo('无指定删除动作，默认不作处理...');
+				}
+				scope.MshowDelete = false;
+			};
 			// showdatas
 			// event binding
 			// init & watch
@@ -188,21 +251,6 @@ promise.directive('must',function(){
 		restrict: 'E',
 		replace: true,
 		template: '<span style="color:#FF3640; font-size: 20px;">*</span>',
-	};
-});
-// roleNode
-promise.directive('roleNode',function($rootScope){
-	return{
-		restrict: 'C',
-		link: function(scope,element,attrs){
-			scope.Mselected = false;
-			element.bind({
-				'click': function(){
-					$(this).toggleClass('toolbarNodeSelected');
-					scope.$apply();
-				}
-			});
-		}
 	};
 });
 

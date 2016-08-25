@@ -564,7 +564,7 @@ table a:hover {
   position: relative;
   float: left;
   overflow: hidden;
-  width: calc((100% - 30px) / 3 * 2);
+  width: calc((100% - 30px) / 3 * 2 + 15px);
   border: 0;
   margin-right: 15px;
   padding: 0;
@@ -582,7 +582,7 @@ table a:hover {
   position: relative;
   float: left;
   overflow: hidden;
-  width: calc((100% - 45px) / 4 * 3);
+  width: calc((100% - 45px) / 4 * 3 + 30px);
   border: 0;
   margin-right: 15px;
   padding: 0;
@@ -781,11 +781,6 @@ select.toolbarFullNode {
 
 .nameCard {
   height:180px;
-  /*box-shadow: 0 0 2px #000;*/
-  /*background-color: RGBA(38, 72, 99, 1.00);*/
-}
-name-card .node:last-child {
-  margin-bottom: 15px;
 }
 .nameCardLeft {
   position:absolute;
@@ -820,6 +815,80 @@ name-card .node:last-child {
   line-height: 20px;
   font-size: 18px;
   margin: 10px 20px;
+}
+.nameCardCloseBox {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  cursor: pointer;
+}
+.nameCardConfirm {
+  font-size: 25px;
+}
+.nameCardConfirm:hover {
+  color: #E16169;
+}
+
+.roleCardLeft {
+  position: relative;
+  float: left;
+  width: 20%;
+  box-sizing: border-box;
+}
+.roleCardLeftPortrait {
+  width:100px;
+  height:100px;
+  margin:20px auto 5px auto;
+  border:solid 7px RGBA(152, 80, 84, 1.00);
+  border-radius:100px;
+  background:url('/images/role.jpg');
+  background-size:100% 100%;
+}
+.roleCardLeftName {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 600;
+}
+.roleCardMiddle {
+  position: relative;
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.roleCardRight {
+  position: relative;
+  float: left;
+  width: 55%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.roleCardUserNode {
+  float: left;
+  margin: 10px;
+}
+.roleCardUserNodePortrait {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 5px auto;
+  border: solid 4px RGBA(152, 80, 84, 1.00);
+  border-radius: 100px;
+  background: url('/images/portrait.jpg');
+  background-size: 100% 100%;
+}
+.roleCardRoleNodePortrait {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 5px auto;
+  border: solid 4px RGBA(152, 80, 84, 1.00);
+  border-radius: 100px;
+  background: url('/images/role.jpg');
+  background-size: 100% 100%;
+}
+.roleCardUserNodeName {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 /* 位置样式 */

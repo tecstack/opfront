@@ -172,6 +172,12 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 		});
 		return VrestApi;
 	};
+	var FdeleteUser = function(Vtoken) {
+		var VrestApi = $resource(VuserUrl, {}, {
+			'delete': {method:'DELETE', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+		});
+		return VrestApi;
+	};
 	// ------------------------------------role--------------------------------------
 	var FgetRoleList = function(Vtoken) {
 		var VrestApi = $resource(VroleUrl, {}, {
@@ -179,7 +185,25 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 		});
 		return VrestApi;
 	};
+	var FcreateRole = function(Vtoken) {
+		var VrestApi = $resource(VroleUrl, {}, {
+			'post': {method:'POST', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+		});
+		return VrestApi;
+	};
+	var FdeleteRole = function(Vtoken) {
+		var VrestApi = $resource(VroleUrl, {}, {
+			'delete': {method:'DELETE', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+		});
+		return VrestApi;
+	};
 	// ------------------------------------privilege--------------------------------------
+	var FgetPrivilegeList = function(Vtoken) {
+		var VrestApi = $resource(VprivilegeUrl, {}, {
+			'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+		});
+		return VrestApi;
+	};
 
 	return {
 		'FsignIn': FsignIn,
@@ -189,8 +213,13 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 
 		'FgetUserList': FgetUserList,
 		'FcreateUser': FcreateUser,
+		'FdeleteUser': FdeleteUser,
 
 		'FgetRoleList': FgetRoleList,
+		'FcreateRole': FcreateRole,
+		'FdeleteRole': FdeleteRole,
+
+		'FgetPrivilegeList': FgetPrivilegeList,
 	};
 });
 
