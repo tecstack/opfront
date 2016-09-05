@@ -27,7 +27,7 @@ promise.controller('ChelperTrigger', function($scope,$rootScope){
 });
 
 // sign
-promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
+promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService,SdelayService){
   // 初始化
   $scope.MisKeep = false;
   // 切换保持登录
@@ -43,5 +43,8 @@ promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService){
     }
   };
   // 手动登出
-  $rootScope.FsignOut = SuserService.FsignOut;
+  $rootScope.FsignOut = function(){
+    SuserService.FsignOut();
+    SdelayService.FstopInterval();
+  };
 });

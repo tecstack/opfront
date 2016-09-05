@@ -21,26 +21,20 @@
   <div class="row">
     <div class="thirdCol">
       <div class="node">
-        <div class="nodeTitle">待办事项</div>
-        <div class="toolbar">
-          <div class="toolbarLabel">待审批：</div>
-          <div class="toolbarNode"></div>
+        <div class="nodeTitle">同步数据</div>
+        <canvas class="chartDoughnut full" data="MdataBar" style="width:100%; height:100px;"></canvas>
+        <div class="nodeBottom">
+          <a href="#/host"><div class="toolbarNode" style="background-color:#F7464A;">主机：{{MhostsNum}}</div></a>
+          <a href="#/script"><div class="toolbarNode" style="background-color:#46BFBD;">脚本：{{MscriptsNum}}</div></a>
         </div>
       </div>
     </div>
     <div class="thirdCol">
       <div class="node">
-        <div class="nodeTitle">主机信息</div>
+        <div class="nodeTitle">待办事项</div>
         <div class="toolbar">
-          <div class="toolbarLabel">纳管数量：</div>
-          <a href="#/host"><div class="toolbarNode">{{MhostsNum}}</div></a>
-        </div>
-      </div>
-      <div class="node">
-        <div class="nodeTitle">脚本信息</div>
-        <div class="toolbar">
-          <div class="toolbarLabel">可用数量：</div>
-          <a href="#/script"><div class="toolbarNode">{{MscriptsNum}}</div></a>
+          <div class="toolbarLabel">待审批：</div>
+          <div class="toolbarNode"></div>
         </div>
       </div>
     </div>

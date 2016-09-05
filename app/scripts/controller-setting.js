@@ -11,7 +11,7 @@
 
 var promise = angular.module('promise');
 
-promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserService){
+promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserService, SdelayService){
   // service
   $scope.FgetUserList = function(){
     SuserService.FgetUserList($rootScope.Mtoken).get(
@@ -19,6 +19,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
       function successCallback(callbackdata){
         $scope.MuserInfos = callbackdata.user_list;
         SinfoService.FaddInfo('已同步' + $scope.MuserInfos.length + '条用户信息');
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
@@ -33,6 +34,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         SinfoService.FaddInfo(callbackdata.message);
         $scope.MshowMask.createUser = false;
         $scope.FgetUserList();
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
@@ -45,6 +47,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
       function successCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.message);
         $scope.FgetUserList();
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
@@ -59,6 +62,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         $scope.MroleInfos = callbackdata.role_list;
         SinfoService.FaddInfo('已同步' + $scope.MroleInfos.length + '条角色信息');
         $scope.Finit();
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
@@ -73,6 +77,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         SinfoService.FaddInfo(callbackdata.message);
         $scope.MshowMask.createRole = false;
         $scope.FgetRoleList();
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
@@ -85,6 +90,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
       function successCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.message);
         $scope.FgetRoleList();
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
@@ -99,6 +105,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         $scope.MprivilegeInfos = callbackdata.privilege_list;
         SinfoService.FaddInfo('已同步' + $scope.MprivilegeInfos.length + '条权限信息');
         $scope.Finit();
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);

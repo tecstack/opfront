@@ -2,25 +2,21 @@
   <div class="nodeTitle">
     {{MprivilegeInfo.privilege_name}},{{MprivilegeInfo.description}}
   </div>
-  <div class="node-half">
-    <div class="tableContent">
-      <div class="nodeTitle">所属角色</div>
-      <div class="toolbar">
-        <div class="roleCardUserNode" ng-repeat="role in MprivilegeInfo.role">
-          <div class="roleCardRoleNodePortrait"></div>
-          <div class="roleCardUserNodeName">{{role.role_name}}</div>
-        </div>
+  <div class="tableContent">
+    <div class="nodeTitle">所属角色</div>
+    <div class="toolbar">
+      <div class="roleCardUserNode" ng-repeat="role in MprivilegeInfo.role">
+        <div class="roleCardRoleNodePortrait"></div>
+        <div class="roleCardUserNodeName">{{role.role_name}}</div>
       </div>
     </div>
   </div>
-  <div class="node-half">
-    <div class="tableContent">
-      <div class="nodeTitle">所属用户</div>
-      <div class="toolbar">
-        <div class="roleCardUserNode" ng-repeat="user in MprivilegeInfo.user">
-          <div class="roleCardUserNodePortrait"></div>
-          <div class="roleCardUserNodeName">{{user.username}}</div>
-        </div>
+  <div class="tableContent">
+    <div class="nodeTitle">所属用户</div>
+    <div class="toolbar">
+      <div class="roleCardUserNode" ng-repeat="user in MprivilegeInfo.user">
+        <div class="roleCardUserNodePortrait"></div>
+        <div class="roleCardUserNodeName">{{user.username}}</div>
       </div>
     </div>
   </div>

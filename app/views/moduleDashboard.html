@@ -1,28 +1,17 @@
 <div ng-controller="Cmodule">
   <div class="row">
-    <div class="thirdCol">
+    <div class="quarterCol">
       <div class="node">
         <div class="nodeTitle">执行</div>
         <div class="tableContent">
           <div class="toolbar">
-            <div class="toolbarLabel">执行：</div>
-            <div class="toolbarNode" ng-click="Fexecute()">执行</div>
+            <div class="toolbarNode toolbarFullNode" ng-click="Fexecute()">执行</div>
           </div>
           <div class="toolbar">
-            <div class="toolbarLabel">执行用户：</div>
-            <select class="toolbarNode" ng-model="Mosuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+            <select class="toolbarNode toolbarFullNode" ng-model="Mosuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
           </div>
           <div class="toolbar">
-            <div class="toolbarLabel">模块<must></must>：</div>
-            <div class="toolbarContent">
-              <div class="toolbarNode" ng-click="FselectModule('shell')" ng-class="{toolbarNodeSelected: MshowNode.shell}">单条指令下发</div>
-              <div class="toolbarNode" ng-click="FselectModule('script')" ng-class="{toolbarNodeSelected: MshowNode.script}">批量脚本执行</div>
-            </div>
-          </div>
-          <div class="toolbar">
-            <div class="toolbarLabel">目标机器<must></must>：</div>
-            <div class="toolbarNode" ng-click="FshowSelector('hosts')">选取机器</div>
-            <div class="toolbarShowNode">已选：{{MhostsSelected.length}}</div>
+            <div class="toolbarNode toolbarFullNode">{{MhostsSelected.length}}台目标机器</div>
           </div>
         </div>
       </div>
@@ -30,7 +19,7 @@
         <div class="nodeTitle">已选机器</div>
         <div class="tableContent">
           <div class="toolbar">
-            <div class="toolbarNode toolbarFullNode">已选：{{MhostsSelected.length}}</div>
+            <div class="toolbarNode toolbarFullNode" ng-click="FshowSelector('hosts')">选取机器<must></must></div>
           </div>
           <div class="toolbar" ng-repeat="ip in MhostsSelected">
             <div class="toolbarNode toolbarFullNode">{{ip}}</div>
@@ -38,7 +27,17 @@
         </div>
       </div>
     </div>
-    <div class="twoThirdCol">
+    <div class="threeQuarterCol">
+      <div class="node">
+        <div class="moduleNode" ng-click="FselectModule('shell')" ng-class="{toolbarNodeSelected: MshowNode.shell}">
+          <i class="iconfont">&#xe670;</i>
+          <div>指令</div>
+        </div>
+        <div class="moduleNode" ng-click="FselectModule('script')" ng-class="{toolbarNodeSelected: MshowNode.script}">
+          <i class="iconfont">&#xe670;</i>
+          <div>脚本</div>
+        </div>
+      </div>
       <div class="node" ng-show="MshowNode.shell">
         <div class="nodeTitle">指令下发－详情</div>
         <div class="tableContent">
@@ -68,7 +67,6 @@
           <div class="tableContent">
             <div class="toolbar">
               <div class="toolbarNode label" ng-click="Fback()">返回</div>
-              <!-- <div class="toolbarNode" ng-click="FstopInfoWalker()">停止轮询</div> -->
             </div>
             <!-- Result dashboard -->
             <div class="threeQuarterCol">
@@ -81,6 +79,7 @@
                 <div class="progressbar" option="pro.result"></div>
                 <table>
                   <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
+                    <td style="width:30px;"><i class="iconfont" ng-show="value.ip === MresultSelected">&#xe67c;</i></td>
                     <td>{{key}}</td>
                     <td>{{value|trailsFilter}}</td>
                   </tr>

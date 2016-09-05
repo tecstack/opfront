@@ -6,6 +6,43 @@ var VbaseUrl = 'http://192.168.182.3';
 var Vversion = 'v0.0';
 var timeout = 30000;
 
+promise.factory('SdelayService', function($rootScope, $interval, SinfoService){
+	var Fdelay = function(){
+		var now = new Date();
+		$rootScope.Mexpire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes()+45, now.getSeconds()+25);
+	};
+	var FstartInterval = function(){
+		$rootScope.MexpirePromise = $interval(
+	    function(){
+	      var date = new Date();
+	      if (date > $rootScope.Mexpire) {
+					SinfoService.FaddInfo('长时间未操作，已超时');
+					$rootScope.MisSign = false;
+					$rootScope.MuserInfo = {
+						'username': $rootScope.Mself.username,
+						'password': ''
+					};
+					$rootScope.MsignErrorInfos = "长时间未操作，请重新登录";
+					$rootScope.MsignError = true;
+					FstopInterval();
+	      } else {
+					$rootScope.FcookieAuth();
+	      }
+	    },
+			// 1h50m
+	    6600000
+	  );
+	};
+	var FstopInterval = function(){
+		$interval.cancel($rootScope.MexpirePromise);
+	};
+	return {
+		'Fdelay': Fdelay,
+		'FstartInterval': FstartInterval,
+		'FstopInterval': FstopInterval,
+	};
+});
+
 promise.factory('SinfoService', function($rootScope, $timeout){
 	var FaddInfo = function(Vinfo){
 		$rootScope.Minfos.push(Vinfo);
@@ -28,11 +65,6 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 	var VroleUrl = Vurl + 'role/';
 	var VprivilegeUrl = Vurl + 'privilege/';
 
-	// 初始化动作，在登录成功后执行
-	var FinitAction = function(){
-		$rootScope.FgetHost();
-		$rootScope.FgetScriptList();
-	};
 	// 根据参数返回当前时间滞后n小时的date object
 	var FhoursExpire = function(Vnum){
 		var now = new Date();
@@ -58,12 +90,14 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 			function successCallback(callbackdata){
 				// 存放refreshtoken
 				if (VisKeep){
-					// 用户勾选了保持登录状态,refreshtoken存入cookie
-					$cookies.put('refreshtoken', callbackdata.refreshtoken, new FdatesExpire(14));
+					// 用户勾选了保持登录状态,refreshtoken存入cookie,有效期2周
+					$cookies.put('refreshtoken', callbackdata.refreshtoken, new FdatesExpire(7));
 				}
 				else {
 					// 用户未勾选保持登录，refreshtoken存入rootScope
-					$rootScope.Mrefreshtoken = callbackdata.refreshtoken;
+					// $rootScope.Mrefreshtoken = callbackdata.refreshtoken;
+					// 用户未勾选保持登录，refreshtoken存入cookie,有效期2小时
+					$cookies.put('refreshtoken', callbackdata.refreshtoken, new FhoursExpire(2));
 				}
 				// 存放token
 				$cookies.put('token', callbackdata.token, new FhoursExpire(2));
@@ -75,7 +109,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 				$rootScope.MisSign = true;
 				$rootScope.MsignError = false;
 				// 初始化数据
-				new FinitAction();
+				$rootScope.FinitAction();
 			},
 			function errorCallback(callbackdata){
 				if (!jQuery.isEmptyObject(callbackdata.data)) {
@@ -113,7 +147,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 					$rootScope.Mself = callbackdata.user_info;
 					SinfoService.FaddInfo('Hi,' + $rootScope.Mself.username + ',欢迎使用Promise!');
 					// 初始化数据
-					new FinitAction();
+					$rootScope.FinitAction();
 	      },
 	      function errorCallback(callbackdata){
 					if (!jQuery.isEmptyObject(callbackdata.data)) {

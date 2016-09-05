@@ -12,31 +12,32 @@
 var promise = angular.module('promise');
 
 // --------------------------Module---------------------------
-promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, $filter, SscriptService, SwalkerService, SinfoService){
+promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, $filter, SscriptService, SwalkerService, SinfoService, SdelayService){
   // walker service
   $scope.MinfoWalkerPromise = {};
-  $scope.Mprogress = {
-    'success': 0,
-    'failed': 0,
-    'unreachable': 0,
-    'skipped': 0,
-    'total': 0,
-    'complete': 0,
+  $scope.Msuccess = 0;
+  $scope.MstatesInfo = {
+    '-2': '任务已建立',
+    '-1': '运行中',
+    '0': '所有目标主机执行成功',
+    '-3': '执行超时',
+    '-4': '任务建立失败',
   };
+
   $scope.FcreateWalker = function(VmoduleName, VmoduleVars){
     SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
       {},
       VmoduleVars,
       function successCallback(callbackdata){
         $scope.MwalkerId = callbackdata.walker_id;
-        $scope.MerrInfo = callbackdata.message;
-        SinfoService.FaddInfo($scope.MerrInfo);
+        $scope.Mstate = callbackdata.state;
         $scope.MinfoWalkerPromise[$scope.MwalkerId] = $interval(
           function (){
             $scope.FinfoWalker($scope.MmoduleSelected.name, $scope.MwalkerId);
           },
           2000
         );
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         // console.log(callbackdata);
@@ -49,6 +50,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     SwalkerService.FqueryWalker($rootScope.Mtoken, VmoduleName).get(
       {},
       function successCallback(callbackdata){
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         // console.log(callbackdata);
@@ -59,38 +61,21 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     SwalkerService.FinfoWalker($rootScope.Mtoken, VmoduleName, VwalkerId).get(
       {},
       function successCallback(callbackdata){
-        var VtotalHosts = callbackdata.trails.length;
-        var Vsuccess = 0;
-        var Vfailed = 0;
-        var Vunreachable = 0;
-        var Vskipped = 0;
-        var Vcomplete = 0;
-        for (var index in callbackdata.trails) {
-          var node = callbackdata.trails[index];
-          var ip = node.ip;
-          $scope.Mresult[ip] = node;
-          if (node.sum_changed || node.sum_ok) {
-            Vsuccess += 1;
-            Vcomplete += 1;
-          } else if (node.sum_failures) {
-            Vfailed += 1;
-            Vcomplete += 1;
-          } else if (node.sum_unreachable) {
-            Vunreachable += 1;
-            Vcomplete += 1;
-          } else if (node.sum_skipped) {
-            Vskipped += 1;
-            Vcomplete += 1;
+        if (!jQuery.isEmptyObject($scope.MinfoWalkerPromise)) {
+          var Vsuccess = 0;
+          for (var index in callbackdata.trails) {
+            var node = callbackdata.trails[index];
+            var ip = node.ip;
+            $scope.Mresult[ip] = node;
+            if (node.sum_changed || node.sum_ok) {
+              Vsuccess += 1;
+            }
           }
+          $scope.Msuccess = Vsuccess;
+          $scope.pro.result.current = $scope.Msuccess;
+          $scope.Mstate = callbackdata.state;
+          SdelayService.Fdelay();
         }
-        $scope.Mprogress.success = Vsuccess;
-        $scope.pro.result.current = $scope.Mprogress.success;
-        $scope.Mprogress.failed = Vfailed;
-        $scope.Mprogress.unreachable = Vunreachable;
-        $scope.Mprogress.skipped = Vskipped;
-        $scope.Mprogress.total = VtotalHosts;
-        $scope.Mprogress.complete = Vcomplete;
-        $scope.MerrInfo = callbackdata.message;
       },
       function errorCallback(callbackdata){
         $scope.MerrInfo = callbackdata.data.message;
@@ -223,7 +208,8 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   // Go
   $scope.MosuserOptions = [
     {'label':'选取执行用户', 'value':''},
-    {'label':'ROOT', 'value':'root'},
+    {'label':'ROOT执行', 'value':'root'},
+    {'label':'Admin执行', 'value':'admin'},
   ];
   $scope.Mosuser = 'root';
 
@@ -298,6 +284,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
         'max': 0,
         'current': 0,
       };
+      $scope.MresultSelected = '';
       $scope.MshowExecutor = true;
       $scope.MshowLoading = true;
       $scope.Mresult = {};
@@ -309,9 +296,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
 
       $scope.Mstdout = '';
       $scope.MerrInfo = '';
-      for (var kind in $scope.Mprogress) {
-        $scope.Mprogress[kind] = 0;
-      }
+      $scope.Msuccess = 0;
       for (var index in $scope.MhostsSelected) {
         var ip = $scope.MhostsSelected[index];
         $scope.Mresult[ip] = {};
@@ -322,8 +307,10 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   };
   $scope.Fback = function(){
     $scope.MshowExecutor = false;
+    $scope.FstopInfoWalker();
   };
   $scope.FshowStdout = function(node){
+    $scope.MresultSelected = node.ip;
     if (node.stdout) {
       $scope.Mstdout = node.stdout;
     } else if (node.stderr) {
@@ -332,7 +319,6 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       $scope.Mstdout = node.msg;
     }
   };
-
 
   // ---------------------watch & show---------------------
   $scope.MshowNode = {
@@ -344,10 +330,16 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     'scripts': false,
   };
   // 监控walker结果信息，如果成功更新了状态(ok/change/failed/unreachable/skipped)，则停止轮询
-  $scope.$watchCollection('Mprogress', function(newValue, oldValue){
-    if (!jQuery.isEmptyObject(newValue) && newValue.total !== 0) {
-      if (newValue.complete === newValue.total) {
+  $scope.$watch('Mstate', function(newValue, oldValue){
+    if (!jQuery.isEmptyObject($scope.MinfoWalkerPromise)) {
+      if (newValue >= 0 || newValue ===-3 || newValue === -4) {
+        // success or timeout or fialed
         $scope.FstopInfoWalker();
+        SinfoService.FaddInfo('任务结束');
+        $scope.MerrInfo = $scope.MstatesInfo[$scope.Mstate];
+      } else if (newValue === -1 || newValue === -2) {
+        // established or running
+        $scope.MerrInfo = $scope.MstatesInfo[$scope.Mstate];
       }
     }
   });

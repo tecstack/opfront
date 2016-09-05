@@ -144,9 +144,9 @@ table a:hover {
   display: block;
   margin-top: 20px;
   margin-bottom: 20px;
-  font-size: 60px;
+  font-size: 45px;
   font-weight: 800;
-  line-height: 60px;
+  line-height: 45px;
   text-align: center;
   color: #95A7EE;
 }
@@ -514,7 +514,7 @@ table a:hover {
   overflow: auto;
   width: 100%;
   opacity: 1;
-  background-color: RGBA(0, 0, 0, 0.8);
+  background-color: RGBA(0, 0, 0, 0.9);
   color: #fff;
 }
 
@@ -633,7 +633,7 @@ table a:hover {
   /*color: #95A7EE;*/
 }
 .formContent {
-  width: 500px;
+  width: 1000px;
   margin: auto;
   /*border: 1px solid #E9E9E9;*/
   margin-top: 100px;
@@ -741,7 +741,7 @@ table a:hover {
   background-color: rgba(200, 200, 200, 1);
 }
 .toolbarNodeSelected {
-  background-color: rgba(110, 147, 188, 1);
+  background-color: rgba(110, 147, 188, 1) !important;
 }
 .toolbar .iconfont {
   font-weight: 900;
@@ -769,12 +769,32 @@ select.toolbarFullNode {
   font-size: 17px;
 }
 .label {}
-.pageFlip {
+/*.pageFlip {
   width: 30px !important;
 }
 .pageGo {
   width: 30px !important;
   text-align: center !important;
+}*/
+
+.moduleNode {
+  float: left;
+  padding: 5px;
+  min-width: 60px;
+  border-radius: 2px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgba(110, 147, 188, 0.3);
+}
+.moduleNode:hover {
+  background-color: rgba(110, 147, 188, 0.8);
+}
+.moduleNode>.iconfont {
+  font-size: 40px;
+  line-height: 40px;
+  margin-bottom: 5px;
 }
 
 .progressBar {}
@@ -813,8 +833,10 @@ select.toolbarFullNode {
   overflow: auto;
 }
 .nameCardRightNode {
+  clear: both;
+  min-height: 20px;
   line-height: 20px;
-  font-size: 18px;
+  font-size: 16px;
   margin: 10px 20px;
 }
 .nameCardCloseBox {
@@ -850,17 +872,11 @@ select.toolbarFullNode {
   font-size: 30px;
   font-weight: 600;
 }
-.roleCardMiddle {
-  position: relative;
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
 .roleCardRight {
   position: relative;
   float: left;
-  width: 55%;
+  width: 80%;
+  border-left: solid 1px #fff;
   padding: 0 10px;
   box-sizing: border-box;
 }
@@ -919,8 +935,8 @@ select.toolbarFullNode {
 
 /* 边框样式 */
 .full {
-	height: 100%;
-	width: 100%;
+	height: 100% !important;
+	width: 100% !important;
 }
 .node-half {
   float: left;

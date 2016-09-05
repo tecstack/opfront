@@ -12,7 +12,7 @@
 var promise = angular.module('promise');
 
 // ------------------------------Script----------------------------
-promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService){
+promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService, SdelayService){
   // 初始化
   $scope.MlangOptions = [
     {'label': '选择语言', 'value': ''},
@@ -59,6 +59,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
           $scope.Mshow.editor = false;
           $rootScope.FgetScriptList();
         }, 500);
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         $scope.MscriptInfo.create = callbackdata.data.message;
@@ -76,6 +77,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
           $scope.Mshow.editor = false;
           $rootScope.FgetScriptList();
         }, 500);
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         $scope.MscriptInfo.create = callbackdata.data.message;
@@ -92,6 +94,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
           $scope.Mshow.list = true;
           $rootScope.FgetScriptList();
         }, 500);
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         $scope.MscriptInfo.getList = callbackdata.data.message;

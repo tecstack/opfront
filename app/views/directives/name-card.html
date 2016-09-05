@@ -21,12 +21,12 @@
       {{MuserInfo.last_login | dateFilter}}
     </div>
     <div class="nameCardRightNode">
-      <i class="iconfont">&#xe636;</i> 角色:
-      <span ng-repeat="role in MuserInfo.role">{{role.name}}({{role.description}})&nbsp;</span>
+      <div style="float:left;"><i class="iconfont">&#xe636;</i> 角色:</div>
+      <span ng-repeat="role in MuserInfo.role" style="float:left;">{{role.name}}({{role.description}})&nbsp;</span>
     </div>
     <div class="nameCardRightNode">
-      <i class="iconfont">&#xe66d;</i> 权限:
-      <span ng-repeat="privilege in MuserInfo.privilege">{{privilege.name}}&nbsp;</span>
+      <div style="float:left;"><i class="iconfont">&#xe66d;</i> 权限:</div>
+      <span ng-repeat="privilege in MuserInfo.privilege" style="float:left;">{{privilege.name}}&nbsp;</span>
     </div>
   </div>
   <div class="nameCardCloseBox">

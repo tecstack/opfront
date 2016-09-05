@@ -12,18 +12,17 @@
 var promise = angular.module('promise');
 
 // angular init
-promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, SuserService, ShostService, SscriptService){
+promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoService, SuserService, ShostService, SscriptService, SdelayService){
   // charjs 初始设置
   Chart.defaults.global.defaultFontColor = '#fff';
   Chart.defaults.global.scaleFontColor = '#fff';
-  Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>',
+  Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
+
+  // 超时检测，2小时超时
+  $rootScope.Mexpire = new Date();
 
   // 消息队列，用于消息区临时提示
   $rootScope.Minfos = [];
-
-  // $rootScope.FaddInfo = function(node){
-  //   SinfoService.FaddInfo(node);
-  // };
 
   // 主机信息服务
   $rootScope.FgetHost = function(){
@@ -34,6 +33,7 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, Suse
         $rootScope.Mhosts = callbackdata.data;
         $rootScope.MhostsNum = $rootScope.Mhosts.length;
         SinfoService.FaddInfo('已同步' + $rootScope.MhostsNum + '条主机信息');
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo('获取主机信息失败:' + callbackdata.message);
@@ -49,12 +49,22 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, Suse
         $rootScope.Mscripts = callbackdata.scripts;
         $rootScope.MscriptsNum = $rootScope.Mscripts.length;
         SinfoService.FaddInfo('已同步' + $rootScope.MscriptsNum + '条脚本信息');
+        SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo('获取脚本信息失败:' + callbackdata.message);
       }
     );
   };
+
+  // 初始化动作
+  $rootScope.FinitAction = function(){
+		$rootScope.FgetHost();
+		$rootScope.FgetScriptList();
+    SdelayService.Fdelay();
+		SdelayService.FstopInterval();
+		SdelayService.FstartInterval();
+	};
 
   // 自动登录，使用cookie保存token
   $rootScope.FtokenSignIn = SuserService.FtokenSignIn;
@@ -64,7 +74,7 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, Suse
   $rootScope.FcookieAuth = function(){
     var Vrefreshtoken = $cookies.get('refreshtoken');
     if (!Vrefreshtoken){
-      // refreshtoken已过期或者未保持登录，不刷新，只尝试token自动登录
+      // refreshtoken已过期，不刷新，只尝试token自动登录
       $rootScope.MsignError = false;
       $rootScope.MisSign = false;
       $rootScope.FtokenSignIn();
@@ -80,5 +90,11 @@ promise.run(function($rootScope, $timeout, $filter, $cookies, SinfoService, Suse
   // 监控区
   $rootScope.$watch('MisSign', function(newValue, oldValue){
     $rootScope.MshowSign = !$rootScope.MisSign;
+  });
+
+  // 销毁区
+  $rootScope.$on('$destroy', function() {
+    // Make sure that the interval is destroyed too
+    SdelayService.FstopInterval();
   });
 });

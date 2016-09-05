@@ -117,8 +117,8 @@
 
 <div class="dashboard" ui-view="dashboardView"></div>
 
-<div class="signBg" ng-show="MshowSign">
-  <div ng-controller="Csign">
+<div ng-controller="Csign">
+  <div class="signBg" ng-show="MshowSign">
     <div class="row">
       <div class="fullCol">
         <div class="node signNode">
@@ -135,7 +135,7 @@
             <div class="toolbarNode" ng-click="FtoggleIsKeep()">
               <i class="iconfont" ng-show="MisKeep">&#xe67c;</i>
               <i class="iconfont" ng-show="!MisKeep">&#xe67d;</i>
-              保持登录
+              自动登录
             </div>
             <div class="toolbarNode" ng-click="FsignIn(MuserInfo, MisKeep)">登录</div>
             <div class="toolbarNode">注册</div>

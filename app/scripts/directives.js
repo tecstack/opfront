@@ -256,12 +256,19 @@ promise.directive('must',function(){
 
 // chartjs line
 promise.directive('chartLine',function(){
+	var options = {};
 	return{
 		restrict: 'C',
+		scope: {
+			Mdata: '=data',
+		},
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data);
-		  var myChart = new Chart(chartDom).Line(chartData);
+			var myChart = new Chart(chartDom);
+			myChart.Line(scope.Mdata);
+			scope.$watch('Mdata', function(){
+					myChart.Line(scope.Mdata, options);
+			}, true);
 		}
 	};
 });
@@ -273,54 +280,95 @@ promise.directive('chartBar',function(){
 	};
 	return{
 		restrict: 'C',
+		scope: {
+			Mdata: '=data',
+		},
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data);
-		  var myChart = new Chart(chartDom).Bar(chartData, options);
+			var myChart = new Chart(chartDom);
+			myChart.Bar(scope.Mdata, options);
+			scope.$watch('Mdata', function(){
+					myChart.Bar(scope.Mdata, options);
+			}, true);
 		}
 	};
 });
 // chartjs radar
 promise.directive('chartRadar',function(){
+	var options = {};
 	return{
 		restrict: 'C',
+		scope: {
+			Mdata: '=data',
+		},
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data);
-		  var myChart = new Chart(chartDom).Radar(chartData);
+			var myChart = new Chart(chartDom);
+			myChart.Radar(scope.Mdata);
+			scope.$watch('Mdata', function(){
+					myChart.Radar(scope.Mdata, options);
+			}, true);
 		}
 	};
 });
 // chartjs polar
 promise.directive('chartPolar',function(){
+	var options = {};
 	return{
 		restrict: 'C',
+		scope: {
+			Mdata: '=data',
+		},
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data);
-		  var myChart = new Chart(chartDom).PolarArea(chartData);
+			var myChart = new Chart(chartDom);
+			myChart.PolarArea(scope.Mdata);
+			scope.$watch('Mdata', function(){
+					myChart.PolarArea(scope.Mdata, options);
+			}, true);
 		}
 	};
 });
 // chartjs pie
 promise.directive('chartPie',function(){
+	var options = {};
 	return{
 		restrict: 'C',
+		scope: {
+			Mdata: '=data',
+		},
 		link: function(scope,element,attrs){
 			var chartDom = element.get(0).getContext('2d');
-			var chartData = jQuery.parseJSON(attrs.data);
-		  var myChart = new Chart(chartDom).Pie(chartData);
+			var myChart = new Chart(chartDom);
+			myChart.Pie(scope.Mdata);
+			scope.$watch('Mdata', function(){
+					myChart.Pie(scope.Mdata, options);
+			}, true);
 		}
 	};
 });
-//
-
-
-
-
-
-
-
+// chartjs Doughnut
+promise.directive('chartDoughnut',function(){
+	var options = {
+		// segmentShowStroke : false,
+		segmentStrokeColor : "RGBA(22, 41, 57, 1.00)",
+		segmentStrokeWidth : 1,
+	};
+	return{
+		restrict: 'C',
+		scope: {
+			Mdata: '=data',
+		},
+		link: function(scope,element,attrs){
+			var chartDom = element.get(0).getContext('2d');
+			var myChart = new Chart(chartDom);
+			myChart.Doughnut(scope.Mdata);
+			scope.$watch('Mdata', function(){
+					myChart.Doughnut(scope.Mdata, options);
+			}, true);
+		}
+	};
+});
 
 
 
