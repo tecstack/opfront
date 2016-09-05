@@ -769,13 +769,13 @@ select.toolbarFullNode {
   font-size: 17px;
 }
 .label {}
-/*.pageFlip {
+.pageFlip {
   width: 30px !important;
 }
 .pageGo {
   width: 30px !important;
   text-align: center !important;
-}*/
+}
 
 .moduleNode {
   float: left;
