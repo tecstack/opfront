@@ -21,6 +21,7 @@ promise.controller('Chost', function($scope, $rootScope, $filter){
 
   // 整理数据，从原始数据中整理出展示用数据
   $scope.FhostsDatasInit = function(){
+    $scope.MhostsDatasTd = [];
     for (var index in $rootScope.Mhosts) {
       var tempNode = [];
       tempNode.push($rootScope.Mhosts[index].hostid);

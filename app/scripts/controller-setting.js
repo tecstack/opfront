@@ -14,19 +14,23 @@ var promise = angular.module('promise');
 promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserService, SdelayService){
   // service
   $scope.FgetUserList = function(){
+    SinfoService.FstartLoading();
     SuserService.FgetUserList($rootScope.Mtoken).get(
       {},
       function successCallback(callbackdata){
         $scope.MuserInfos = callbackdata.user_list;
         SinfoService.FaddInfo('已同步' + $scope.MuserInfos.length + '条用户信息');
+        SinfoService.FstopLoading();
         SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
       }
     );
   };
   $scope.FcreateUser = function(VuserInfo){
+    SinfoService.FstartLoading();
     SuserService.FcreateUser($rootScope.Mtoken).post(
       {},
       VuserInfo,
@@ -35,27 +39,33 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         $scope.MshowMask.createUser = false;
         $scope.FgetUserList();
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
       }
     );
   };
   $scope.FdeleteUser = function(VuserInfo){
+    SinfoService.FstartLoading();
     SuserService.FdeleteUser($rootScope.Mtoken).delete(
       {'user_id': VuserInfo.user_id},
       function successCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.message);
         $scope.FgetUserList();
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
       }
     );
   };
 
   $scope.FgetRoleList = function(){
+    SinfoService.FstartLoading();
     SuserService.FgetRoleList($rootScope.Mtoken).get(
       {},
       function successCallback(callbackdata){
@@ -63,13 +73,16 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         SinfoService.FaddInfo('已同步' + $scope.MroleInfos.length + '条角色信息');
         $scope.Finit();
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
       }
     );
   };
   $scope.FcreateRole = function(VroleInfo){
+    SinfoService.FstartLoading();
     SuserService.FcreateRole($rootScope.Mtoken).post(
       {},
       VroleInfo,
@@ -78,27 +91,33 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         $scope.MshowMask.createRole = false;
         $scope.FgetRoleList();
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
       }
     );
   };
   $scope.FdeleteRole = function(VroleInfo){
+    SinfoService.FstartLoading();
     SuserService.FdeleteRole($rootScope.Mtoken).delete(
       {'role_id': VroleInfo.role_id},
       function successCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.message);
         $scope.FgetRoleList();
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
       }
     );
   };
 
   $scope.FgetPrivilegeList = function(){
+    SinfoService.FstartLoading();
     SuserService.FgetPrivilegeList($rootScope.Mtoken).get(
       {},
       function successCallback(callbackdata){
@@ -106,9 +125,11 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         SinfoService.FaddInfo('已同步' + $scope.MprivilegeInfos.length + '条权限信息');
         $scope.Finit();
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
       }
     );
   };

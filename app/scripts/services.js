@@ -9,7 +9,7 @@ var timeout = 30000;
 promise.factory('SdelayService', function($rootScope, $interval, SinfoService){
 	var Fdelay = function(){
 		var now = new Date();
-		$rootScope.Mexpire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes()+45, now.getSeconds()+25);
+		$rootScope.Mexpire = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes()+45, now.getSeconds());
 	};
 	var FstartInterval = function(){
 		$rootScope.MexpirePromise = $interval(
@@ -45,6 +45,11 @@ promise.factory('SdelayService', function($rootScope, $interval, SinfoService){
 
 promise.factory('SinfoService', function($rootScope, $timeout){
 	var FaddInfo = function(Vinfo){
+		var VinfoObject = {
+			'date': new Date(),
+			'info': Vinfo
+		}
+		$rootScope.MinfosHistory.push(VinfoObject);
 		$rootScope.Minfos.push(Vinfo);
 		$timeout(
 	    function(){
@@ -53,8 +58,16 @@ promise.factory('SinfoService', function($rootScope, $timeout){
 	    3000
 	  );
 	};
+	var FstartLoading = function(){
+		$rootScope.MshowNavLoading = true;
+	};
+	var FstopLoading = function(){
+		$rootScope.MshowNavLoading = false;
+	};
 	return {
 		'FaddInfo': FaddInfo,
+		'FstartLoading': FstartLoading,
+		'FstopLoading': FstopLoading,
 	};
 });
 
@@ -84,6 +97,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 			'post': {method:'POST', isArray:false, timeout:timeout, headers:{'Content-Type': 'application/json'}}
 		});
 		VuserInfo.granttype = 'login';
+		SinfoService.FstartLoading();
 		VsignInApi.post(
 			{},
 			VuserInfo,
@@ -105,6 +119,9 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 				// 个人信息
 				$rootScope.Mself = callbackdata.user_info;
 				SinfoService.FaddInfo('Hi,' + $rootScope.Mself.username + ',欢迎使用Promise!');
+				SinfoService.FstopLoading();
+				VuserInfo.username = '';
+				VuserInfo.password = '';
 				// 显示控制
 				$rootScope.MisSign = true;
 				$rootScope.MsignError = false;
@@ -118,6 +135,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 				}
 				$rootScope.MisSign = false;
 				SinfoService.FaddInfo('登录失败');
+				SinfoService.FstopLoading();
 			}
 		);
 	};
@@ -137,6 +155,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 			var VtokenSignInApi = $resource(VtokenUrl, {}, {
 				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken}}
 			});
+			SinfoService.FstartLoading();
 			VtokenSignInApi.get(
 	      {},
 	      function successCallback(callbackdata){
@@ -146,6 +165,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 					// 个人信息
 					$rootScope.Mself = callbackdata.user_info;
 					SinfoService.FaddInfo('Hi,' + $rootScope.Mself.username + ',欢迎使用Promise!');
+					SinfoService.FstopLoading();
 					// 初始化数据
 					$rootScope.FinitAction();
 	      },
@@ -156,6 +176,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 					}
 	        $rootScope.MisSign = false;
 					SinfoService.FaddInfo('自动登录失败，请手动登录');
+					SinfoService.FstopLoading();
 	      }
 	    );
 		} else {
@@ -171,11 +192,13 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 			var VtokenRefreshApi = $resource(VtokenUrl, {}, {
 				'post': {method:'POST', isArray:false, timeout:timeout, headers:{'Content-Type': 'application/json'}}
 			});
+			SinfoService.FstartLoading();
 			VtokenRefreshApi.post(
 	      {},
 	      {'granttype': 'refreshtoken', 'refreshtoken': Vrefreshtoken},
 	      function successCallback(callbackdata){
 					$cookies.put('token', callbackdata.token, new FhoursExpire(2));
+					SinfoService.FstopLoading();
 	        new FtokenSignIn();
 	      },
 	      function errorCallback(callbackdata){
@@ -185,6 +208,7 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 					}
 	        $rootScope.MisSign = false;
 					SinfoService.FaddInfo('自动延期失败，请联系管理员');
+					SinfoService.FstopLoading();
 	      }
 	    );
 		} else {

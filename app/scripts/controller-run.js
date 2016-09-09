@@ -23,19 +23,23 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
 
   // 消息队列，用于消息区临时提示
   $rootScope.Minfos = [];
+  $rootScope.MinfosHistory = [];
 
   // 主机信息服务
   $rootScope.FgetHost = function(){
     var vars = {};
+    SinfoService.FstartLoading();
     ShostService.Fhost($rootScope.Mtoken).get(
       vars,
       function successCallback(callbackdata){
         $rootScope.Mhosts = callbackdata.data;
         $rootScope.MhostsNum = $rootScope.Mhosts.length;
+        SinfoService.FstopLoading();
         SinfoService.FaddInfo('已同步' + $rootScope.MhostsNum + '条主机信息');
         SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
+        SinfoService.FstopLoading();
         SinfoService.FaddInfo('获取主机信息失败:' + callbackdata.message);
       }
     );
@@ -43,15 +47,18 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
 
   // 脚本信息服务
   $rootScope.FgetScriptList = function(){
+    SinfoService.FstartLoading();
     SscriptService.FgetList($rootScope.Mtoken).get(
       {},
       function successCallback(callbackdata){
         $rootScope.Mscripts = callbackdata.scripts;
         $rootScope.MscriptsNum = $rootScope.Mscripts.length;
+        SinfoService.FstopLoading();
         SinfoService.FaddInfo('已同步' + $rootScope.MscriptsNum + '条脚本信息');
         SdelayService.Fdelay();
       },
       function errorCallback(callbackdata){
+        SinfoService.FstopLoading();
         SinfoService.FaddInfo('获取脚本信息失败:' + callbackdata.message);
       }
     );

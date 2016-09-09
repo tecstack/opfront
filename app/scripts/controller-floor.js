@@ -14,8 +14,13 @@ var promise = angular.module('promise');
 // navbar
 promise.controller('Cnavbar', function($scope, $rootScope){
   $rootScope.MshowHelper = false;
+  $rootScope.MshowMenu = false;
+  $rootScope.MshowInfosHistory = false;
   $scope.FtoggleMenu = function(){
     $rootScope.MshowMenu = !$rootScope.MshowMenu;
+  };
+  $scope.FtoggleInfoHistory = function(){
+    $rootScope.MshowInfosHistory = !$rootScope.MshowInfosHistory;
   };
 });
 

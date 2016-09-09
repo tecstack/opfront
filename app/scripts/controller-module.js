@@ -25,6 +25,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   };
 
   $scope.FcreateWalker = function(VmoduleName, VmoduleVars){
+    SinfoService.FstartLoading();
     SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
       {},
       VmoduleVars,
@@ -43,6 +44,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
         // console.log(callbackdata);
         $scope.MshowLoading = false;
         $scope.MerrInfo = callbackdata.data.message;
+        SinfoService.FstopLoading();
       }
     );
   };
@@ -83,6 +85,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
     );
   };
   $scope.FstopInfoWalker = function(){
+    SinfoService.FstopLoading();
     if (!jQuery.isEmptyObject($scope.MinfoWalkerPromise)) {
       var Vnum = Object.keys($scope.MinfoWalkerPromise).length;
       for (var walkerId in $scope.MinfoWalkerPromise) {
@@ -103,6 +106,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   $scope.MhostsDatasTd = [];
   // $rootScope.MhostsSelected = [];
   $scope.FhostsDatasInit = function(){
+    $scope.MhostsDatasTd = [];
     for (var index in $rootScope.Mhosts) {
       var tempNode = [];
       tempNode.push($rootScope.Mhosts[index].hostid);
@@ -118,6 +122,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   $scope.MscriptsDatasTh = ['名称','语言','创建者','创建时间'];
   $scope.MscriptsDatasTd = [];
   $scope.FscriptsDatasInit = function(){
+    $scope.MscriptsDatasTd = [];
     for (var index in $rootScope.Mscripts) {
       var tempNode = [];
       tempNode.push($rootScope.Mscripts[index].script_name);
@@ -150,7 +155,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
       mode: 'python',
       onLoad: function(_cm){
         $scope.Meditor.script = _cm;
-        $scope.Meditor.script.setSize(null, '400px');
+        $scope.Meditor.script.setSize(null, '300px');
       },
     },
     'executor': {

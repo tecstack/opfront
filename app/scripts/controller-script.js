@@ -12,7 +12,7 @@
 var promise = angular.module('promise');
 
 // ------------------------------Script----------------------------
-promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService, SdelayService){
+promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService, SdelayService, SinfoService){
   // 初始化
   $scope.MlangOptions = [
     {'label': '选择语言', 'value': ''},
@@ -49,6 +49,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
   $scope.MscriptId = '';
 
   $scope.FcreateScript = function(Vscript){
+    SinfoService.FstartLoading();
     SscriptService.Fcreate($rootScope.Mtoken).post(
       {},
       Vscript,
@@ -60,13 +61,16 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
           $rootScope.FgetScriptList();
         }, 500);
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         $scope.MscriptInfo.create = callbackdata.data.message;
+        SinfoService.FstopLoading();
       }
     );
   };
   $scope.FupdateScript = function(Vscript){
+    SinfoService.FstartLoading();
     SscriptService.Fmodify($rootScope.Mtoken, $scope.MscriptId).put(
       {},
       Vscript,
@@ -78,14 +82,17 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
           $rootScope.FgetScriptList();
         }, 500);
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         $scope.MscriptInfo.create = callbackdata.data.message;
+        SinfoService.FstopLoading();
       }
     );
   };
   $scope.FdeleteScript = function(Vscript){
     var VscriptId = Vscript.script_id;
+    SinfoService.FstartLoading();
     SscriptService.Fdelete($rootScope.Mtoken, VscriptId).delete(
       {},
       function successCallback(callbackdata){
@@ -95,9 +102,11 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
           $rootScope.FgetScriptList();
         }, 500);
         SdelayService.Fdelay();
+        SinfoService.FstopLoading();
       },
       function errorCallback(callbackdata){
         $scope.MscriptInfo.getList = callbackdata.data.message;
+        SinfoService.FstopLoading();
       }
     );
   };
@@ -129,6 +138,18 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
       'script_text': Vscript.script_text,
       'script_lang': Vscript.script_lang,
       'is_public': Vscript.is_public
+    };
+  };
+  $scope.FcloneAction = function(Vscript){
+    $scope.Mshow.list = false;
+    $scope.Mshow.editor = true;
+    $scope.Mshow.create = true;
+    $scope.Mshow.update = false;
+    $scope.Mscript = {
+      'script_name': '',
+      'script_text': Vscript.script_text,
+      'script_lang': Vscript.script_lang,
+      'is_public': ''
     };
   };
   $scope.FbackAction = function(){

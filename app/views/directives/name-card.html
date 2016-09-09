@@ -5,32 +5,32 @@
   </div>
   <div class="nameCardRight">
     <div class="nameCardRightNode">
-      <i class="iconfont">&#xe668;</i> 电话:
+      <i class="iconfont">&#xe611;</i> 电话:
       {{MuserInfo.tel}}
     </div>
     <div class="nameCardRightNode">
-      <i class="iconfont">&#xe61b;</i> 邮箱:
+      <i class="iconfont">&#xe835;</i> 邮箱:
       {{MuserInfo.email}}
     </div>
     <div class="nameCardRightNode">
-      <i class="iconfont">&#xe683;</i> 注册时间:
+      <i class="iconfont">&#xe64b;</i> 注册时间:
       {{MuserInfo.sign_up_date | dateFilter}}
     </div>
     <div class="nameCardRightNode">
-      <i class="iconfont">&#xe683;</i> 最近登录:
+      <i class="iconfont">&#xe614;</i> 最近登录:
       {{MuserInfo.last_login | dateFilter}}
     </div>
     <div class="nameCardRightNode">
-      <div style="float:left;"><i class="iconfont">&#xe636;</i> 角色:</div>
+      <div style="float:left;"><i class="iconfont">&#xe602;</i> 角色:</div>
       <span ng-repeat="role in MuserInfo.role" style="float:left;">{{role.name}}({{role.description}})&nbsp;</span>
     </div>
     <div class="nameCardRightNode">
-      <div style="float:left;"><i class="iconfont">&#xe66d;</i> 权限:</div>
+      <div style="float:left;"><i class="iconfont">&#xe620;</i> 权限:</div>
       <span ng-repeat="privilege in MuserInfo.privilege" style="float:left;">{{privilege.name}}&nbsp;</span>
     </div>
   </div>
   <div class="nameCardCloseBox">
-    <i class="iconfont nameCardConfirm" ng-show="!MshowDelete" ng-click="MshowDelete = true;">&#xe67d;</i>
+    <i class="iconfont nameCardConfirm" ng-show="!MshowDelete" ng-click="MshowDelete = true;">&#xe69d;</i>
     <div ng-show="MshowDelete">
       <a class="nameCardConfirm" href="" ng-click="FdeleteUser()">确认删除</a>
       <a class="nameCardConfirm" href="" ng-click="MshowDelete = false;">取消</a>

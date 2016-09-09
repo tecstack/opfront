@@ -17,15 +17,17 @@ promise.directive('sidebarNode',function(){
 		}
 	};
 });
-// sidebar 隐藏
+// sidebar infoHistoryBar 隐藏
 promise.directive('dashboard',function($rootScope){
 	return{
 		restrict: 'C',
 		link: function(scope,element,attrs){
 			element.bind({
 				'mouseenter': function(){
-					$rootScope.MshowMenu = false;
-					scope.$apply();
+					scope.$apply(function(){
+						$rootScope.MshowMenu = false;
+						$rootScope.MshowInfosHistory = false;
+					});
 				}
 			});
 		}
@@ -61,6 +63,52 @@ promise.directive('scriptNode',function($rootScope){
 		}
 	};
 });
+// 下拉框
+promise.directive('dropDown',function(){
+	return{
+		restrict: 'C',
+		scope: {
+			MshowDropDownBox: '=show',
+		},
+		link: function(scope,element,attrs){
+			scope.MshowDropDownBox = false;
+			element.bind({
+				click: function(e){
+					scope.MshowDropDownBox = !scope.MshowDropDownBox;
+					scope.$apply();
+				}
+			});
+			element.find('.dropDownBox').bind({
+        click: function(e){
+          e.stopPropagation();
+        }
+      });
+			scope.$watch('MshowDropDownBox', function(newValue, oldValue){
+				if (newValue === true) {
+					element.find('.dropDownBox').css({'display': 'block'});
+					element.find('.dropDownBox').animate(
+						{
+							'opacity': '1',
+							'top': '35px'
+						},
+						50
+					);
+				} else {
+					element.find('.dropDownBox').animate(
+						{
+							'opacity': '0',
+							'top': '0'
+						},
+						50,
+						function(){
+							$(this).css({'display': 'none'});
+						}
+					);
+				}
+			});
+		}
+	};
+});
 // progressBar
 promise.directive('progressbar',function(){
 	return{
@@ -78,7 +126,7 @@ promise.directive('progressbar',function(){
 	};
 });
 // ng-table
-promise.directive('ngTable',function($filter){
+promise.directive('ngTable',function($filter, SinfoService){
 	return{
 		restrict: 'E',
 		scope: {
@@ -87,12 +135,16 @@ promise.directive('ngTable',function($filter){
 			Fselect: '=select',
 			FunSelect: '=unselect',
 			FdbClick: '=dbclick',
+			Frefresh: '=refresh',
+			Fnew: '=new',
 		},
 		templateUrl: 'views/directives/ng-table.html',
 		link: function(scope, element, attrs){
 			// showdatas
-			scope.Mpp = 100;
+			scope.Mpp = 20;
+			scope.MppNode = scope.Mpp;
 			scope.Mpage = 1;
+			scope.MpageNode = scope.Mpage;
 			scope.FinitData = function(){
 				scope.MfilterDatas = $filter('filter')(scope.Mdata, scope.Mfil);
 			};
@@ -115,7 +167,51 @@ promise.directive('ngTable',function($filter){
 				scope.Mpage = Vpage;
 			};
 
-			// event binding
+			// dropdown box event binding
+			scope.FupdateMpp = function(Vmpp){
+				scope.Mpp = Vmpp;
+				scope.MshowMppBox = false;
+			};
+			scope.FupdateMppEnter = function(event, Vmpp){
+				if (event.keyCode === 13){
+		      scope.FupdateMpp(Vmpp);
+		    }
+			};
+			scope.FupdateMfil = function(){
+				scope.MshowMfilBox = false;
+			};
+			scope.FupdateMfilEnter = function(event){
+				if (event.keyCode === 13){
+		      scope.FupdateMfil();
+		    }
+			};
+			scope.FupdateMpage = function(Vmpage){
+				scope.Mpage = Vmpage;
+				scope.MshowMpageBox = false;
+			};
+			scope.FupdateMpageEnter = function(event, Vmpage){
+				if (event.keyCode === 13){
+		      scope.FupdateMpage(Vmpage);
+		    }
+			};
+			scope.FhideAll = function(){
+				scope.MshowMppBox = false;
+				scope.MshowMfilBox = false;
+				scope.MshowMpageBox = false;
+			};
+			element.find('.ngTable').bind({
+				click: function(){
+					scope.FhideAll();
+					scope.$apply();
+				},
+			});
+			element.find('.dropDown').bind({
+				click: function(e){
+					e.stopPropagation();
+				},
+			});
+
+			// table event
 			scope.FcheckAll = function(Vstatus){
 				for (var index in scope.MfilterDatas){
 					if (scope.MfilterDatas.hasOwnProperty(index)){
@@ -147,6 +243,20 @@ promise.directive('ngTable',function($filter){
 			scope.FtrDbClick = function(Vnode){
 				if (scope.FdbClick) {
 					scope.FdbClick(Vnode);
+				}
+			};
+			scope.FrefreshAction = function(){
+				if (scope.Frefresh) {
+					scope.Frefresh();
+				} else {
+					SinfoService.FaddInfo('未指定刷新动作');
+				}
+			};
+			scope.FnewAction = function(){
+				if (scope.Fnew) {
+					scope.Fnew();
+				} else {
+					SinfoService.FaddInfo('未指定新建动作');
 				}
 			};
 
@@ -351,7 +461,7 @@ promise.directive('chartPie',function(){
 promise.directive('chartDoughnut',function(){
 	var options = {
 		// segmentShowStroke : false,
-		segmentStrokeColor : "RGBA(22, 41, 57, 1.00)",
+		segmentStrokeColor : "RGBA(98, 104, 125, 1.00)",
 		segmentStrokeWidth : 1,
 	};
 	return{
@@ -369,66 +479,3 @@ promise.directive('chartDoughnut',function(){
 		}
 	};
 });
-
-
-
-
-
-// promise.directive('edit',function(){
-// 	return{
-// 		restrict: 'E',
-// 		require: 'ngModel',
-// 		link: function(scope,element,attrs,ngModel){
-// 			element.bind('click',function(){
-// 				var id = ngModel.$modelValue.vm_id;
-// 				var obj = $('#'+id);
-//     			var tdsize = [];
-//
-// 				scope.$apply(function(){
-// 					angular.copy(ngModel.$modelValue,scope.vm_infos_bak);
-// 					obj.children('td').each(function(){
-// 						var size = { width:$(this).children('clevertd').width(), height:$(this).height() };
-// 						tdsize.push(size);
-// 					});
-// 					obj.find('td input').each(function(i){
-// 						$(this).width(tdsize[i].width);
-// 						$(this).height(tdsize[i].height);
-// 					});
-// 					scope.showEdit = false;
-// 				});
-// 			});
-// 		}
-// 	};
-// });
-//
-// promise.directive('update',function(){
-// 	return{
-// 		restrict: 'E',
-// 		require: 'ngModel',
-// 		link: function(scope,element,attrs,ngModel){
-// 			element.bind('click',function(){
-// 				var id = ngModel.$modelValue.vm_id;
-// 				var obj = $('#'+id);
-//
-// 				scope.$apply(function(){
-// 					angular.copy(ngModel.$modelValue,scope.vm_infos_bak);
-// 				});
-//
-// 				scope.$apply(function(){
-// 					scope.showEdit = true;
-// 				});
-// 			});
-// 		}
-// 	};
-// });
-
-// promise.directive('',function(){
-// 	return{
-// 		restrict: 'E',
-// 		link: function(scope,element,attrs,ngModel){
-// 			element.bind('',function(){
-
-// 			})
-// 		}
-// 	}
-// });

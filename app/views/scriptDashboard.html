@@ -7,7 +7,7 @@
           <div class="tableContent">
             <div class="toolbar">
               <input type="text" class="toolbarNode" placeholder="Search..." ng-model="Mfil">
-              <div class="toolbarNode label" ng-click="FgetScriptList()">刷新</div>
+              <i class="iconfont toolbarNode" ng-click="FgetScriptList()">&#xe63a;</i>
               <div class="toolbarNode label" ng-click="FnewAction()">新建</div>
             </div>
           </div>
@@ -25,9 +25,9 @@
                 <td>{{script.time_last_edit | dateFilter}}</td>
                 <td>
                   <div ng-show="MshowAction">
-                    <a href="" ng-click="FupdateAction(script)">编辑</a>
-                    <!-- <a href="">克隆</a> -->
-                    <a href="" class="delete">删除</a>
+                    <a href="" ng-click="FupdateAction(script)" ng-show="script.owner_name === Mself.username">编辑</a>
+                    <a href="" ng-click="FcloneAction(script)" ng-show="script.owner_name !== Mself.username">克隆</a>
+                    <a href="" class="delete" ng-show="script.owner_name === Mself.username">删除</a>
                     <!-- <a href="">执行</a> -->
                   </div>
                   <div ng-show="!MshowAction">

@@ -2,12 +2,12 @@
 <div class="navbar" ng-controller="Cnavbar">
   <!-- MENU -->
   <div class="navbarIcon">
-    <div ng-click="FtoggleMenu()"><i class="iconfont">&#xe648;</i></div>
+    <div ng-click="FtoggleMenu()"><i class="iconfont">&#xe61f;</i></div>
     <div class="sidebar" ng-show="MshowMenu">
       <div class="sidebarNode">
         <div class="sidebarTitle">
           <div>资源池</div>
-          <i class="iconfont">&#xe676;</i>
+          <i class="iconfont">&#xe62c;</i>
         </div>
         <div class="sidebarSubnode">
           <div class="sidebarSubnodeContent">
@@ -27,7 +27,7 @@
       <div class="sidebarNode">
         <div class="sidebarTitle">
           <div>维护</div>
-          <i class="iconfont">&#xe676;</i>
+          <i class="iconfont">&#xe62c;</i>
         </div>
         <div class="sidebarSubnode">
           <div class="sidebarSubnodeContent">
@@ -47,7 +47,7 @@
       <div class="sidebarNode">
         <div class="sidebarTitle">
           <div>管理</div>
-          <i class="iconfont">&#xe676;</i>
+          <i class="iconfont">&#xe62c;</i>
         </div>
         <div class="sidebarSubnode">
           <div class="sidebarSubnodeContent">
@@ -58,7 +58,7 @@
       <div class="sidebarNode">
         <div class="sidebarTitle">
           <div>问题与故障</div>
-          <i class="iconfont">&#xe676;</i>
+          <i class="iconfont">&#xe62c;</i>
         </div>
         <div class="sidebarSubnode">
           <div class="sidebarSubnodeContent">问题<div class="nodeNumber">0</div></div>
@@ -69,42 +69,49 @@
   </div>
 
   <!-- Index -->
-  <div class="navbarIcon"><a href="#/"><i class="iconfont">&#xe626;</i></a></div>
+  <div class="navbarIcon"><a href="#/"><i class="iconfont">&#xe618;</i></a></div>
 
   <!-- UI -->
-  <div class="navbarNode"><a href="#/ui">UI</a></div>
+  <div class="navbarIcon"><a href="#/ui"><i class="iconfont">&#xe7ba;</i></a></div>
 
   <!-- Todo -->
-  <div class="navbarNode"><a href="#/">Todo</a></div>
+  <div class="navbarIcon"><a href=""><i class="iconfont">&#xe6ef;</i></a></div>
 
   <!-- Record -->
-  <div class="navbarNode"><a href="#/">Record</a></div>
+  <div class="navbarIcon"><a href=""><i class="iconfont">&#xe686;</i></a></div>
 
   <!-- Sign out -->
-  <div class="navbarNode" ng-click="FsignOut()"><a href="#/">Sign out</a></div>
+  <div class="navbarIconAnti" ng-click="FsignOut()"><a href="#/"><i class="iconfont">&#xe63f;</i></a></div>
 
   <!-- User -->
   <div class="navbarIconAnti"><a href="#/user"><i class="iconfont">&#xe636;</i></a></div>
 
   <!-- Settings -->
-  <div class="navbarIconAnti"><a href="#/setting"><i class="iconfont">&#xe66d;</i></a></div>
+  <div class="navbarIconAnti"><a href="#/setting"><i class="iconfont">&#xe632;</i></a></div>
 
   <!-- Info -->
-  <div class="navbarIconAnti">
-    <a href="#/"><i class="iconfont">&#xe67e;</i></a>
+  <div class="navbarIconAnti" ng-click="FtoggleInfoHistory()">
+    <a href=""><i class="iconfont">&#xe61c;</i></a>
     <div class="infoBar">
       <div class="infoNode" ng-repeat="info in Minfos track by $index">{{info}}</div>
+    </div>
+    <div class="infoBar infoHistoryBar" ng-show="MshowInfosHistory">
+      <div class="toolbar" ng-repeat="infoObject in MinfosHistory track by $index">
+        <div class="toolbarNode">{{infoObject.date | date:'HH:mm:ss'}}</div>
+        <div class="toolbarNode">{{infoObject.info}}</div>
+      </div>
     </div>
   </div>
 
   <!-- Search -->
   <div class="navbarInput"><input type="text" placeholder="Search..."></div>
-
 </div>
+
+<div class="loadingNode" ng-show="MshowNavLoading"></div>
 
 <div class="helper" ng-show="MshowHelper">
   <div class="helperLogo">
-    <i class="iconfont">&#xe683;</i>
+    <i class="iconfont">&#xe61e;</i>
     <br />
     Helper
   </div>
@@ -112,7 +119,11 @@
 </div>
 
 <div class="helperTrigger" ng-controller="ChelperTrigger" ng-click="FtoggleHelper()">
-  <div class="vetical">&lt;&lt;</div>
+  <!-- <div class="vetical">&lt;&lt;</div> -->
+  <div class="vetical">
+    <i class="iconfont" ng-show="!MshowHelper">&#xe63e;</i>
+    <i class="iconfont" ng-show="MshowHelper">&#xe62c;</i>
+  </div>
 </div>
 
 <div class="dashboard" ui-view="dashboardView"></div>
@@ -124,17 +135,17 @@
         <div class="node signNode">
           <div class="signTitle">Promise・Sign</div>
           <div class="toolbar signBar">
-            <div class="toolbarNode"><i class="iconfont">&#xe636;</i></div>
+            <div class="toolbarNode"><i class="iconfont">&#xe602;</i></div>
             <input class="toolbarNode" type="text" placeholder="用户名" ng-model="MuserInfo.username">
           </div>
           <div class="toolbar signBar">
-            <div class="toolbarNode"><i class="iconfont">&#xe61b;</i></div>
+            <div class="toolbarNode"><i class="iconfont">&#xe620;</i></div>
             <input class="toolbarNode" type="password" placeholder="密码" ng-model="MuserInfo.password" ng-keyup="FsignInEnter($event, MuserInfo, MisKeep)">
           </div>
           <div class="toolbar signBar">
             <div class="toolbarNode" ng-click="FtoggleIsKeep()">
-              <i class="iconfont" ng-show="MisKeep">&#xe67c;</i>
-              <i class="iconfont" ng-show="!MisKeep">&#xe67d;</i>
+              <i class="iconfont" ng-show="MisKeep">&#xe63d;</i>
+              <i class="iconfont" ng-show="!MisKeep">&#xe69d;</i>
               自动登录
             </div>
             <div class="toolbarNode" ng-click="FsignIn(MuserInfo, MisKeep)">登录</div>

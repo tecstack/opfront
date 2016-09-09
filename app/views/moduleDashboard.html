@@ -5,10 +5,20 @@
         <div class="nodeTitle">执行</div>
         <div class="tableContent">
           <div class="toolbar">
-            <div class="toolbarNode toolbarFullNode" ng-click="Fexecute()">执行</div>
+            <div class="toolbarIcon">
+              <i class="iconfont toolbarNode" ng-click="Fexecute()">&#xe68c;</i>
+            </div>
+            <div class="toolbarIconContent">
+              <div class="toolbarNode toolbarFullNode" ng-click="Fexecute()">执行</div>
+            </div>
           </div>
           <div class="toolbar">
-            <select class="toolbarNode toolbarFullNode" ng-model="Mosuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+            <div class="toolbarIcon">
+              <i class="iconfont toolbarNode">&#xe602;</i>
+            </div>
+            <div class="toolbarIconContent">
+              <select class="toolbarNode toolbarFullNode" ng-model="Mosuser" ng-options="item.value as item.label for item in MosuserOptions"></select>
+            </div>
           </div>
           <div class="toolbar">
             <div class="toolbarNode toolbarFullNode">{{MhostsSelected.length}}台目标机器</div>
@@ -30,94 +40,98 @@
     <div class="threeQuarterCol">
       <div class="node">
         <div class="moduleNode" ng-click="FselectModule('shell')" ng-class="{toolbarNodeSelected: MshowNode.shell}">
-          <i class="iconfont">&#xe670;</i>
+          <i class="iconfont">&#xe648;</i>
           <div>指令</div>
         </div>
         <div class="moduleNode" ng-click="FselectModule('script')" ng-class="{toolbarNodeSelected: MshowNode.script}">
-          <i class="iconfont">&#xe670;</i>
+          <i class="iconfont">&#xe648;</i>
           <div>脚本</div>
         </div>
       </div>
       <div class="node" ng-show="MshowNode.shell">
-        <div class="nodeTitle">指令下发－详情</div>
-        <div class="tableContent">
-          <div ui-codemirror="MeditorOptions.shell" ng-model="MshellSelected.shell"></div>
-        </div>
+        <div class="nodeTitle">批量下发指令</div>
+        <div ui-codemirror="MeditorOptions.shell" ng-model="MshellSelected.shell"></div>
       </div>
       <div class="node" ng-show="MshowNode.script">
-        <div class="nodeTitle">脚本执行－详情</div>
-        <div class="tableContent">
-          <div class="toolbar">
-            <div class="toolbarNode toolbarFullNode" ng-click="FshowSelector('scripts')">选取脚本<must></must></div>
+        <div class="nodeTitle">批量执行脚本</div>
+        <div class="toolbar">
+          <div class="toolbarIcon">
+            <i class="iconfont toolbarNode" ng-click="FshowSelector('scripts')">&#xe60a;</i>
           </div>
-          <div ui-codemirror="MeditorOptions.script" ng-model="MscriptShow.script_text" ui-refresh="MscriptShow.script_text"></div>
-          <div class="toolbar">
-            <div class="toolbarNode toolbarFullNode">{{MscriptShow.script_name}}</div>
+          <div class="toolbarIconContent">
+            <div class="toolbarNode" ng-click="FshowSelector('scripts')">选取脚本<must></must></div>
+            <div class="toolbarNode">{{MscriptShow.script_name}}</div>
           </div>
         </div>
+        <div ui-codemirror="MeditorOptions.script" ng-model="MscriptShow.script_text" ui-refresh="MscriptShow.script_text"></div>
       </div>
     </div>
   </div>
 
   <!-- executor -->
     <div class="dashboardMask" ng-show="MshowExecutor">
-      <div class="fullCol">
-        <div class="node">
-          <div class="nodeTitle">执行结果</div>
-          <div class="tableContent">
+      <div class="row">
+        <div class="fullCol">
+          <div class="node">
+            <div class="nodeTitle">执行结果</div>
             <div class="toolbar">
               <div class="toolbarNode label" ng-click="Fback()">返回</div>
             </div>
-            <!-- Result dashboard -->
-            <div class="threeQuarterCol">
-              <div ui-codemirror="MeditorOptions.executor" ng-model="Mstdout" ui-refresh="Mstdout"></div>
-              <div class="codeEditorLoding" ng-show="MshowLoading"></div>
-            </div>
-            <!-- Hosts list -->
-            <div class="quarterCol">
-              <div class="resultBox">
-                <div class="progressbar" option="pro.result"></div>
-                <table>
-                  <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
-                    <td style="width:30px;"><i class="iconfont" ng-show="value.ip === MresultSelected">&#xe67c;</i></td>
-                    <td>{{key}}</td>
-                    <td>{{value|trailsFilter}}</td>
-                  </tr>
-                </table>
+            <div>
+              <!-- Result dashboard -->
+              <div class="threeQuarterCol">
+                <div ui-codemirror="MeditorOptions.executor" ng-model="Mstdout" ui-refresh="Mstdout"></div>
+                <div class="codeEditorLoding" ng-show="MshowLoading"></div>
+              </div>
+              <!-- Hosts list -->
+              <div class="quarterCol">
+                <div class="resultBox">
+                  <div class="progressbar" option="pro.result"></div>
+                  <table>
+                    <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
+                      <td style="width:30px;"><i class="iconfont" ng-show="value.ip === MresultSelected">&#xe63d;</i></td>
+                      <td>{{key}}</td>
+                      <td>{{value|trailsFilter}}</td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
+            <div class="nodeBottom red">{{MerrInfo}}</div>
           </div>
-          <div class="nodeBottom red">{{MerrInfo}}</div>
         </div>
       </div>
     </div>
 
     <!-- Host Selector -->
     <div class="dashboardMask" ng-show="MshowSelector.hosts">
-      <div class="node" >
-        <div class="nodeTitle">主机选择</div>
-        <div class="tableContent">
-          <div class="toolbar">
-            <div class="toolbarNode" ng-click="MshowSelector.hosts = false;">确定</div>
-            <div class="toolbarNode">已选：{{MhostsSelected.length}}</div>
+      <div class="row">
+        <div class="fullCol">
+          <div class="node" >
+            <div class="nodeTitle">主机选择</div>
+            <div class="toolbar">
+              <div class="toolbarNode" ng-click="MshowSelector.hosts = false;">确定</div>
+              <div class="toolbarNode">已选：{{MhostsSelected.length}}</div>
+            </div>
+            <ng-table th="MhostsDatasTh" data="MhostsDatasTd" select="FselectHost" unselect="FunSelectHost" refresh="FgetHost"></ng-table>
           </div>
         </div>
-        <ng-table th="MhostsDatasTh" data="MhostsDatasTd" select="FselectHost" unselect="FunSelectHost"></ng-table>
       </div>
     </div>
     <!-- Script Selector -->
     <div class="dashboardMask" ng-show="MshowSelector.scripts">
-      <div class="node" >
-        <div class="nodeTitle">脚本选择</div>
-        <div class="tableContent">
-          <div class="toolbar">
-            <div class="toolbarNode" ng-click="MshowSelector.scripts = false;">确定</div>
-            <div class="toolbarNode">已选择:{{MscriptSelected.script_name}}</div>
-            <div class="toolbarErrorNode">注意：以最后一次选择为准</div>
+      <div class="row">
+        <div class="fullCol">
+          <div class="node" >
+            <div class="nodeTitle">脚本选择</div>
+            <div class="toolbar">
+              <div class="toolbarNode" ng-click="MshowSelector.scripts = false;">确定</div>
+              <div class="toolbarNode">已选择:{{MscriptSelected.script_name}}</div>
+              <div class="toolbarErrorNode">注意：以最后一次选择为准</div>
+            </div>
+            <ng-table th="MscriptsDatasTh" data="MscriptsDatasTd" select="FselectScript" refresh="FgetScriptList"></ng-table>
           </div>
         </div>
-        <ng-table th="MscriptsDatasTh" data="MscriptsDatasTd" select="FselectScript"></ng-table>
       </div>
     </div>
-
 </div>

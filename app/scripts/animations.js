@@ -43,6 +43,30 @@ promise.animation('.sidebar', function(){
   };
 });
 
+promise.animation('.infoHistoryBar', function(){
+  return{
+    addClass: function(element){
+      // hide
+      element.animate(
+        {'opacity': '0', 'height': '0'},
+        100,
+        function(){
+          $(this).css('display', 'none');
+        }
+      );
+    },
+    removeClass: function(element){
+      // show
+      element.css({
+        'display': 'block',
+        'opacity': '0',
+        'height': '0'
+      });
+      element.animate({'opacity': '1', 'height': '350px'}, 100);
+    }
+  };
+});
+
 promise.animation('.infoNode', function(){
   return{
     leave: function(element){
@@ -82,6 +106,36 @@ promise.animation('.infoNode', function(){
   };
 });
 
+promise.animation('.loadingNode', function(){
+  return{
+    addClass: function(element){
+      element.animate(
+        {
+          'opacity': '0',
+          'top': '-60px',
+        },
+        300,
+        function(){
+          $(this).css({'display': 'none'});
+        }
+      );
+    },
+    removeClass: function(element){
+      element.css({
+        'display': 'block',
+        'opacity': '0',
+      });
+      element.animate(
+        {
+          'opacity': '1',
+          'top': '0',
+        },
+        300
+      );
+    }
+  };
+});
+
 promise.animation('.dashboardMask', function(){
   return{
     addClass: function(element){
@@ -116,24 +170,6 @@ promise.animation('.helper', function(){
       element.animate({'opacity': '1', 'right': '0px'}, 100);
     }
   };
-});
-
-promise.directive('label',function(){
-	return{
-		restrict: 'C',
-		link: function(scope,element,attrs){
-      element.children('div').bind({
-        click: function(e){
-          e.stopPropagation();
-        }
-      });
-      element.bind({
-        click: function(e){
-          element.children('div').toggle(100);
-        }
-      });
-		}
-	};
 });
 
 promise.animation('.toolbar', function(){
