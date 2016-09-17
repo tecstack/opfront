@@ -19,6 +19,31 @@ var promise = angular.module('promise');
 //   return result;
 // };
 
+// script_type filter: 1->ansible 2->Forward
+promise.filter('scriptTypeFilter', function(){
+  return function(input){
+    if (input === 1) {
+      return 'Ansible';
+    } else if (input === 2) {
+      return 'Forward';
+    } else {
+      return '未定义';
+    }
+  };
+});
+
+// is_public filter: 0->not public 1->public
+promise.filter('isPublicFilter', function(){
+  return function(input){
+    if (input === 0) {
+      return '否';
+    } else if (input === 1) {
+      return '是';
+    } else {
+      return '未知';
+    }
+  };
+});
 
 // date filter: 'Tue, 23 Aug 2016 00:50:12 GMT' - > '2016-08-23 00:50:12'
 promise.filter('dateFilter', function($filter){
@@ -37,7 +62,9 @@ promise.filter('groupsFilter', function(){
     var groupNameList = [];
     var output = '';
     for (var key in input) {
-      groupNameList.push(input[key].name);
+      if (input[key].hasOwnProperty('name')) {
+        groupNameList.push(input[key].name);
+      }
     }
     output = groupNameList.join();
     return output;

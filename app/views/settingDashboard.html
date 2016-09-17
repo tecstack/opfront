@@ -64,7 +64,7 @@
           <i class="iconfont toolbarNode">&#xe633;</i>
           <input type="text" class="toolbarNode" placeholder="Search User.." ng-model="MuserFilter">
         </div>
-        <name-card ng-repeat="user in MuserInfos | filter:MuserFilter" userinfo="user" delete="FdeleteUser"></name-card>
+        <name-card ng-repeat="user in MuserInfos | filter:MuserFilter" userinfo="user" modify="FshowUserModifyMask" delete="FdeleteUser"></name-card>
       </div>
 
       <div ng-show="MshowRightCol.role">
@@ -85,13 +85,13 @@
     </div>
   </div>
 
-  <div class="dashboardMask" ng-show="MshowMask.createUser">
+  <div class="dashboardMask" ng-show="MshowMask.user">
     <div class="formContent">
       <div class="tableContent">
         <div class="toolbar">
           <div class="toolbarLabel">用户名<must></must>：</div>
           <div class="toolbarContent">
-            <input type="text" class="toolbarNode" placeholder="Username..." ng-model="McreateUserInfo.username">
+            <input type="text" class="toolbarNode" placeholder="Username..." ng-model="MuserInfo.username">
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@
         <div class="toolbar">
           <div class="toolbarLabel">密码<must></must>：</div>
           <div class="toolbarContent">
-            <input type="password" class="toolbarNode" placeholder="Password..." ng-model="McreateUserInfo.password">
+            <input type="password" class="toolbarNode" placeholder="Password..." ng-model="MuserInfo.password">
           </div>
         </div>
       </div>
@@ -107,7 +107,7 @@
         <div class="toolbar">
           <div class="toolbarLabel">电话<must></must>：</div>
           <div class="toolbarContent">
-            <input type="text" class="toolbarNode" placeholder="Telephone..." ng-model="McreateUserInfo.tel">
+            <input type="text" class="toolbarNode" placeholder="Telephone..." ng-model="MuserInfo.tel">
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@
         <div class="toolbar">
           <div class="toolbarLabel">邮箱<must></must>：</div>
           <div class="toolbarContent">
-            <input type="text" class="toolbarNode" placeholder="Email..." ng-model="McreateUserInfo.email">
+            <input type="text" class="toolbarNode" placeholder="Email..." ng-model="MuserInfo.email">
           </div>
         </div>
       </div>
@@ -131,21 +131,22 @@
         <div class="toolbar">
           <div class="toolbarLabel">确认：</div>
           <div class="toolbarContent">
-            <div class="toolbarNode" ng-click="FcreateUser(McreateUserInfo)">确认</div>
-            <div class="toolbarNode" ng-click="MshowMask.createUser=false;">取消</div>
+            <div class="toolbarNode" ng-click="FcreateUser(MuserInfo)" ng-show="MshowButtonCreate">确认</div>
+            <div class="toolbarNode" ng-click="FmodifyUser(MuserInfo)" ng-show="!MshowButtonCreate">更新</div>
+            <div class="toolbarNode" ng-click="MshowMask.user=false;">取消</div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="dashboardMask" ng-show="MshowMask.createRole">
+  <div class="dashboardMask" ng-show="MshowMask.role">
     <div class="formContent">
       <div class="tableContent">
         <div class="toolbar">
           <div class="toolbarLabel">角色名<must></must>：</div>
           <div class="toolbarContent">
-            <input type="text" class="toolbarNode" placeholder="Role name..." ng-model="McreateRoleInfo.role_name">
+            <input type="text" class="toolbarNode" placeholder="Role name..." ng-model="MroleInfo.role_name">
           </div>
         </div>
       </div>
@@ -153,7 +154,7 @@
         <div class="toolbar">
           <div class="toolbarLabel">描述：</div>
           <div class="toolbarContent">
-            <input type="text" class="toolbarNode" placeholder="Description..." ng-model="McreateRoleInfo.description">
+            <input type="text" class="toolbarNode" placeholder="Description..." ng-model="MroleInfo.description">
           </div>
         </div>
       </div>
@@ -177,8 +178,9 @@
         <div class="toolbar">
           <div class="toolbarLabel">确认：</div>
           <div class="toolbarContent">
-            <div class="toolbarNode" ng-click="FcreateRole(McreateRoleInfo)">确认</div>
-            <div class="toolbarNode" ng-click="MshowMask.createRole=false;">取消</div>
+            <div class="toolbarNode" ng-click="FcreateRole(MroleInfo)" ng-show="MshowButtonCreate">确认</div>
+            <div class="toolbarNode" ng-click="FmodifyRole(MroleInfo)" ng-show="!MshowButtonCreate">更新</div>
+            <div class="toolbarNode" ng-click="MshowMask.role=false;">取消</div>
           </div>
         </div>
       </div>

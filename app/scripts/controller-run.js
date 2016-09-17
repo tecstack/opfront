@@ -12,7 +12,7 @@
 var promise = angular.module('promise');
 
 // angular init
-promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoService, SuserService, ShostService, SscriptService, SdelayService){
+promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoService, SuserService, SscriptService, SeaterService, SdelayService){
   // charjs 初始设置
   Chart.defaults.global.defaultFontColor = '#fff';
   Chart.defaults.global.scaleFontColor = '#fff';
@@ -25,11 +25,29 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
   $rootScope.Minfos = [];
   $rootScope.MinfosHistory = [];
 
-  // 主机信息服务
+  // 自定义面板配置
+  $rootScope.Mtest = [
+    {
+        title: '自定义1',
+        type: 'ansibleWalkerText',
+        vars: {}
+    },
+    {
+        title: '自定义2',
+        type: 'ansibleWalkerText',
+        vars: {}
+    }
+  ];
+
+
+  // Eater host服务
   $rootScope.FgetHost = function(){
-    var vars = {};
+    var vars = {
+      'extend': true,
+      'opt': 'id%%name%%group%%ip%%ip_addr',
+    };
     SinfoService.FstartLoading();
-    ShostService.Fhost($rootScope.Mtoken).get(
+    SeaterService.Fhost($rootScope.Mtoken).get(
       vars,
       function successCallback(callbackdata){
         $rootScope.Mhosts = callbackdata.data;
@@ -44,6 +62,26 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
       }
     );
   };
+
+  // 主机信息服务
+  // $rootScope.FgetHost = function(){
+  //   var vars = {};
+  //   SinfoService.FstartLoading();
+  //   ShostService.Fhost($rootScope.Mtoken).get(
+  //     vars,
+  //     function successCallback(callbackdata){
+  //       $rootScope.Mhosts = callbackdata.data;
+  //       $rootScope.MhostsNum = $rootScope.Mhosts.length;
+  //       SinfoService.FstopLoading();
+  //       SinfoService.FaddInfo('已同步' + $rootScope.MhostsNum + '条主机信息');
+  //       SdelayService.Fdelay();
+  //     },
+  //     function errorCallback(callbackdata){
+  //       SinfoService.FstopLoading();
+  //       SinfoService.FaddInfo('获取主机信息失败:' + callbackdata.message);
+  //     }
+  //   );
+  // };
 
   // 脚本信息服务
   $rootScope.FgetScriptList = function(){

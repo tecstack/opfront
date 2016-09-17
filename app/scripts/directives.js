@@ -93,6 +93,7 @@ promise.directive('dropDown',function(){
 						},
 						50
 					);
+					element.find('.dropDownBox').find('input').first().focus();
 				} else {
 					element.find('.dropDownBox').animate(
 						{
@@ -106,6 +107,29 @@ promise.directive('dropDown',function(){
 					);
 				}
 			});
+		}
+	};
+});
+// tr action show
+promise.directive('trAnimate',function(){
+	return{
+		restrict: 'C',
+		link: function(scope,element,attrs){
+			element.bind({
+				'mouseenter': function(e){
+					scope.MshowAction = true;
+					scope.$apply();
+				},
+				'mouseleave': function(e){
+					scope.MshowAction = false;
+					scope.$apply();
+				},
+			});
+			element.find('.actionTd').bind({
+        click: function(e){
+          e.stopPropagation();
+        }
+      });
 		}
 	};
 });
@@ -137,6 +161,9 @@ promise.directive('ngTable',function($filter, SinfoService){
 			FdbClick: '=dbclick',
 			Frefresh: '=refresh',
 			Fnew: '=new',
+			Fmodify: '=modify',
+			Fdelete: '=delete',
+			Fhelp: '=help',
 		},
 		templateUrl: 'views/directives/ng-table.html',
 		link: function(scope, element, attrs){
@@ -152,14 +179,14 @@ promise.directive('ngTable',function($filter, SinfoService){
 				if (scope.MfilterDatas.length && scope.Mpp){
 					scope.Mpages = Math.ceil(parseFloat(scope.MfilterDatas.length)/parseFloat(scope.Mpp));
 				} else if (scope.MfilterDatas.length === 0){
-					scope.Mpages = 0;
+					scope.Mpages = 1;
 				} else if (scope.Mpp === 0){
 					scope.Mpages = 1;
 				}
 				if (scope.Mpage > scope.Mpages && scope.Mpage !== 1){
 					scope.Mpage = scope.Mpages;
-				} else if (scope.Mpage < 0){
-					scope.Mpage = 0;
+				} else if (scope.Mpage < 1){
+					scope.Mpage = 1;
 				}
 				scope.MshowDatas = scope.MfilterDatas.slice(scope.Mpp*(scope.Mpage-1),scope.Mpp*scope.Mpage);
 			};
@@ -212,7 +239,12 @@ promise.directive('ngTable',function($filter, SinfoService){
 			});
 
 			// table event
-			scope.FcheckAll = function(Vstatus){
+			scope.FcheckAll = function(){
+				if (typeof scope.Mall === 'undefined') {
+					scope.Mall = false;
+				}
+				scope.Mall = !scope.Mall;
+				var Vstatus = scope.Mall;
 				for (var index in scope.MfilterDatas){
 					if (scope.MfilterDatas.hasOwnProperty(index)){
 						if (scope.MfilterDatas[index].select !== true && Vstatus === true) {
@@ -259,6 +291,27 @@ promise.directive('ngTable',function($filter, SinfoService){
 					SinfoService.FaddInfo('未指定新建动作');
 				}
 			};
+			scope.FmodifyAction = function(Vnode){
+				if (scope.Fmodify) {
+					scope.Fmodify(Vnode);
+				} else {
+					SinfoService.FaddInfo('未指定修改动作');
+				}
+			};
+			scope.FdeleteAction = function(Vnode){
+				if (scope.Fdelete) {
+					scope.Fdelete(Vnode);
+				} else {
+					SinfoService.FaddInfo('未指定删除动作');
+				}
+			};
+			scope.FhelpAction = function(Vnode){
+				if (scope.Fhelp) {
+					scope.Fhelp(Vnode);
+				} else {
+					SinfoService.FaddInfo('无帮助信息');
+				}
+			};
 
 			// init & watch
 			scope.FinitData();
@@ -284,16 +337,24 @@ promise.directive('nameCard',function(SinfoService){
 		replace: true,
 		scope: {
 			MuserInfo: '=userinfo',
+			FmodifyFunction: '=modify',
 			FdeleteFunction: '=delete',
 		},
 		templateUrl: 'views/directives/name-card.html',
 		link: function(scope, element, attrs){
 			scope.MshowDelete = false;
+			scope.FmodifyUser = function(){
+				if (typeof scope.FmodifyFunction === 'function') {
+					scope.FmodifyFunction(scope.MuserInfo);
+				} else {
+					SinfoService.FaddInfo('无指定修改动作');
+				}
+			};
 			scope.FdeleteUser = function(){
 				if (typeof scope.FdeleteFunction === 'function') {
 					scope.FdeleteFunction(scope.MuserInfo);
 				} else {
-					SinfoService.FaddInfo('无指定删除动作，默认不作处理...');
+					SinfoService.FaddInfo('无指定删除动作');
 				}
 				scope.MshowDelete = false;
 			};
@@ -310,16 +371,24 @@ promise.directive('roleCard',function(){
 		replace: true,
 		scope: {
 			MroleInfo: '=roleinfo',
+			FmodifyFunction: '=modify',
 			FdeleteFunction: '=delete',
 		},
 		templateUrl: 'views/directives/role-card.html',
 		link: function(scope, element, attrs){
 			scope.MshowDelete = false;
+			scope.FmodifyRole = function(){
+				if (typeof scope.FmodifyFunction === 'function') {
+					scope.FmodifyFunction(scope.MroleInfo);
+				} else {
+					SinfoService.FaddInfo('无指定修改动作');
+				}
+			};
 			scope.FdeleteUser = function(){
 				if (typeof scope.FdeleteFunction === 'function') {
 					scope.FdeleteFunction(scope.MroleInfo);
 				} else {
-					SinfoService.FaddInfo('无指定删除动作，默认不作处理...');
+					SinfoService.FaddInfo('无指定删除动作');
 				}
 				scope.MshowDelete = false;
 			};
@@ -476,6 +545,155 @@ promise.directive('chartDoughnut',function(){
 			scope.$watch('Mdata', function(){
 					myChart.Doughnut(scope.Mdata, options);
 			}, true);
+		}
+	};
+});
+// compile Dynamic compilation
+promise.directive('compile',function($compile){
+	return {
+		restrict: 'E',
+		scope: {
+			Mdata: '=data',
+		},
+		link: function(scope, element, attrs) {
+			scope.Meditor = {
+	      lineNumbers: true,
+	      theme:'monokai',
+	      readOnly: true,
+	      lineWrapping : false,
+	      mode: 'shell',
+	      onLoad: function(_cm){
+	        _cm.setSize('100%', '100%');
+	      },
+		  };
+			scope.$watchCollection('Mdata',function(value) {
+				// var Vhtml = '<' + value.type + ' title="' + value.title + '"></' + value.type + '>';
+				var Vhtml = '<div class="' + value.type + '" title="Mdata.title" edi="Meditor"></div>';
+				element.html(Vhtml);
+				$compile(element.contents())(scope);
+			});
+		}
+	};
+});
+// ansible-walker-text
+promise.directive('ansibleWalkerText',function($rootScope, $interval, SinfoService, SwalkerService, SdelayService){
+	return{
+		restrict: 'EC',
+		replace: true,
+		scope: {
+			Mtitle: '=title',
+			Mmodule: '=module',
+			Mvars: '=vars',
+			Medi: '=edi',
+		},
+		templateUrl: 'views/directives/ansible-walker-text.html',
+		link: function(scope,element,attrs){
+			scope.FcreateWalker = function(VmoduleName, VmoduleVars){
+		    SwalkerService.FcreateWalker($rootScope.Mtoken, VmoduleName).post(
+		      {},
+		      VmoduleVars,
+		      function successCallback(callbackdata){
+		        scope.MwalkerId = callbackdata.walker_id;
+		        scope.Mstate = callbackdata.state;
+						scope.MinfoWalkerPromise[scope.MwalkerId] = $interval(
+		          function (){
+		            scope.FinfoWalker(VmoduleName, scope.MwalkerId);
+		          },
+		          2000
+		        );
+		        SdelayService.Fdelay();
+		      },
+		      function errorCallback(callbackdata){
+		        // console.log(callbackdata);
+		        scope.MshowLoading = false;
+						SinfoService.FaddInfo(callbackdata.data.message);
+		      }
+		    );
+		  };
+			scope.FinfoWalker = function(VmoduleName, VwalkerId){
+		    SwalkerService.FinfoWalker($rootScope.Mtoken, VmoduleName, VwalkerId).get(
+		      {},
+		      function successCallback(callbackdata){
+		        if (!jQuery.isEmptyObject(scope.MinfoWalkerPromise)) {
+							scope.progress.max = callbackdata.trails.length;
+							scope.progress.current = 0;
+							for (var index in callbackdata.trails) {
+		            var node = callbackdata.trails[index];
+		            var ip = node.ip;
+		            scope.Mresult[ip] = node;
+		            if (node.sum_changed || node.sum_ok) {
+		              scope.progress.current += 1;
+		            }
+		          }
+		          scope.Mstate = callbackdata.state;
+		          SdelayService.Fdelay();
+		        }
+		      },
+		      function errorCallback(callbackdata){
+						SinfoService.FaddInfo(callbackdata.data.message);
+		      }
+		    );
+		  };
+			scope.FstopInfoWalker = function(){
+				if (!jQuery.isEmptyObject(scope.MinfoWalkerPromise)) {
+					var Vnum = Object.keys(scope.MinfoWalkerPromise).length;
+					for (var walkerId in scope.MinfoWalkerPromise) {
+						$interval.cancel(scope.MinfoWalkerPromise[walkerId]);
+						delete scope.MinfoWalkerPromise[walkerId];
+					}
+					SinfoService.FaddInfo('已停止' + Vnum + '个轮询任务');
+					scope.MshowLoading = false;
+				}
+			};
+
+			scope.Frefresh = function(){
+				var test = {
+					'shell': 'ls /',
+					'iplist': ['192.168.182.4','192.168.182.8','192.168.182.12'],
+					'osuser': 'root',
+				};
+				scope.Mmodule = 'shell';
+				scope.Mvars = test;
+				scope.MshowLoading = true;
+				scope.FcreateWalker(scope.Mmodule, scope.Mvars);
+			};
+
+			scope.FshowStdout = function(node){
+		    scope.MresultSelected = node.ip;
+		    if (node.stdout) {
+		      scope.Mstdout = node.stdout;
+		    } else if (node.stderr) {
+		      scope.Mstdout = node.stderr;
+		    } else if (node.msg) {
+		      scope.Mstdout = node.msg;
+		    }
+		  };
+			scope.Mstdout = '';
+			scope.MshowLoading = false;
+			scope.Mresult = {};
+			scope.progress = {
+        'name': '成功个数',
+        'max': 0,
+        'current': 0,
+      };
+			scope.MresultSelected = '';
+			scope.MinfoWalkerPromise = {};
+
+			scope.$watch('Mstate', function(newValue, oldValue){
+		    if (!jQuery.isEmptyObject(scope.MinfoWalkerPromise)) {
+		      if (newValue >= 0 || newValue ===-3 || newValue === -4) {
+		        // success or timeout or fialed
+		        scope.FstopInfoWalker();
+		        SinfoService.FaddInfo('任务结束');
+		      } else if (newValue === -1 || newValue === -2) {
+		        // established or running
+		      }
+		    }
+		  });
+			scope.$on('$destroy', function() {
+		    // Make sure that the interval is destroyed too
+		    scope.FstopInfoWalker();
+		  });
 		}
 	};
 });

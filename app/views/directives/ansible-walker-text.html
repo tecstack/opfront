@@ -1,0 +1,27 @@
+<div class="node">
+  <div class="nodeTitle">{{Mtitle}}</div>
+  <div>
+    <!-- Result dashboard -->
+    <div class="twoThirdCol">
+      <div class="ansibleWalkerTextStdout">
+        <div ui-codemirror="Medi" ng-model="Mstdout"></div>
+      </div>
+      <div class="codeEditorLoding" ng-show="MshowLoading"></div>
+    </div>
+    <!-- Hosts list -->
+    <div class="thirdCol">
+      <div class="ansibleWalkerTextList">
+        <div class="progressbar" option="progress"></div>
+        <table>
+          <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
+            <td style="width:15px;"><i class="iconfont" ng-show="value.ip === MresultSelected">&#xe63d;</i></td>
+            <td>{{key}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="nameCardCloseBox">
+    <i class="iconfont nameCardConfirm" ng-click="Frefresh()">&#xe63a;</i>
+  </div>
+</div>

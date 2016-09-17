@@ -1,8 +1,8 @@
-<div ng-controller="Cmodule">
+<div ng-controller="Cansible">
   <div class="row">
     <div class="quarterCol">
       <div class="node">
-        <div class="nodeTitle">执行</div>
+        <div class="nodeTitle">执行Anisble</div>
         <div class="tableContent">
           <div class="toolbar">
             <div class="toolbarIcon">
@@ -69,69 +69,69 @@
   </div>
 
   <!-- executor -->
-    <div class="dashboardMask" ng-show="MshowExecutor">
-      <div class="row">
-        <div class="fullCol">
-          <div class="node">
-            <div class="nodeTitle">执行结果</div>
-            <div class="toolbar">
-              <div class="toolbarNode label" ng-click="Fback()">返回</div>
-            </div>
-            <div>
-              <!-- Result dashboard -->
-              <div class="threeQuarterCol">
-                <div ui-codemirror="MeditorOptions.executor" ng-model="Mstdout" ui-refresh="Mstdout"></div>
-                <div class="codeEditorLoding" ng-show="MshowLoading"></div>
-              </div>
-              <!-- Hosts list -->
-              <div class="quarterCol">
-                <div class="resultBox">
-                  <div class="progressbar" option="pro.result"></div>
-                  <table>
-                    <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
-                      <td style="width:30px;"><i class="iconfont" ng-show="value.ip === MresultSelected">&#xe63d;</i></td>
-                      <td>{{key}}</td>
-                      <td>{{value|trailsFilter}}</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="nodeBottom red">{{MerrInfo}}</div>
+  <div class="dashboardMask" ng-show="MshowExecutor">
+    <div class="row">
+      <div class="fullCol">
+        <div class="node">
+          <div class="nodeTitle">执行结果</div>
+          <div class="toolbar">
+            <div class="toolbarNode label" ng-click="Fback()">返回</div>
           </div>
+          <div>
+            <!-- Result dashboard -->
+            <div class="threeQuarterCol">
+              <div ui-codemirror="MeditorOptions.executor" ng-model="Mstdout" ui-refresh="Mstdout"></div>
+              <div class="codeEditorLoding" ng-show="MshowLoading"></div>
+            </div>
+            <!-- Hosts list -->
+            <div class="quarterCol">
+              <div class="resultBox">
+                <div class="progressbar" option="pro.result"></div>
+                <table>
+                  <tr ng-repeat="(key, value) in Mresult" ng-click="FshowStdout(value)" ng-class="{'bgSuccess': ((value.sum_ok > 0) || (value.sum_changed > 0)), 'bgFailed': (value.sum_failures > 0), 'bgUnreachable': (value.sum_unreachable > 0), 'bgSkipped':(value.sum_skipped > 0)}">
+                    <td style="width:30px;"><i class="iconfont" ng-show="value.ip === MresultSelected">&#xe63d;</i></td>
+                    <td>{{key}}</td>
+                    <td>{{value|trailsFilter}}</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="nodeBottom red">{{MerrInfo}}</div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Host Selector -->
-    <div class="dashboardMask" ng-show="MshowSelector.hosts">
-      <div class="row">
-        <div class="fullCol">
-          <div class="node" >
-            <div class="nodeTitle">主机选择</div>
-            <div class="toolbar">
-              <div class="toolbarNode" ng-click="MshowSelector.hosts = false;">确定</div>
-              <div class="toolbarNode">已选：{{MhostsSelected.length}}</div>
-            </div>
-            <ng-table th="MhostsDatasTh" data="MhostsDatasTd" select="FselectHost" unselect="FunSelectHost" refresh="FgetHost"></ng-table>
+  <!-- Host Selector -->
+  <div class="dashboardMask" ng-show="MshowSelector.hosts">
+    <div class="row">
+      <div class="fullCol">
+        <div class="node" >
+          <div class="nodeTitle">主机选择</div>
+          <div class="toolbar">
+            <div class="toolbarNode" ng-click="MshowSelector.hosts = false;">确定</div>
+            <div class="toolbarNode">已选：{{MhostsSelected.length}}</div>
           </div>
+          <ng-table th="MhostsDatasTh" data="MhostsDatasTd" select="FselectHost" unselect="FunSelectHost" refresh="FgetHost"></ng-table>
         </div>
       </div>
     </div>
-    <!-- Script Selector -->
-    <div class="dashboardMask" ng-show="MshowSelector.scripts">
-      <div class="row">
-        <div class="fullCol">
-          <div class="node" >
-            <div class="nodeTitle">脚本选择</div>
-            <div class="toolbar">
-              <div class="toolbarNode" ng-click="MshowSelector.scripts = false;">确定</div>
-              <div class="toolbarNode">已选择:{{MscriptSelected.script_name}}</div>
-              <div class="toolbarErrorNode">注意：以最后一次选择为准</div>
-            </div>
-            <ng-table th="MscriptsDatasTh" data="MscriptsDatasTd" select="FselectScript" refresh="FgetScriptList"></ng-table>
+  </div>
+  <!-- Script Selector -->
+  <div class="dashboardMask" ng-show="MshowSelector.scripts">
+    <div class="row">
+      <div class="fullCol">
+        <div class="node" >
+          <div class="nodeTitle">脚本选择</div>
+          <div class="toolbar">
+            <div class="toolbarNode" ng-click="MshowSelector.scripts = false;">确定</div>
+            <div class="toolbarNode">已选择:{{MscriptSelected.script_name}}</div>
+            <div class="toolbarErrorNode">注意：以最后一次选择为准</div>
           </div>
+          <ng-table th="MscriptsDatasTh" data="MscriptsDatasTd" select="FselectScript" refresh="FgetScriptList"></ng-table>
         </div>
       </div>
     </div>
+  </div>
 </div>

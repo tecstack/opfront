@@ -473,8 +473,8 @@ table a:hover {
 	font-size: 25px;
 	font-weight: 600;
 	text-align: center;
-  background: url("/images/circle.gif");
-  background-size: 100% 100%;
+  /*background: url("/images/circle.gif");*/
+  /*background-size: 100% 100%;*/
 }
 .helperLogo>.iconfont {
 	font-size: 45px;
@@ -849,6 +849,22 @@ select.toolbarFullNode {
   margin: 5px 0;
   border: solid 1px rgba(98, 104, 125, 1.00);
 }
+.notCheckAll {
+  color: RGBA(174, 173, 172, 0.4);
+}
+.notCheckAll:hover {
+  color: #9FB5FF;
+}
+.checkAll {
+  color: #fff;
+}
+.actionTd .iconfont {
+  color: #fff;
+}
+.actionTd .iconfont:hover {
+  color: #9FB5FF;
+}
+
 .progressBar {}
 
 .nameCard {
@@ -959,6 +975,35 @@ select.toolbarFullNode {
   font-size: 20px;
   font-weight: 600;
 }
+
+.ansibleWalkerTextStdout {
+  overflow: auto;
+  box-sizing: border-box;
+  border: solid 1px rgba(98, 104, 125, 1.00);
+  width: 100%;
+  height: 200px;
+  background-color: #000;
+  font-size: 15px;
+  white-space:nowrap;
+}
+.ansibleWalkerTextList {
+  overflow: auto;
+  box-sizing: border-box;
+  border: solid 1px rgba(98, 104, 125, 1.00);
+  width: 100%;
+  height: 200px;
+  font-size: 15px;
+}
+.ansibleWalkerTextList table {
+  font-size: 15px;
+}
+.ansibleWalkerTextList tr {
+  line-height: 20px;
+}
+.ansibleWalkerTextList td {
+  padding-left: 0;
+}
+
 
 /* 位置样式 */
 .clear {

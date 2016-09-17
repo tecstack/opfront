@@ -36,7 +36,27 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
       VuserInfo,
       function successCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.message);
-        $scope.MshowMask.createUser = false;
+        $scope.MshowMask.user = false;
+        $scope.FgetUserList();
+        SdelayService.Fdelay();
+        SinfoService.FstopLoading();
+      },
+      function errorCallback(callbackdata){
+        SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
+      }
+    );
+  };
+  $scope.FmodifyUser = function(VuserInfo){
+    SinfoService.FstartLoading();
+    SuserService.FmodifyUser($rootScope.Mtoken).put(
+      {
+        'user_id': VuserInfo.user_id,
+      },
+      VuserInfo,
+      function successCallback(callbackdata){
+        SinfoService.FaddInfo(callbackdata.message);
+        $scope.MshowMask.user = false;
         $scope.FgetUserList();
         SdelayService.Fdelay();
         SinfoService.FstopLoading();
@@ -88,7 +108,27 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
       VroleInfo,
       function successCallback(callbackdata){
         SinfoService.FaddInfo(callbackdata.message);
-        $scope.MshowMask.createRole = false;
+        $scope.MshowMask.role = false;
+        $scope.FgetRoleList();
+        SdelayService.Fdelay();
+        SinfoService.FstopLoading();
+      },
+      function errorCallback(callbackdata){
+        SinfoService.FaddInfo(callbackdata.data.message);
+        SinfoService.FstopLoading();
+      }
+    );
+  };
+  $scope.FmodifyRole = function(VroleInfo){
+    SinfoService.FstartLoading();
+    SuserService.FmodifyRole($rootScope.Mtoken).put(
+      {
+        'role_id': VroleInfo.role_id,
+      },
+      VroleInfo,
+      function successCallback(callbackdata){
+        SinfoService.FaddInfo(callbackdata.message);
+        $scope.MshowMask.role = false;
         $scope.FgetRoleList();
         SdelayService.Fdelay();
         SinfoService.FstopLoading();
@@ -154,19 +194,39 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
     }
   };
   $scope.FshowUserCreateMask = function(){
-    $scope.McreateUserInfo = {
+    $scope.MuserInfo = {
       'role_id_list': [],
     };
     $scope.Finit();
-    $scope.Fshow($scope.MshowMask, 'createUser');
+    $scope.Fshow($scope.MshowMask, 'user');
+    $scope.MshowButtonCreate = true;
+  };
+  $scope.FshowUserModifyMask = function(VuserInfo){
+    $scope.MuserInfo = VuserInfo;
+    $scope.MuserInfo.role_id_list = [];
+    $scope.Finit();
+    for (var index in VuserInfo.role) {
+      if (VuserInfo.role.hasOwnProperty(index)) {
+        var Vrole_name = VuserInfo.role[index].name;
+        for (var indexs in $scope.MroleInfos) {
+          if ($scope.MroleInfos.hasOwnProperty(indexs)) {
+            if (Vrole_name === $scope.MroleInfos[indexs].role_name) {
+              $scope.MroleSelected[$scope.MroleInfos[indexs].role_id] = true;
+            }
+          }
+        }
+      }
+    }
+    $scope.Fshow($scope.MshowMask, 'user');
+    $scope.MshowButtonCreate = false;
   };
   $scope.FshowRoleCreateMask = function(){
-    $scope.McreateRoleInfo = {
+    $scope.MroleInfo = {
       'privilege_id_list': [],
       'user_id_list': [],
     };
     $scope.Finit();
-    $scope.Fshow($scope.MshowMask, 'createRole');
+    $scope.Fshow($scope.MshowMask, 'role');
   };
 
   $scope.MuserSelected = {};
@@ -183,7 +243,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         }
       }
     }
-    $scope.McreateRoleInfo.user_id_list = userArray;
+    $scope.MroleInfo.user_id_list = userArray;
   };
   $scope.FselectRole = function(Vrole){
     var id = Vrole.role_id;
@@ -196,7 +256,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         }
       }
     }
-    $scope.McreateUserInfo.role_id_list = roleArray;
+    $scope.MuserInfo.role_id_list = roleArray;
   };
   $scope.FselectPrivilege = function(Vprivilege){
     var id = Vprivilege.privilege_id;
@@ -209,12 +269,12 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         }
       }
     }
-    $scope.McreateRoleInfo.privilege_id_list = privilegeArray;
+    $scope.MroleInfo.privilege_id_list = privilegeArray;
   };
   // show & watch
   $scope.MshowMask = {
-    'createUser': false,
-    'createRole': false,
+    'user': false,
+    'role': false,
   };
   $scope.MshowRightCol = {
     'user': true,

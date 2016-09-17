@@ -112,7 +112,6 @@ promise.animation('.loadingNode', function(){
       element.animate(
         {
           'opacity': '0',
-          'top': '-60px',
         },
         300,
         function(){
@@ -128,7 +127,6 @@ promise.animation('.loadingNode', function(){
       element.animate(
         {
           'opacity': '1',
-          'top': '0',
         },
         300
       );

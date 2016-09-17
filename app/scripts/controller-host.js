@@ -24,11 +24,29 @@ promise.controller('Chost', function($scope, $rootScope, $filter){
     $scope.MhostsDatasTd = [];
     for (var index in $rootScope.Mhosts) {
       var tempNode = [];
-      tempNode.push($rootScope.Mhosts[index].hostid);
-      tempNode.push($rootScope.Mhosts[index].interfaces[0].ip);
-      tempNode.push($rootScope.Mhosts[index].host);
-      var groups = $filter('groupsFilter')($rootScope.Mhosts[index].groups);
-      tempNode.push(groups);
+      if ($rootScope.Mhosts[index].hasOwnProperty('id')) {
+        tempNode.push($rootScope.Mhosts[index].id);
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('ip') && $rootScope.Mhosts[index].ip.length > 0) {
+        if ($rootScope.Mhosts[index].ip[0].hasOwnProperty('ip_addr')) {
+          tempNode.push($rootScope.Mhosts[index].ip[0].ip_addr);
+        }
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('name')) {
+        tempNode.push($rootScope.Mhosts[index].name);
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('group')) {
+        var groups = $filter('groupsFilter')($rootScope.Mhosts[index].group);
+        tempNode.push(groups);
+      } else {
+        tempNode.push('');
+      }
       $scope.MhostsDatasTd.push(tempNode);
     }
   };
@@ -39,7 +57,7 @@ promise.controller('Chost', function($scope, $rootScope, $filter){
     var id = node[0];
     for (var index in $rootScope.Mhosts) {
       if ($rootScope.Mhosts.hasOwnProperty(index)) {
-        if (id === $rootScope.Mhosts[index].hostid) {
+        if (id === $rootScope.Mhosts[index].id) {
           $rootScope.MhostsDataHelper = $rootScope.Mhosts[index];
           $rootScope.MshowHelper = true;
           break;

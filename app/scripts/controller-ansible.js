@@ -12,7 +12,7 @@
 var promise = angular.module('promise');
 
 // --------------------------Module---------------------------
-promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, $filter, SscriptService, SwalkerService, SinfoService, SdelayService){
+promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval, $filter, SwalkerService, SinfoService, SdelayService){
   // walker service
   $scope.MinfoWalkerPromise = {};
   $scope.Msuccess = 0;
@@ -104,32 +104,52 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   // hosts data
   $scope.MhostsDatasTh = ['ID','IP','主机名','组'];
   $scope.MhostsDatasTd = [];
-  // $rootScope.MhostsSelected = [];
   $scope.FhostsDatasInit = function(){
     $scope.MhostsDatasTd = [];
     for (var index in $rootScope.Mhosts) {
       var tempNode = [];
-      tempNode.push($rootScope.Mhosts[index].hostid);
-      tempNode.push($rootScope.Mhosts[index].interfaces[0].ip);
-      tempNode.push($rootScope.Mhosts[index].host);
-      var groups = $filter('groupsFilter')($rootScope.Mhosts[index].groups);
-      tempNode.push(groups);
+      if ($rootScope.Mhosts[index].hasOwnProperty('id')) {
+        tempNode.push($rootScope.Mhosts[index].id);
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('ip') && $rootScope.Mhosts[index].ip.length > 0) {
+        if ($rootScope.Mhosts[index].ip[0].hasOwnProperty('ip_addr')) {
+          tempNode.push($rootScope.Mhosts[index].ip[0].ip_addr);
+        }
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('name')) {
+        tempNode.push($rootScope.Mhosts[index].name);
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('group')) {
+        var groups = $filter('groupsFilter')($rootScope.Mhosts[index].group);
+        tempNode.push(groups);
+      } else {
+        tempNode.push('');
+      }
       $scope.MhostsDatasTd.push(tempNode);
     }
   };
 
   // script data
-  $scope.MscriptsDatasTh = ['名称','语言','创建者','创建时间'];
+  $scope.MscriptsDatasTh = ['名称','语言','类型','创建者','创建时间'];
   $scope.MscriptsDatasTd = [];
   $scope.FscriptsDatasInit = function(){
     $scope.MscriptsDatasTd = [];
     for (var index in $rootScope.Mscripts) {
-      var tempNode = [];
-      tempNode.push($rootScope.Mscripts[index].script_name);
-      tempNode.push($rootScope.Mscripts[index].script_lang);
-      tempNode.push($rootScope.Mscripts[index].owner_name);
-      tempNode.push($rootScope.Mscripts[index].time_create);
-      $scope.MscriptsDatasTd.push(tempNode);
+      if ($rootScope.Mscripts[index].script_type === 1) {
+        var tempNode = [];
+        tempNode.push($rootScope.Mscripts[index].script_name);
+        tempNode.push($rootScope.Mscripts[index].script_lang);
+        tempNode.push($filter('scriptTypeFilter')($rootScope.Mscripts[index].script_type));
+        tempNode.push($rootScope.Mscripts[index].owner_name);
+        tempNode.push($rootScope.Mscripts[index].time_create);
+        $scope.MscriptsDatasTd.push(tempNode);
+      }
     }
   };
 
@@ -238,7 +258,7 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
   $scope.MscriptShow = {};
   $scope.MscriptSelected = {};
   $scope.FselectScript = function(Vnode){
-    var Vtime = Vnode[3];
+    var Vtime = Vnode[4];
     for (var index in $rootScope.Mscripts) {
       if ($rootScope.Mscripts.hasOwnProperty(index)) {
         if ($rootScope.Mscripts[index].time_create === Vtime) {
@@ -359,5 +379,5 @@ promise.controller('Cmodule', function($scope, $rootScope, $timeout, $interval, 
 });
 
 // --------------------------Module Helper---------------------------
-promise.controller('CmoduleHelper', function($scope, $rootScope){
+promise.controller('CansibleHelper', function($scope, $rootScope){
 });

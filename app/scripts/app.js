@@ -74,12 +74,20 @@ var promise = angular.module('promise', [
         'dashboardView@network': {templateUrl: 'views/networkDashboard.html'}
       }
     })
-    .state('module', {
-      url: '/module',
+    .state('ansible', {
+      url: '/ansible',
       views: {
         '': {templateUrl: 'views/floor.html'},
-        'helperView@module': {templateUrl: 'views/moduleHelper.html'},
-        'dashboardView@module': {templateUrl: 'views/moduleDashboard.html'}
+        'helperView@ansible': {templateUrl: 'views/ansibleHelper.html'},
+        'dashboardView@ansible': {templateUrl: 'views/ansibleDashboard.html'}
+      }
+    })
+    .state('forward', {
+      url: '/forward',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@forward': {templateUrl: 'views/forwardHelper.html'},
+        'dashboardView@forward': {templateUrl: 'views/forwardDashboard.html'}
       }
     })
     .state('script', {

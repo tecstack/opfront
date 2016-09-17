@@ -13,8 +13,35 @@
         </div>
       </div>
     </div>
-    <div class="threeQuarterCol">
-      <name-card userinfo="Mself"></name-card>
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">数据记录</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">模块调用次数：</div>
+          <div class="toolbarNode"></div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">组件推送次数：</div>
+          <div class="toolbarNode"></div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">审批次数：</div>
+          <div class="toolbarNode"></div>
+        </div>
+      </div>
+    </div>
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">待办事项</div>
+        <div class="toolbar">
+          <div class="toolbarNode toolbarFullNode">Nothing</div>
+        </div>
+      </div>
+    </div>
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">脚本贡献</div>
+      </div>
     </div>
   </div>
 
@@ -31,34 +58,8 @@
         </div>
       </div>
     </div>
-    <div class="thirdCol">
-      <div class="node">
-        <div class="nodeTitle">待办事项</div>
-        <div class="toolbar">
-          <div class="toolbarLabel">待审批：</div>
-          <div class="toolbarNode"></div>
-        </div>
-      </div>
-    </div>
-    <div class="thirdCol">
-      <div class="node">
-        <div class="nodeTitle">数据记录</div>
-        <div class="toolbar">
-          <div class="toolbarLabel">模块调用次数：</div>
-          <div class="toolbarNode"></div>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">组件推送次数：</div>
-          <div class="toolbarNode"></div>
-        </div>
-        <div class="toolbar">
-          <div class="toolbarLabel">审批次数：</div>
-          <div class="toolbarNode"></div>
-        </div>
-      </div>
-      <div class="node">
-        <div class="nodeTitle">脚本贡献</div>
-      </div>
+    <div class="thirdCol" ng-repeat="node in Mtest">
+      <compile data="node"></compile>
     </div>
   </div>
 </div>

@@ -20,7 +20,8 @@
               <tr ng-repeat="script in Mscripts | filter: Mfil" class="scriptNode">
                 <td>{{script.script_name}}</td>
                 <td>{{script.script_lang}}</td>
-                <td>{{script.is_public}}</td>
+                <td>{{script.script_type | scriptTypeFilter}}</td>
+                <td>{{script.is_public | isPublicFilter}}</td>
                 <td>{{script.owner_name}}</td>
                 <td>{{script.time_last_edit | dateFilter}}</td>
                 <td>
@@ -53,7 +54,10 @@
             <div class="toolbar">
               <input type="text" class="toolbarNode" ng-model="Mscript.script_name" placeholder="命名...">
               <select class="toolbarNode" name="" ng-model="MeditorOptions.mode" ng-options="item.value as item.label for item in MlangOptions"></select>
+              <select class="toolbarNode" name="" ng-model="Mscript.script_type" ng-options="item.value as item.label for item in MtypeOptions"></select>
               <select class="toolbarNode" name="" ng-model="Mscript.is_public" ng-options="item.value as item.label for item in MisPublicOptions"></select>
+              <div class="toolbarNode reverse" ng-click="FtemplatePython()">Python模版</div>
+              <div class="toolbarNode reverse" ng-click="FtemplateForward()">Forward模版</div>
             </div>
           </div>
           <div class="tableContent">

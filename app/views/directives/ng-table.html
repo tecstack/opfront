@@ -37,18 +37,27 @@
         </div>
       </div>
     </div>
+    <div class="toolbarNode reverse">共{{MfilterDatas.length}}项</div>
   </div>
 
   <table>
     <tr>
-      <th><input type="checkbox" ng-model="Mall" ng-change="FcheckAll(Mall)"></th>
+      <th><i class="iconfont notCheckAll" ng-class="{checkAll: Mall}" ng-click="FcheckAll()">&#xe63d;</i></th>
       <th ng-repeat="th in Mth">{{th}}</th>
+      <th style="width:150px;">操作</th>
     </tr>
     <tr class="trAnimate" ng-repeat="node in MshowDatas track by $index" ng-click="FtrClick(node)" ng-dbclick="FtrDbClick(node)">
       <td>
         <i class="iconfont" ng-show="node.select">&#xe63d;</i>
       </td>
       <td ng-repeat="td in node track by $index">{{td}}</td>
+      <td>
+        <div class="actionTd" ng-show="MshowAction">
+          <i class="iconfont" ng-click="FmodifyAction(node)">&#xe64b;</i>
+          <i class="iconfont" ng-click="FdeleteAction(node)">&#xe652;</i>
+          <i class="iconfont" ng-click="FhelpAction(node)">&#xe61e;</i>
+        </div>
+      </td>
     </tr>
   </table>
 

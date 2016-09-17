@@ -2,7 +2,7 @@
 'use strict';
 
 var promise = angular.module('promise');
-var VbaseUrl = 'http://192.168.182.3';
+var VbaseUrl = 'http://192.168.182.4';
 var Vversion = 'v0.0';
 var timeout = 30000;
 
@@ -230,6 +230,12 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 		});
 		return VrestApi;
 	};
+	var FmodifyUser = function(Vtoken) {
+		var VrestApi = $resource(VuserUrl, {}, {
+			'put': {method:'PUT', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+		});
+		return VrestApi;
+	};
 	var FdeleteUser = function(Vtoken) {
 		var VrestApi = $resource(VuserUrl, {}, {
 			'delete': {method:'DELETE', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
@@ -246,6 +252,12 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 	var FcreateRole = function(Vtoken) {
 		var VrestApi = $resource(VroleUrl, {}, {
 			'post': {method:'POST', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
+		});
+		return VrestApi;
+	};
+	var FmodifyRole = function(Vtoken) {
+		var VrestApi = $resource(VroleUrl, {}, {
+			'put': {method:'PUT', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}}
 		});
 		return VrestApi;
 	};
@@ -271,36 +283,53 @@ promise.factory('SuserService', function($rootScope, $resource, $cookies, SinfoS
 
 		'FgetUserList': FgetUserList,
 		'FcreateUser': FcreateUser,
+		'FmodifyUser': FmodifyUser,
 		'FdeleteUser': FdeleteUser,
 
 		'FgetRoleList': FgetRoleList,
 		'FcreateRole': FcreateRole,
+		'FmodifyRole': FmodifyRole,
 		'FdeleteRole': FdeleteRole,
 
 		'FgetPrivilegeList': FgetPrivilegeList,
 	};
 });
 
+promise.factory('SeaterService', function($resource){
+	var Vurl = VbaseUrl+'/api/'+Vversion+'/eater/';
 
-promise.factory('ShostService', function($resource){
-	var Vurl = VbaseUrl+'/api/'+Vversion+'/host/';
+	var Fhost = function(Vtoken) {
+		var VhostUrl = Vurl + 'host';
+		var VhostEaterApi = $resource(VhostUrl, {}, {
+			'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+		});
+		return VhostEaterApi;
+	};
 
 	return {
-		'Fhost': function(Vtoken) {
-			// $resource(url, [paramDefaults], [actions], options);
-			var VhostRestApi = $resource(Vurl, {}, {
-				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
-			});
-			return VhostRestApi;
-		},
-		'FhostId': function(Vtoken, VhostId) {
-			var VhostIdRestApi = $resource(Vurl+VhostId, {}, {
-				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
-			});
-			return VhostIdRestApi;
-		},
+		'Fhost': Fhost,
 	};
 });
+
+// promise.factory('ShostService', function($resource){
+// 	var Vurl = VbaseUrl+'/api/'+Vversion+'/host/';
+//
+// 	return {
+// 		'Fhost': function(Vtoken) {
+// 			// $resource(url, [paramDefaults], [actions], options);
+// 			var VhostRestApi = $resource(Vurl, {}, {
+// 				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+// 			});
+// 			return VhostRestApi;
+// 		},
+// 		'FhostId': function(Vtoken, VhostId) {
+// 			var VhostIdRestApi = $resource(Vurl+VhostId, {}, {
+// 				'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+// 			});
+// 			return VhostIdRestApi;
+// 		},
+// 	};
+// });
 
 promise.factory('SscriptService', function($resource){
 	var Vurl = VbaseUrl+'/api/'+Vversion+'/script/';
