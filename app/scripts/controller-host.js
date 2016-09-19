@@ -14,7 +14,7 @@ var promise = angular.module('promise');
 // ------------------------------Host----------------------------
 promise.controller('Chost', function($scope, $rootScope, $filter){
   // 表头
-  $scope.MhostsDatasTh = ['ID','IP','主机名','组'];
+  $scope.MhostsDatasTh = ['ID','IP','主机名','厂家','型号','组'];
   // 展示内容
   $scope.MhostsDatasTd = [];
   // $rootScope.MhostsSelected = [];
@@ -32,12 +32,32 @@ promise.controller('Chost', function($scope, $rootScope, $filter){
       if ($rootScope.Mhosts[index].hasOwnProperty('ip') && $rootScope.Mhosts[index].ip.length > 0) {
         if ($rootScope.Mhosts[index].ip[0].hasOwnProperty('ip_addr')) {
           tempNode.push($rootScope.Mhosts[index].ip[0].ip_addr);
+        } else {
+          tempNode.push('');
         }
       } else {
         tempNode.push('');
       }
       if ($rootScope.Mhosts[index].hasOwnProperty('name')) {
         tempNode.push($rootScope.Mhosts[index].name);
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('model') && $rootScope.Mhosts[index].model.length > 0) {
+        if ($rootScope.Mhosts[index].model[0].hasOwnProperty('vender')) {
+          tempNode.push($rootScope.Mhosts[index].model[0].vender);
+        } else {
+          tempNode.push('');
+        }
+      } else {
+        tempNode.push('');
+      }
+      if ($rootScope.Mhosts[index].hasOwnProperty('model') && $rootScope.Mhosts[index].model.length > 0) {
+        if ($rootScope.Mhosts[index].model[0].hasOwnProperty('name')) {
+          tempNode.push($rootScope.Mhosts[index].model[0].name);
+        } else {
+          tempNode.push('');
+        }
       } else {
         tempNode.push('');
       }

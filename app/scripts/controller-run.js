@@ -44,7 +44,7 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
   $rootScope.FgetHost = function(){
     var vars = {
       'extend': true,
-      'opt': 'id%%name%%group%%ip%%ip_addr',
+      'opt': 'id%%name%%group%%ip%%ip_addr%%model%%vender',
     };
     SinfoService.FstartLoading();
     SeaterService.Fhost($rootScope.Mtoken).get(
