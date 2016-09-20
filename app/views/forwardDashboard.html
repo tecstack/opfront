@@ -47,6 +47,7 @@
           <div class="toolbarIconContent">
             <div class="toolbarNode" ng-click="FshowSelector('scripts')">选取脚本<must></must></div>
             <div class="toolbarNode">{{MscriptShow.script_name}}</div>
+            <input type="text" class="toolbarNode" ng-model="MmoduleSelected.content.params" placeholder="参数">
           </div>
         </div>
         <div ui-codemirror="MeditorOptions.script" ng-model="MscriptShow.script_text" ui-refresh="MscriptShow.script_text"></div>

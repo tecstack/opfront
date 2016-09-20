@@ -19,6 +19,80 @@ var promise = angular.module('promise');
 //   return result;
 // };
 
+// hosts data init filter
+promise.filter('hostsInitFilter', function($filter){
+  return function(input){
+    var output = [];
+    for (var index in input) {
+      var tempNode = [];
+      if (input[index].hasOwnProperty('id')) {
+        tempNode.push(input[index].id);
+      } else {
+        tempNode.push('');
+      }
+      if (input[index].hasOwnProperty('ip') && input[index].ip.length > 0) {
+        if (input[index].ip[0].hasOwnProperty('ip_addr')) {
+          tempNode.push(input[index].ip[0].ip_addr);
+        } else {
+          tempNode.push('');
+        }
+      } else {
+        tempNode.push('');
+      }
+      if (input[index].hasOwnProperty('name')) {
+        tempNode.push(input[index].name);
+      } else {
+        tempNode.push('');
+      }
+      if (input[index].hasOwnProperty('model') && input[index].model.length > 0) {
+        if (input[index].model[0].hasOwnProperty('vender')) {
+          tempNode.push(input[index].model[0].vender);
+        } else {
+          tempNode.push('');
+        }
+      } else {
+        tempNode.push('');
+      }
+      if (input[index].hasOwnProperty('model') && input[index].model.length > 0) {
+        if (input[index].model[0].hasOwnProperty('name')) {
+          tempNode.push(input[index].model[0].name);
+        } else {
+          tempNode.push('');
+        }
+      } else {
+        tempNode.push('');
+      }
+      if (input[index].hasOwnProperty('group')) {
+        var groups = $filter('groupsFilter')(input[index].group);
+        tempNode.push(groups);
+      } else {
+        tempNode.push('');
+      }
+      output.push(tempNode);
+    }
+    return output;
+  };
+});
+
+// scripts data init filter
+promise.filter('scriptsInitFilter', function($filter){
+  return function(input, scriptType){
+    var output = [];
+    for (var index in input) {
+      if (input[index].script_type === scriptType) {
+        var tempNode = [];
+        tempNode.push(input[index].script_name);
+        tempNode.push(input[index].script_lang);
+        tempNode.push($filter('scriptTypeFilter')(input[index].script_type));
+        tempNode.push(input[index].owner_name);
+        tempNode.push(input[index].time_create);
+        output.push(tempNode);
+      }
+    }
+    return output;
+  };
+});
+
 // script_type filter: 1->ansible 2->Forward
 promise.filter('scriptTypeFilter', function(){
   return function(input){

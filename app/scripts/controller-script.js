@@ -37,7 +37,7 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
     lineWrapping : false,
     mode: 'python',
   };
-  $scope.MpythonTemplate = '#!/usr/bin/env python\r#coding:utf-8\r\r#--------------------------------\r# Name:\r# Purpose:\r# Author:\r# Created:\r#--------------------------------\r\r# Module Import\r\r# Define\r\r# Main\rif __name__ == "__main__":\r    return 1';
+  $scope.MpythonTemplate = '#!/usr/bin/env python\r#coding:utf-8\r\r#--------------------------------\r# Name:\r# Purpose:\r# Author:\r# Created:\r#--------------------------------\r\r# Module Import\r\r# Define\r\r# Main\rif __name__ == "__main__":\r    print 1';
   $scope.MforwardTemplate = '#!/usr/bin/env python\r#coding:utf-8\r\r#--------------------------------\r# Name:\r# Purpose:\r# Author:\r# Created:\r#--------------------------------\r\r# forard node input\r#--------------------------------\r# nodeInput = {\r#     \'instance\':{\r#         \'172.17.0.2\' : classInstanceA,\r#         \'192.168.100.100\' : classInstanceB\r#     },\r#     \'parameters\': <Which you define in your privateConf>\r# }\r#--------------------------------\r\r# Module Import\r\r# Define\r\r# Node Main\rdef node(nodeInput):\r    # init njInfo\r    njInfo = {\r        \'status\':True,\r        \'errLog\':\'\',\r        \'content\':{}\r    }\r    # Your code\r    \r    return njInfo';
 
   // 接口服务

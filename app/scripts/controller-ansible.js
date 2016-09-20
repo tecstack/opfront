@@ -105,76 +105,17 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
   $scope.MhostsDatasTh = ['ID','IP','主机名','厂家','型号','组'];
   $scope.MhostsDatasTd = [];
   $scope.FhostsDatasInit = function(){
-    $scope.MhostsDatasTd = [];
-    for (var index in $rootScope.Mhosts) {
-      var tempNode = [];
-      if ($rootScope.Mhosts[index].hasOwnProperty('id')) {
-        tempNode.push($rootScope.Mhosts[index].id);
-      } else {
-        tempNode.push('');
-      }
-      if ($rootScope.Mhosts[index].hasOwnProperty('ip') && $rootScope.Mhosts[index].ip.length > 0) {
-        if ($rootScope.Mhosts[index].ip[0].hasOwnProperty('ip_addr')) {
-          tempNode.push($rootScope.Mhosts[index].ip[0].ip_addr);
-        } else {
-          tempNode.push('');
-        }
-      } else {
-        tempNode.push('');
-      }
-      if ($rootScope.Mhosts[index].hasOwnProperty('name')) {
-        tempNode.push($rootScope.Mhosts[index].name);
-      } else {
-        tempNode.push('');
-      }
-      if ($rootScope.Mhosts[index].hasOwnProperty('model') && $rootScope.Mhosts[index].model.length > 0) {
-        if ($rootScope.Mhosts[index].model[0].hasOwnProperty('vender')) {
-          tempNode.push($rootScope.Mhosts[index].model[0].vender);
-        } else {
-          tempNode.push('');
-        }
-      } else {
-        tempNode.push('');
-      }
-      if ($rootScope.Mhosts[index].hasOwnProperty('model') && $rootScope.Mhosts[index].model.length > 0) {
-        if ($rootScope.Mhosts[index].model[0].hasOwnProperty('name')) {
-          tempNode.push($rootScope.Mhosts[index].model[0].name);
-        } else {
-          tempNode.push('');
-        }
-      } else {
-        tempNode.push('');
-      }
-      if ($rootScope.Mhosts[index].hasOwnProperty('group')) {
-        var groups = $filter('groupsFilter')($rootScope.Mhosts[index].group);
-        tempNode.push(groups);
-      } else {
-        tempNode.push('');
-      }
-      $scope.MhostsDatasTd.push(tempNode);
-    }
+    $scope.MhostsDatasTd = $filter('hostsInitFilter')($rootScope.Mhosts);
   };
 
   // script data
   $scope.MscriptsDatasTh = ['名称','语言','类型','创建者','创建时间'];
   $scope.MscriptsDatasTd = [];
   $scope.FscriptsDatasInit = function(){
-    $scope.MscriptsDatasTd = [];
-    for (var index in $rootScope.Mscripts) {
-      if ($rootScope.Mscripts[index].script_type === 1) {
-        var tempNode = [];
-        tempNode.push($rootScope.Mscripts[index].script_name);
-        tempNode.push($rootScope.Mscripts[index].script_lang);
-        tempNode.push($filter('scriptTypeFilter')($rootScope.Mscripts[index].script_type));
-        tempNode.push($rootScope.Mscripts[index].owner_name);
-        tempNode.push($rootScope.Mscripts[index].time_create);
-        $scope.MscriptsDatasTd.push(tempNode);
-      }
-    }
+    $scope.MscriptsDatasTd = $filter('scriptsInitFilter')($rootScope.Mscripts, 1);
   };
 
   // Code Mirror
-  $scope.Meditor = {};
   $scope.MeditorOptions = {
     'shell': {
       lineNumbers: true,
@@ -183,8 +124,7 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
       lineWrapping : false,
       mode: 'shell',
       onLoad: function(_cm){
-        $scope.Meditor.shell = _cm;
-        $scope.Meditor.shell.setSize(null, '65px');
+        _cm.setSize(null, '65px');
       },
     },
     'script': {
@@ -194,8 +134,7 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
       lineWrapping : false,
       mode: 'python',
       onLoad: function(_cm){
-        $scope.Meditor.script = _cm;
-        $scope.Meditor.script.setSize(null, '300px');
+        _cm.setSize(null, '300px');
       },
     },
     'executor': {
@@ -205,8 +144,7 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
       lineWrapping : false,
       mode: 'shell',
       onLoad: function(_cm){
-        $scope.Meditor.executor = _cm;
-        $scope.Meditor.executor.setSize(null, '500px');
+        _cm.setSize(null, '500px');
       },
     },
   };
@@ -228,7 +166,7 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
         }
       }
     }
-    $scope.MscriptSelected = {'scriptid': ''};
+    $scope.MscriptSelected = {'scriptid': '', 'params': ''};
     $scope.MshellSelected = {'shell': ''};
     $scope.MscriptShow = {};
     if (Vmodule === 'shell') {
@@ -253,10 +191,10 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
   // Go
   $scope.MosuserOptions = [
     {'label':'选取执行用户', 'value':''},
-    {'label':'ROOT执行', 'value':'root'},
+    // {'label':'ROOT执行', 'value':'root'},
     {'label':'Admin执行', 'value':'admin'},
   ];
-  $scope.Mosuser = 'root';
+  $scope.Mosuser = 'admin';
 
   // Hosts Selector
   $scope.MhostsSelected = [];
@@ -284,6 +222,7 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
         if ($rootScope.Mscripts[index].time_create === Vtime) {
           $scope.MscriptShow = $rootScope.Mscripts[index];
           $scope.MscriptSelected.scriptid = $scope.MscriptShow.script_id;
+          $scope.MscriptSelected.params = '';
           $scope.MeditorOptions.script.mode = $scope.MscriptShow.script_lang;
           $scope.MshowSelector.scripts = false;
           break;
