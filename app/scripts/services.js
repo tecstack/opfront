@@ -60,10 +60,10 @@ promise.factory('SinfoService', function($rootScope, $timeout){
 	  );
 	};
 	var FstartLoading = function(){
-		$rootScope.MshowNavLoading = true;
+		$rootScope.MloadingMissions += 1;
 	};
 	var FstopLoading = function(){
-		$rootScope.MshowNavLoading = false;
+		$rootScope.MloadingMissions = ($rootScope.MloadingMissions <= 0) ? 0 : $rootScope.MloadingMissions-1;
 	};
 	return {
 		'FaddInfo': FaddInfo,
@@ -306,9 +306,18 @@ promise.factory('SeaterService', function($resource){
 		});
 		return VhostEaterApi;
 	};
+	var FhostSync = function(Vtoken) {
+		var VhostUrl = Vurl + 'hostsync';
+		var VhostEaterApi = $resource(VhostUrl, {}, {
+			'post': {method:'POST', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Content-Type': 'application/json'}},
+			'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+		});
+		return VhostEaterApi;
+	};
 
 	return {
 		'Fhost': Fhost,
+		'FhostSync': FhostSync,
 	};
 });
 

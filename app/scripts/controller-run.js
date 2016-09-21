@@ -24,6 +24,7 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
   // 消息队列，用于消息区临时提示
   $rootScope.Minfos = [];
   $rootScope.MinfosHistory = [];
+  $rootScope.MloadingMissions = 0;
 
   // 自定义面板配置
   $rootScope.Mtest = [
@@ -62,26 +63,29 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
       }
     );
   };
-
-  // 主机信息服务
-  // $rootScope.FgetHost = function(){
-  //   var vars = {};
-  //   SinfoService.FstartLoading();
-  //   ShostService.Fhost($rootScope.Mtoken).get(
-  //     vars,
-  //     function successCallback(callbackdata){
-  //       $rootScope.Mhosts = callbackdata.data;
-  //       $rootScope.MhostsNum = $rootScope.Mhosts.length;
-  //       SinfoService.FstopLoading();
-  //       SinfoService.FaddInfo('已同步' + $rootScope.MhostsNum + '条主机信息');
-  //       SdelayService.Fdelay();
-  //     },
-  //     function errorCallback(callbackdata){
-  //       SinfoService.FstopLoading();
-  //       SinfoService.FaddInfo('获取主机信息失败:' + callbackdata.message);
-  //     }
-  //   );
-  // };
+  // Eater host sync服务
+  $rootScope.FhostSync = function(){
+    var vars = {};
+    SinfoService.FstartLoading();
+    SeaterService.FhostSync($rootScope.Mtoken).post(
+      vars,
+      {},
+      function successCallback(callbackdata){},
+      function errorCallback(callbackdata){}
+    );
+  };
+  $rootScope.FinfoHostSync = function(){
+    var vars = {
+      
+    };
+    SinfoService.FstartLoading();
+    SeaterService.FhostSync($rootScope.Mtoken).post(
+      vars,
+      {},
+      function successCallback(callbackdata){},
+      function errorCallback(callbackdata){}
+    );
+  };
 
   // 脚本信息服务
   $rootScope.FgetScriptList = function(){
@@ -135,6 +139,13 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
   // 监控区
   $rootScope.$watch('MisSign', function(newValue, oldValue){
     $rootScope.MshowSign = !$rootScope.MisSign;
+  });
+  $rootScope.$watch('MloadingMissions', function(newValue, oldValue){
+    if (newValue > 0) {
+      $rootScope.MshowNavLoading = true;
+    } else {
+      $rootScope.MshowNavLoading = false;
+    }
   });
 
   // 销毁区
