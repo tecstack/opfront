@@ -1,0 +1,119 @@
+<div ng-controller="Cui">
+
+  <div class="row">
+    <div class="fullCol">
+      <div class="node">
+        <div class="nodeTitle">长整行</div>
+        <canvas class="chartBar" data="MbarDatas" style="width:100%; height:100px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="thirdCol">
+      <div class="node">
+        <div class="nodeTitle">图表</div>
+        <canvas class="chartLine full" data="indexDataLine"></canvas>
+      </div>
+    </div>
+    <div class="thirdCol">
+      <div class="node" style="background:url('images/uibg.jpg');background-size:100% 100%;height:246px;">
+        <div class="nodeTitle">图片</div>
+        <div class="textContent">Promise是移动云南方基地运维团队自主研发的自动运维平台</div>
+      </div>
+    </div>
+    <div class="thirdCol">
+      <div class="node">
+        <div class="nodeTitle">进度条</div>
+        <div class="progressbar" option="pro.xiaomin" style="margin-bottom: 5px;"></div>
+        <div class="progressbar" option="pro.xiaoan" style="margin-bottom: 5px;"></div>
+        <div class="progressbar" option="pro.xiaomei"></div>
+      </div>
+      <div class="node">
+        <div class="nodeTitle">进度条</div>
+        <div class="progressbar" option="pro.ant"></div>
+        <div class="nodeBottom">页脚</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="halfCol">
+      <div class="node">
+        <div class="nodeTitle">表单</div>
+        <div class="toolbar signBar">
+          <div class="toolbarNode"><i class="iconfont">&#xe636;</i></div>
+          <input class="toolbarNode" type="text" placeholder="用户名">
+        </div>
+        <div class="toolbar signBar">
+          <div class="toolbarNode"><i class="iconfont">&#xe61b;</i></div>
+          <input class="toolbarNode" type="password" placeholder="密码">
+        </div>
+        <div class="toolbar signBar">
+          <div class="toolbarNode"><input type="checkbox">保持登录</div>
+          <div class="toolbarNode">登录</div>
+          <div class="toolbarNode">注册</div>
+        </div>
+      </div>
+      <div class="node">
+        <div class="nodeTitle">文本</div>
+        <div class="tableContent">文本区内容</div>
+      </div>
+    </div>
+    <div class="halfCol">
+      <div class="node">
+        <div class="nodeTitle">表格</div>
+        <div class="toolbar">
+          <div class="toolbarNode">工具箱</div>
+          <select class="toolbarNode" ng-model="MscriptContent.osuser" ng-options="item.value as item.label for item in MuserOptions"></select>
+          <input class="toolbarNode" type="text" placeholder="检索...">
+          <div class="toolbarNode"><i class="iconfont">&#xe629;</i></div>
+        </div>
+        <table>
+          <tr>
+            <th ng-repeat="data in tableDataTh">{{data}}</th>
+          </tr>
+          <tr ng-repeat="tr in tableData">
+            <td ng-repeat="td in tr track by $index">{{td}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">选择器</div>
+        <div class="toolbar">
+          <div class="toolbarLabel">请选择模块<must></must>：</div>
+          <div class="toolbarNode">选取模块</div>
+        </div>
+        <div class="toolbar">
+          <div class="toolbarLabel">已选信息：</div>
+          <div class="toolbarContent">
+            <div class="toolbar"><div class="toolbarNode">模块: file</div></div>
+            <div class="toolbar"><div class="toolbarNode">执行用户: ROOT</div></div>
+            <div class="toolbar"><div class="toolbarNode">内容: /apps/svr</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">四分格</div>
+      </div>
+    </div>
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">四分格</div>
+      </div>
+    </div>
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">四分格</div>
+      </div>
+    </div>
+  </div>
+
+</div>

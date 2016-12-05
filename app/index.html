@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" ng-app="helloworldApp">
+<html class="no-js" ng-app="promise">
   <head>
     <meta charset="utf-8">
     <title></title>
@@ -8,11 +8,14 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="styles/dashboard-test.css">
+    <link rel="stylesheet" href="styles/promise-opfront.css">
+    <link rel="stylesheet" href="styles/promise-opfront-fan.css">
+    <link rel="stylesheet" href="styles/codemirror/monokai.css" />
+    <link rel="stylesheet" href="styles/codemirror/dracula.css" />
     <!-- endbuild -->
   </head>
   <body>
@@ -21,25 +24,44 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-base64/angular-base64.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/codemirror/lib/codemirror.js"></script>
+    <script src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/chartjs/Chart.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers.js"></script>
+    <script src="scripts/controller-run.js"></script>
+    <script src="scripts/controller-floor.js"></script>
+    <script src="scripts/controller-index.js"></script>
+    <script src="scripts/controller-ui.js"></script>
+    <script src="scripts/controller-host.js"></script>
+    <script src="scripts/controller-script.js"></script>
+    <script src="scripts/controller-ansible.js"></script>
+    <script src="scripts/controller-forward.js"></script>
+    <script src="scripts/controller-network.js"></script>
+    <script src="scripts/controller-setting.js"></script>
+    <script src="scripts/controller-user.js"></script>
+    <script src="scripts/controller-fan.js"></script>
     <script src="scripts/animations.js"></script>
     <script src="scripts/filters.js"></script>
     <script src="scripts/services.js"></script>
     <script src="scripts/directives.js"></script>
+    <script src="scripts/animations-fan.js"></script>
+    <script src="scripts/filters-fan.js"></script>
+    <script src="scripts/services-fan.js"></script>
+    <script src="scripts/directives-fan.js"></script>
+    <script src="scripts/codemirror/python.js"></script>
+    <script src="scripts/codemirror/shell.js"></script>
     <!-- endbuild -->
 </body>
 </html>

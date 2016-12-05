@@ -1,0 +1,372 @@
+/* css example */
+/* .example { */
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+/* } */
+
+/* Global */
+body {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	margin: 0;
+	padding: 0;
+
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft YaHei", "微软雅黑";
+
+	/* visual: background / color / transition / list-style / shadows / ... */
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Promise组件样式 */
+.navbar {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: block;
+	overflow-x: hidden;
+	overflow-y: visible;
+
+	/* box model: border / margin / padding / width / height / ... */
+	width: 100%;
+	height: 50px;
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	padding: 0;
+
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+
+.sidebar {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 50px;
+	bottom: 0;
+	left: 0;
+	display: block;
+	overflow-x: visible;
+	overflow-y: hidden;
+
+	/* box model: border / margin / padding / width / height / ... */
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	padding: 0px;
+
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+
+.helper {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: fixed;
+	top: 50px;
+	bottom: 0;
+	right: 0;
+	display: block;
+	overflow-x: visible;
+	overflow-y: auto;
+
+	/* box model: border / margin / padding / width / height / ... */
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	padding: 5px;
+
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+
+.dashboard {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	position: relative;
+	display: block;
+
+	/* box model: border / margin / padding / width / height / ... */
+	border: 0;
+	border-radius: 0;
+	padding: 0;
+
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+}
+
+.logo {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	display: inline-block;
+	float: left;
+
+	/* box model: border / margin / padding / width / height / ... */
+	border: 0;
+	margin: 0;
+	padding: 0;
+
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	font-family: "Bradley Hand ITC";
+	font-size: 40px;
+	font-weight: 900;
+	line-height: 50px;
+	text-align: center;
+
+	/* visual: background / color / transition / list-style / shadows / ... */
+	color: #FFFFFF;
+}
+.logo > a {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+
+	/*display: block;
+	margin: 0;*/
+	color: #FFFFFF;
+	/*text-decoration:none;*/
+}
+.logo > a:hover {
+	color: #FF9900;
+}
+
+.navbar-ul {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	margin: 0 10px;
+	float: right;
+}
+.navbar-ul > li > a {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	padding: 10px 10px;
+	font-size: 30px;
+	color: #FFFFFF;
+}
+.navbar-ul > li > a:hover {
+	background-color: transparent;
+	color: #FF9900;
+}
+
+.nav-sidebar > li > a {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	font-size: 20px;
+	font-weight: 600;
+	color: #30363D;
+	padding-right: 30px;
+	padding-left: 40px;
+}
+.nav-sidebar > li > a:hover {
+	color: #FF9900;
+	background-color: transparent;
+}
+
+.line {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+  max-width: 100%;
+  height: 1px;
+  margin: 10px 12px;
+  overflow: hidden;
+  font-size: 0;
+  background-color: #2e3344;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.helper-div > .panel > h4 {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	font-weight: 600;
+	padding: 0 10px;
+}
+
+.helper-div > .panel > ul {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	padding: 0 5px;
+}
+
+.helper-div > .panel > ul > li {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	list-style-type:none;
+	border: 1px solid #2e3344;
+	border-width: 0 0 1px 0;
+	padding: 5px;
+}
+
+.dashboard-navbar {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	width: 100%;
+	height: 60px;
+	display: block;
+}
+
+.dashboard-navbar > ul > li {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	float: left;
+	text-align: center;
+	font-size: 15px;
+	margin: 5px 5px 5px 0;
+	width: 100px;
+	height: 50px;
+	line-height: 50px;
+}
+
+.dashboard-navbar > ul > li:hover {
+	background-color: #FF9900;
+}
+
+.userboard {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.mask {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	z-index: 9998;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.4;
+}
+
+.signin {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	z-index: 9999;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	height: 260px;
+	margin: -130px 0 0 -200px;
+	background: #fff;
+}
+
+.signup {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	z-index: 10000;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 600px;
+	height: 400px;
+	margin: -200px 0 0 -300px;
+	background: #fff;
+}
+
+.sign-title {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	padding: 12px 15px;
+	font-size: 20px;
+}
+
+.sign-panel {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	padding: 30px 15px;
+	font-size: 20px;
+}
+
+/* 位置样式 */
+.window-full {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	z-index: 9998;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.full {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	width: 100%;
+	height: 100%;
+}
+
+.button-close {
+	/* formatting model: position / top / right / bottom / left / float / display / overflow / ... */
+	/* box model: border / margin / padding / width / height / ... */
+	/* typographic: font / line-height / text-align / word-wrap / ... */
+	/* visual: background / color / transition / list-style / shadows / ... */
+	position: absolute;
+	right: 6px;
+	top: 6px;
+}
+.button-close:hover {
+	background-color: #3a3f51;
+ 	color: #FFFFFF;
+}
+
+/* 边框样式 */
+.shadow {
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05), 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+.b-l-black {
+	border-left: 1px solid #2e3344;
+}
+
+.b-r-black {
+	border-right: 1px solid #2e3344;
+}
+
+/* 背景样式 */
+.bg-dark {
+	background-color: #30363D;
+}
+
+.bg-white {
+	background-color: #ffffff;
+}

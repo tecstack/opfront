@@ -1,0 +1,70 @@
+<div class="ngTable">
+  <div class="toolbar">
+    <div class="toolbarNode dropDown" show="MshowMppBox">
+      每页{{Mpp}}项&nbsp;&nbsp;<i class="iconfont">&#xe650;</i>
+      <div class="dropDownBox" style="width:270px;">
+        <div class="toolbar">
+          <input type="text" class="toolbarNode" placeholder="Num per page..." ng-model="MppNode" ng-keyup="FupdateMppEnter($event, MppNode)">
+          <div class="toolbarNode" ng-click="FupdateMpp(MppNode)">确定</div>
+        </div>
+      </div>
+    </div>
+    <div class="toolbarNode dropDown" show="MshowMfilBox">
+      <i class="iconfont">&#xe633;</i>
+      <div class="dropDownBox" style="width:270px;">
+        <div class="toolbar">
+          <input type="text" class="toolbarNode" placeholder="Search..." ng-model="Mfil" ng-keyup="FupdateMfilEnter($event)">
+          <div class="toolbarNode" ng-click="FupdateMfil()">确定</div>
+        </div>
+      </div>
+    </div>
+    <div class="toolbarNode" ng-click="FrefreshAction()">
+      <i class="iconfont">&#xe63a;</i>
+    </div>
+    <div class="toolbarNode" ng-click="FnewAction()">
+      <i class="iconfont">&#xe623;</i>
+    </div>
+    <div class="toolbarNode reverse" ng-click="FchangePage(Mpages)">&gt;|</div>
+    <div class="toolbarNode reverse" ng-click="FchangePage(Mpage+1)">&gt;</div>
+    <div class="toolbarNode reverse" ng-click="FchangePage(Mpage-1)">&lt;</div>
+    <div class="toolbarNode reverse" ng-click="FchangePage(1)">|&lt;</div>
+    <div class="toolbarNode reverse dropDown" show="MshowMpageBox">
+      当前：{{Mpage}}/{{Mpages}}&nbsp;&nbsp;<i class="iconfont">&#xe650;
+      <div class="dropDownBox" style="width:270px;">
+        <div class="toolbar">
+          <input class="toolbarNode" type="text" ng-model="MpageNode" placeholder="" ng-keyup="FupdateMpageEnter($event, MpageNode)">
+          <div class="toolbarNode" ng-click="FupdateMpage(MpageNode)">确定</div>
+        </div>
+      </div>
+    </div>
+    <div class="toolbarNode reverse">共{{MfilterDatas.length}}项</div>
+  </div>
+
+  <table>
+    <tr>
+      <th><i class="iconfont notCheckAll" ng-class="{checkAll: Mall}" ng-click="FcheckAll()">&#xe63d;</i></th>
+      <th ng-repeat="th in Mth">{{th}}</th>
+      <th style="width:150px;">操作</th>
+    </tr>
+    <tr class="trAnimate" ng-repeat="node in MshowDatas track by $index" ng-click="FtrClick(node)" ng-dbclick="FtrDbClick(node)">
+      <td>
+        <i class="iconfont" ng-show="node.select">&#xe63d;</i>
+      </td>
+      <td ng-repeat="td in node track by $index">{{td}}</td>
+      <td>
+        <div class="actionTd" ng-show="MshowAction">
+          <i class="iconfont" ng-click="FmodifyAction(node)">&#xe64b;</i>
+          <i class="iconfont" ng-click="FdeleteAction(node)">&#xe652;</i>
+          <i class="iconfont" ng-click="FhelpAction(node)">&#xe61e;</i>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div class="toolbar">
+    <div class="toolbarNode reverse" ng-click="FchangePage(Mpages)">&gt;|</div>
+    <div class="toolbarNode reverse" ng-click="FchangePage(Mpage+1)">&gt;</div>
+    <div class="toolbarNode reverse" ng-click="FchangePage(Mpage-1)">&lt;</div>
+    <div class="toolbarNode reverse" ng-click="FchangePage(1)">|&lt;</div>
+  </div>
+</div>

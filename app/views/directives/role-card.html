@@ -1,0 +1,32 @@
+<div class="node roleCard">
+  <div class="roleCardLeft">
+    <div class="roleCardLeftPortrait"></div>
+    <div class="roleCardLeftName">{{MroleInfo.role_name}}</div>
+    <div class="roleCardLeftName">{{MroleInfo.description}}</div>
+  </div>
+  <div class="roleCardRight">
+    <div class="tableContent">
+      <div class="nodeTitle">拥有权限</div>
+      <div class="toolbar">
+        <div class="toolbarNode" ng-repeat="privilege in MroleInfo.privilege">{{privilege.privilege_name}}</div>
+      </div>
+    </div>
+    <div class="tableContent">
+      <div class="nodeTitle">用户群</div>
+      <div class="toolbar">
+        <div class="roleCardUserNode" ng-repeat="user in MroleInfo.user">
+          <div class="roleCardUserNodePortrait"></div>
+          <div class="roleCardUserNodeName">{{user.username}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nameCardCloseBox">
+    <i class="iconfont nameCardConfirm" ng-show="!MshowDelete" ng-click="FmodifyRole()">&#xe64b;</i>
+    <i class="iconfont nameCardConfirm" ng-show="!MshowDelete" ng-click="MshowDelete = true;">&#xe69d;</i>
+    <div ng-show="MshowDelete">
+      <a class="nameCardConfirm" href="" ng-click="FdeleteUser()">确认删除</a>
+      <a class="nameCardConfirm" href="" ng-click="MshowDelete = false;">取消</a>
+    </div>
+  </div>
+</div>

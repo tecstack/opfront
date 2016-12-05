@@ -1,155 +1,101 @@
+/*jshint jquery: true, unused: false, undef:false*/
 'use strict';
 
 /**
  * @ngdoc overview
- * @name helloworldApp
+ * @name promise
  * @description
- * # helloworldApp
+ * # promise
  *
  * Main module of the application.
  */
 
-var helloworldApp = angular.module('helloworldApp', [
+var promise = angular.module('promise', [
     'ngAnimate',
     'ngCookies',
     'ngMessages',
     'ngResource',
     'ui.router',
+    'base64',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.codemirror'
   ]);
 
-
-helloworldApp.config(function($stateProvider, $urlRouterProvider) {
+  promise.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
     $stateProvider
-        // 首页路由加载配置
-        .state('index', {
-            url: '/',
-            views: {
-                '': {
-                    templateUrl: 'views/floor.html'
-                },
-                'navbar@index': {
-                    templateUrl: 'views/navbar.html'
-                },
-                'sidebar@index': {
-                    templateUrl: 'views/sidebar.html'
-                },
-                'dashboard-left@index': {
-                    templateUrl: 'views/left-main.html'
-                },
-                'helper@index': {
-                    templateUrl: 'views/left-about.html'
-                }
-            }
-        })
-        // UI展示页路由加载配置
-        .state('ui', {
-            url: '/ui',
-            views: {
-                '': {
-                    templateUrl: 'views/floor.html'
-                },
-                'navbar@ui': {
-                    templateUrl: 'views/navbar.html'
-                },
-                'sidebar@ui': {
-                    templateUrl: 'views/sidebar.html'
-                },
-                'dashboard-left@ui': {
-                    templateUrl: 'views/left-ui.html'
-                },
-                'helper@ui': {
-                    templateUrl: 'views/right-ui.html'
-                }
-            }
-        })
-        // angularjs实验区路由加载配置
-        .state('nglab', {
-            url: '/nglab',
-            views: {
-                '': {
-                    templateUrl: 'views/floor.html'
-                },
-                'navbar@nglab': {
-                    templateUrl: 'views/navbar.html'
-                },
-                'sidebar@nglab': {
-                    templateUrl: 'views/sidebar.html'
-                },
-                'dashboard-left@nglab': {
-                    templateUrl: 'views/left-nglab.html'
-                },
-                'helper@nglab': {
-                    templateUrl: 'views/right-docker.html'
-                }
-            }
-        })
-        // blog测试页路由加载配置
-        .state('blog', {
-            url: '/blog',
-            views: {
-                '': {
-                    templateUrl: 'views/floor.html'
-                },
-                'navbar@blog': {
-                    templateUrl: 'views/navbar.html'
-                },
-                'sidebar@blog': {
-                    templateUrl: 'views/sidebar.html'
-                },
-                'dashboard-left@blog': {
-                    templateUrl: 'views/left-blog.html'
-                },
-                'helper@blog': {
-                    templateUrl: 'views/left-about.html'
-                }
-            }
-        })
-        // 云主机检视测试页路由加载配置
-        .state('docker', {
-            url: '/docker',
-            views: {
-                '': {
-                    templateUrl: 'views/floor.html'
-                },
-                'navbar@docker': {
-                    templateUrl: 'views/navbar.html'
-                },
-                'sidebar@docker': {
-                    templateUrl: 'views/sidebar.html'
-                },
-                'dashboard-left@docker': {
-                    templateUrl: 'views/left-docker.html'
-                },
-                'helper@docker': {
-                    templateUrl: 'views/right-docker.html'
-                }
-            }
-        })
-        // 介绍页路由加载配置
-        .state('about', {
-            url: '/about',
-            views: {
-                '': {
-                    templateUrl: 'views/floor.html'
-                },
-                'navbar@about': {
-                    templateUrl: 'views/navbar.html'
-                },
-                'sidebar@about': {
-                    templateUrl: 'views/sidebar.html'
-                },
-                'dashboard-left@about': {
-                    templateUrl: 'views/left-about.html'
-                },
-                'helper@about': {
-                    templateUrl: 'views/left-about.html'
-                }
-            }
-        })
-
-
-});
-
+      // 首页路由加载配置
+    .state('index', {
+      url: '/',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@index': {templateUrl: 'views/indexHelper.html'},
+        'dashboardView@index': {templateUrl: 'views/indexDashboard.html'}
+      }
+    })
+    .state('ui', {
+      url: '/ui',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@ui': {templateUrl: 'views/uiHelper.html'},
+        'dashboardView@ui': {templateUrl: 'views/uiDashboard.html'}
+      }
+    })
+    .state('user', {
+      url: '/user',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@user': {templateUrl: 'views/userHelper.html'},
+        'dashboardView@user': {templateUrl: 'views/userDashboard.html'}
+      }
+    })
+    .state('setting', {
+      url: '/setting',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@setting': {templateUrl: 'views/settingHelper.html'},
+        'dashboardView@setting': {templateUrl: 'views/settingDashboard.html'}
+      }
+    })
+    .state('host', {
+      url: '/host',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@host': {templateUrl: 'views/hostHelper.html'},
+        'dashboardView@host': {templateUrl: 'views/hostDashboard.html'}
+      }
+    })
+    .state('network', {
+      url: '/network',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@network': {templateUrl: 'views/networkHelper.html'},
+        'dashboardView@network': {templateUrl: 'views/networkDashboard.html'}
+      }
+    })
+    .state('ansible', {
+      url: '/ansible',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@ansible': {templateUrl: 'views/ansibleHelper.html'},
+        'dashboardView@ansible': {templateUrl: 'views/ansibleDashboard.html'}
+      }
+    })
+    .state('forward', {
+      url: '/forward',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@forward': {templateUrl: 'views/forwardHelper.html'},
+        'dashboardView@forward': {templateUrl: 'views/forwardDashboard.html'}
+      }
+    })
+    .state('script', {
+      url: '/script',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@script': {templateUrl: 'views/scriptHelper.html'},
+        'dashboardView@script': {templateUrl: 'views/scriptDashboard.html'}
+      }
+    });
+  });

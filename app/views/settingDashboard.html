@@ -1,0 +1,189 @@
+<div ng-controller="Csetting">
+  <div class="row">
+    <div class="quarterCol">
+      <div class="node">
+        <div class="nodeTitle">用户管理</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarIcon">
+              <i class="iconfont toolbarNode">&#xe647;</i>
+            </div>
+            <div class="toolbarIconContent">
+              <div class="toolbarNode toolbarFullNode" ng-click="Fshow(MshowRightCol, 'user')">查看用户</div>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbarIcon">
+              <i class="iconfont toolbarNode">&#xe637;</i>
+            </div>
+            <div class="toolbarIconContent">
+              <div class="toolbarNode toolbarFullNode" ng-click="FshowUserCreateMask()">新增用户</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="node">
+        <div class="nodeTitle">角色管理</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarIcon">
+              <i class="iconfont toolbarNode">&#xe602;</i>
+            </div>
+            <div class="toolbarIconContent">
+              <div class="toolbarNode toolbarFullNode" ng-click="Fshow(MshowRightCol, 'role')">查看角色</div>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbarIcon">
+              <i class="iconfont toolbarNode">&#xe637;</i>
+            </div>
+            <div class="toolbarIconContent">
+              <div class="toolbarNode toolbarFullNode" ng-click="FshowRoleCreateMask()">新增角色</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="node">
+        <div class="nodeTitle">权限管理</div>
+        <div class="tableContent">
+          <div class="toolbar">
+            <div class="toolbarIcon">
+              <i class="iconfont toolbarNode">&#xe620;</i>
+            </div>
+            <div class="toolbarIconContent">
+              <div class="toolbarNode toolbarFullNode" ng-click="Fshow(MshowRightCol, 'privilege')">查看权限</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="threeQuarterCol">
+      <div ng-show="MshowRightCol.user">
+        <div class="node">
+          <i class="iconfont toolbarNode">&#xe633;</i>
+          <input type="text" class="toolbarNode" placeholder="Search User.." ng-model="MuserFilter">
+        </div>
+        <name-card ng-repeat="user in MuserInfos | filter:MuserFilter" userinfo="user" modify="FshowUserModifyMask" delete="FdeleteUser"></name-card>
+      </div>
+
+      <div ng-show="MshowRightCol.role">
+        <div class="node">
+          <i class="iconfont toolbarNode">&#xe633;</i>
+          <input type="text" class="toolbarNode" placeholder="Search Role.." ng-model="MroleFilter">
+        </div>
+        <role-card ng-repeat="role in MroleInfos | filter:MroleFilter" roleinfo="role" delete="FdeleteRole"></role-card>
+      </div>
+
+      <div ng-show="MshowRightCol.privilege">
+        <div class="node">
+          <i class="iconfont toolbarNode">&#xe633;</i>
+          <input type="text" class="toolbarNode" placeholder="Search Privilege.." ng-model="MprivilegeFilter">
+        </div>
+        <privilege-card ng-repeat="privilege in MprivilegeInfos | filter:MprivilegeFilter" privilegeinfo="privilege" delete="FdeletePrivilege"></privilege-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboardMask" ng-show="MshowMask.user">
+    <div class="formContent">
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">用户名<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="text" class="toolbarNode" placeholder="Username..." ng-model="MuserInfo.username">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">密码<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="password" class="toolbarNode" placeholder="Password..." ng-model="MuserInfo.password">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">电话<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="text" class="toolbarNode" placeholder="Telephone..." ng-model="MuserInfo.tel">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">邮箱<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="text" class="toolbarNode" placeholder="Email..." ng-model="MuserInfo.email">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">角色：</div>
+          <div class="toolbarContent">
+            <div class="toolbarNode" ng-repeat="role in MroleInfos" ng-click="FselectRole(role)" ng-class="{'toolbarNodeSelected': MroleSelected[role.role_id]}">{{role.role_name}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">确认：</div>
+          <div class="toolbarContent">
+            <div class="toolbarNode" ng-click="FcreateUser(MuserInfo)" ng-show="MshowButtonCreate">确认</div>
+            <div class="toolbarNode" ng-click="FmodifyUser(MuserInfo)" ng-show="!MshowButtonCreate">更新</div>
+            <div class="toolbarNode" ng-click="MshowMask.user=false;">取消</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboardMask" ng-show="MshowMask.role">
+    <div class="formContent">
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">角色名<must></must>：</div>
+          <div class="toolbarContent">
+            <input type="text" class="toolbarNode" placeholder="Role name..." ng-model="MroleInfo.role_name">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">描述：</div>
+          <div class="toolbarContent">
+            <input type="text" class="toolbarNode" placeholder="Description..." ng-model="MroleInfo.description">
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">权限：</div>
+          <div class="toolbarContent">
+            <div class="toolbarNode" ng-repeat="privilege in MprivilegeInfos" ng-click="FselectPrivilege(privilege)" ng-class="{'toolbarNodeSelected': MprivilegeSelected[privilege.privilege_id]}">{{privilege.privilege_name}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">包含用户：</div>
+          <div class="toolbarContent">
+            <div class="toolbarNode" ng-repeat="user in MuserInfos" ng-click="FselectUser(user)" ng-class="{'toolbarNodeSelected': MuserSelected[user.user_id]}">{{user.username}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="tableContent">
+        <div class="toolbar">
+          <div class="toolbarLabel">确认：</div>
+          <div class="toolbarContent">
+            <div class="toolbarNode" ng-click="FcreateRole(MroleInfo)" ng-show="MshowButtonCreate">确认</div>
+            <div class="toolbarNode" ng-click="FmodifyRole(MroleInfo)" ng-show="!MshowButtonCreate">更新</div>
+            <div class="toolbarNode" ng-click="MshowMask.role=false;">取消</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
