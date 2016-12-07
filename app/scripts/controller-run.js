@@ -14,8 +14,8 @@ var promise = angular.module('promise');
 // angular init
 promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoService, SuserService, SscriptService, SeaterService, SdelayService){
   // charjs 初始设置
-  Chart.defaults.global.defaultFontColor = '#fff';
-  Chart.defaults.global.scaleFontColor = '#fff';
+  Chart.defaults.global.defaultFontColor = 'RGBA(54, 54, 54, 1.00)';
+  Chart.defaults.global.scaleFontColor = 'RGBA(54, 54, 54, 1.00)';
   Chart.defaults.global.multiTooltipTemplate = '<%if (datasetLabel){%><%=datasetLabel%>: <%}%><%= value %>';
 
   // 超时检测，2小时超时
@@ -75,9 +75,7 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
     );
   };
   $rootScope.FinfoHostSync = function(){
-    var vars = {
-      
-    };
+    var vars = {};
     SinfoService.FstartLoading();
     SeaterService.FhostSync($rootScope.Mtoken).post(
       vars,
@@ -106,10 +104,18 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
     );
   };
 
+  // 方案信息服务
+  $rootScope.FgetPlanList = function(){
+    SinfoService.FstartLoading();
+    SinfoService.FaddInfo('假设已经同步到了10个方案信息');
+    SinfoService.FstopLoading();
+  };
+
   // 初始化动作
   $rootScope.FinitAction = function(){
 		$rootScope.FgetHost();
 		$rootScope.FgetScriptList();
+    $rootScope.FgetPlanList();
     SdelayService.Fdelay();
 		SdelayService.FstopInterval();
 		SdelayService.FstartInterval();

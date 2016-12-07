@@ -97,5 +97,13 @@ var promise = angular.module('promise', [
         'helperView@script': {templateUrl: 'views/scriptHelper.html'},
         'dashboardView@script': {templateUrl: 'views/scriptDashboard.html'}
       }
+    })
+    .state('plan', {
+      url: '/plan',
+      views: {
+        '': {templateUrl: 'views/floor.html'},
+        'helperView@plan': {templateUrl: 'views/planHelper.html'},
+        'dashboardView@plan': {templateUrl: 'views/planDashboard.html'}
+      }
     });
   });

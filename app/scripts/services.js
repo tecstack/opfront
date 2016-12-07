@@ -2,8 +2,8 @@
 'use strict';
 
 var promise = angular.module('promise');
-// var VbaseUrl = 'http://192.168.182.4';
-var VbaseUrl = 'http://172.16.224.80:88';
+var VbaseUrl = 'http://192.168.182.4';
+// var VbaseUrl = 'http://172.16.224.80:88';
 var Vversion = 'v0.0';
 var timeout = 30000;
 
