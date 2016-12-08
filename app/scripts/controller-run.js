@@ -105,7 +105,7 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
   };
 
   // 方案信息服务
-  $rootScope.FgetPlanList = function(){
+  $rootScope.FgetSceneList = function(){
     SinfoService.FstartLoading();
     SinfoService.FaddInfo('假设已经同步到了10个方案信息');
     SinfoService.FstopLoading();
@@ -115,7 +115,7 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
   $rootScope.FinitAction = function(){
 		$rootScope.FgetHost();
 		$rootScope.FgetScriptList();
-    $rootScope.FgetPlanList();
+    $rootScope.FgetSceneList();
     SdelayService.Fdelay();
 		SdelayService.FstopInterval();
 		SdelayService.FstartInterval();

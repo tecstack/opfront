@@ -23,9 +23,9 @@ promise.factory('SdelayService', function($rootScope, $interval, SinfoService){
 						'username': $rootScope.Mself.username,
 						'password': ''
 					};
-					$rootScope.MsignErrorInfos = "长时间未操作，请重新登录";
+					$rootScope.MsignErrorInfos = '长时间未操作，请重新登录';
 					$rootScope.MsignError = true;
-					FstopInterval();
+					new FstopInterval();
 	      } else {
 					$rootScope.FcookieAuth();
 	      }
@@ -49,7 +49,7 @@ promise.factory('SinfoService', function($rootScope, $timeout){
 		var VinfoObject = {
 			'date': new Date(),
 			'info': Vinfo
-		}
+		};
 		$rootScope.MinfosHistory.push(VinfoObject);
 		$rootScope.Minfos.push(Vinfo);
 		$timeout(

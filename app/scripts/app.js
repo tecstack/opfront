@@ -98,12 +98,12 @@ var promise = angular.module('promise', [
         'dashboardView@script': {templateUrl: 'views/scriptDashboard.html'}
       }
     })
-    .state('plan', {
-      url: '/plan',
+    .state('scene', {
+      url: '/scene',
       views: {
         '': {templateUrl: 'views/floor.html'},
-        'helperView@plan': {templateUrl: 'views/planHelper.html'},
-        'dashboardView@plan': {templateUrl: 'views/planDashboard.html'}
+        'helperView@scene': {templateUrl: 'views/sceneHelper.html'},
+        'dashboardView@scene': {templateUrl: 'views/sceneDashboard.html'}
       }
     });
   });

@@ -109,7 +109,7 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
   };
 
   // script data
-  $scope.MscriptsDatasTh = ['名称','语言','类型','创建者','创建时间'];
+  $scope.MscriptsDatasTh = ['名称','语言','类型','公开','创建人','最后更新时间'];
   $scope.MscriptsDatasTd = [];
   $scope.FscriptsDatasInit = function(){
     $scope.MscriptsDatasTd = $filter('scriptsInitFilter')($rootScope.Mscripts, 1);
@@ -216,10 +216,10 @@ promise.controller('Cansible', function($scope, $rootScope, $timeout, $interval,
   $scope.MscriptShow = {};
   $scope.MscriptSelected = {};
   $scope.FselectScript = function(Vnode){
-    var Vtime = Vnode[4];
+    var Vtime = Vnode[5];
     for (var index in $rootScope.Mscripts) {
       if ($rootScope.Mscripts.hasOwnProperty(index)) {
-        if ($rootScope.Mscripts[index].time_create === Vtime) {
+        if ($rootScope.Mscripts[index].time_last_edit === Vtime) {
           $scope.MscriptShow = $rootScope.Mscripts[index];
           $scope.MscriptSelected.scriptid = $scope.MscriptShow.script_id;
           $scope.MscriptSelected.params = '';

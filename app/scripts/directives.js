@@ -33,36 +33,6 @@ promise.directive('dashboard',function($rootScope){
 		}
 	};
 });
-// script项，操作控制指令
-promise.directive('scriptNode',function($rootScope){
-	return{
-		restrict: 'C',
-		link: function(scope,element,attrs){
-			scope.MshowAction = true;
-			// 删除键，点击后提示用户确认
-			element.find('.delete').bind({
-				'click': function(){
-					scope.MshowAction = false;
-					scope.$apply();
-				}
-			});
-			// 确认删除
-			element.find('.confirm').bind({
-				'click': function(){
-					scope.MshowAction = true;
-					scope.$apply();
-				}
-			});
-			// 取消删除
-			element.find('.cancel').bind({
-				'click': function(){
-					scope.MshowAction = true;
-					scope.$apply();
-				}
-			});
-		}
-	};
-});
 // 下拉框
 promise.directive('dropDown',function(){
 	return{
@@ -162,6 +132,7 @@ promise.directive('ngTable',function($filter, SinfoService){
 			Frefresh: '=refresh',
 			Fnew: '=new',
 			Fmodify: '=modify',
+			Fclone: '=clone',
 			Fdelete: '=delete',
 			Fhelp: '=help',
 		},
@@ -298,6 +269,13 @@ promise.directive('ngTable',function($filter, SinfoService){
 					SinfoService.FaddInfo('未指定修改动作');
 				}
 			};
+			scope.FcloneAction = function(Vnode){
+				if (scope.Fclone) {
+					scope.Fclone(Vnode);
+				} else {
+					SinfoService.FaddInfo('未指定克隆动作');
+				}
+			};
 			scope.FdeleteAction = function(Vnode){
 				if (scope.Fdelete) {
 					scope.Fdelete(Vnode);
@@ -365,7 +343,7 @@ promise.directive('nameCard',function(SinfoService){
 	};
 });
 // roleCard
-promise.directive('roleCard',function(){
+promise.directive('roleCard',function(SinfoService){
 	return{
 		restrict: 'E',
 		replace: true,
@@ -399,7 +377,7 @@ promise.directive('roleCard',function(){
 	};
 });
 // privilege Card
-promise.directive('privilegeCard',function(){
+promise.directive('privilegeCard',function(SinfoService){
 	return{
 		restrict: 'E',
 		replace: true,
@@ -530,7 +508,7 @@ promise.directive('chartPie',function(){
 promise.directive('chartDoughnut',function(){
 	var options = {
 		// segmentShowStroke : false,
-		segmentStrokeColor : "RGBA(98, 104, 125, 1.00)",
+		segmentStrokeColor : 'RGBA(98, 104, 125, 1.00)',
 		segmentStrokeWidth : 1,
 	};
 	return{

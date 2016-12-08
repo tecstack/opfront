@@ -859,10 +859,10 @@ select.toolbarFullNode {
   color: RGBA(54, 54, 54, 1.00);
 }
 .actionTd .iconfont {
-  color: #fff;
+  color: RGBA(54, 54, 54, 0.70);
 }
 .actionTd .iconfont:hover {
-  color: #9FB5FF;
+  color: RGBA(54, 54, 54, 1.00);
 }
 
 .progressBar {}
