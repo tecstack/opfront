@@ -3,6 +3,36 @@
 
 var promise = angular.module('promise');
 
+// 提示框
+promise.directive('tip', function(){
+	return{
+		restrict: 'C',
+		link: function(scope, element, attrs){
+			element.bind({
+				'mouseenter': function(event){
+					element.children('.tipBox').css({
+						'display': 'block',
+						'position': 'fixed',
+						'left': event.pageX,
+						'top': event.pageY
+					});
+				},
+				'mouseleave': function(){
+					element.children('.tipBox').css({
+						'display': 'none'
+					});
+				},
+				'mousemove': function(event){
+					element.children('.tipBox').css({
+						'left': event.pageX,
+						'top': event.pageY
+					});
+				}
+			});
+		}
+	};
+});
+
 // sidebarNode 切换
 promise.directive('sidebarNode',function(){
 	return{

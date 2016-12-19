@@ -815,6 +815,17 @@ select.toolbarFullNode {
   background-color: rgba(38, 41, 40, 0.85);
 }
 
+.tipBox {
+  display: none;
+  z-index: 12;
+  padding: 8px;
+  border: solid 1px rgba(98, 104, 125, 1.00);
+  font-size: 16px;
+  line-height: 16px;
+  color: #fff;
+  background-color: rgba(38, 41, 40, 0.85);
+}
+
 .moduleNode {
   float: left;
   padding: 5px;
