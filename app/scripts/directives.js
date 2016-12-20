@@ -13,8 +13,8 @@ promise.directive('tip', function(){
 					element.children('.tipBox').css({
 						'display': 'block',
 						'position': 'fixed',
-						'left': event.pageX,
-						'top': event.pageY
+						'left': event.pageX + 2,
+						'top': event.pageY + 2
 					});
 				},
 				'mouseleave': function(){
@@ -24,8 +24,8 @@ promise.directive('tip', function(){
 				},
 				'mousemove': function(event){
 					element.children('.tipBox').css({
-						'left': event.pageX,
-						'top': event.pageY
+						'left': event.pageX + 2,
+						'top': event.pageY + 2
 					});
 				}
 			});
