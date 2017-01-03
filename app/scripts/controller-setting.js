@@ -182,12 +182,12 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
         $scope.MuserSelected[$scope.MuserInfos[index].user_id] = false;
       }
     }
-    for (var index in $scope.MroleInfos) {
+    for (index in $scope.MroleInfos) {
       if ($scope.MroleInfos.hasOwnProperty(index)) {
         $scope.MroleSelected[$scope.MroleInfos[index].role_id] = false;
       }
     }
-    for (var index in $scope.MprivilegeInfos) {
+    for (index in $scope.MprivilegeInfos) {
       if ($scope.MprivilegeInfos.hasOwnProperty(index)) {
         $scope.MprivilegeSelected[$scope.MprivilegeInfos[index].privilege_id] = false;
       }
@@ -280,7 +280,7 @@ promise.controller('Csetting', function($scope, $rootScope, SinfoService, SuserS
     'user': true,
     'role': false,
     'privilege': false,
-  }
+  };
   $scope.Fshow = function(Vdict, Vkey){
     for (var node in Vdict) {
       if (Vdict.hasOwnProperty(node)) {

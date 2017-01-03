@@ -17,15 +17,15 @@ promise.controller('Cindex', function($scope,$rootScope){
     $scope.MdataBar = [
       {
         value: $rootScope.MhostsNum,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: "主机数量"
+        color:'#F7464A',
+        highlight: '#FF5A5E',
+        label: '主机数量'
       },
       {
         value: $rootScope.MscriptsNum,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: "脚本数量"
+        color: '#46BFBD',
+        highlight: '#5AD3D1',
+        label: '脚本数量'
       }
     ];
   });

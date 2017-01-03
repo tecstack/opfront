@@ -12,7 +12,7 @@
 var promise = angular.module('promise');
 
 // ------------------------------Script----------------------------
-promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptService, SdelayService, SinfoService){
+promise.controller('Cscript', function($scope, $rootScope, $timeout, $filter, SscriptService, SdelayService, SinfoService){
   // 初始化
   $scope.MlangOptions = [
     {'label': '选择语言', 'value': ''},
@@ -29,7 +29,11 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
     {'label': '仅自己', 'value': 0},
     {'label': '所有人', 'value': 1}
   ];
-  $scope.MscriptTh = ['名称','语言','类型','公开','创建人','最后更新时间','操作'];
+  $scope.MscriptTh = ['名称','语言','类型','公开','创建人','最后更新时间'];
+  $scope.MscriptsTd = [];
+  $scope.FscriptsInit = function(){
+    $scope.MscriptsTd = $filter('scriptsInitFilter')($rootScope.Mscripts, 0);
+  };
   $scope.MeditorOptions = {
     lineNumbers: true,
     theme:'dracula',
@@ -54,6 +58,21 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
     'getList': ''
   };
   $scope.MscriptId = '';
+
+  $scope.FfindScript = function(VscriptTd){
+    // find script via time_last_edit
+    var Vscript = '';
+    var Vtime = VscriptTd[5];
+    for (var index in $rootScope.Mscripts) {
+      if ($rootScope.Mscripts.hasOwnProperty(index)) {
+        if ($rootScope.Mscripts[index].time_last_edit === Vtime) {
+          Vscript = $rootScope.Mscripts[index];
+          break;
+        }
+      }
+    }
+    return Vscript;
+  };
 
   $scope.FcreateScript = function(Vscript){
     SinfoService.FstartLoading();
@@ -97,15 +116,14 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
       }
     );
   };
-  $scope.FdeleteScript = function(Vscript){
-    var VscriptId = Vscript.script_id;
+  $scope.FdeleteScript = function(VscriptID){
+    $scope.Mshow.delete = false;
     SinfoService.FstartLoading();
-    SscriptService.Fdelete($rootScope.Mtoken, VscriptId).delete(
+    SscriptService.Fdelete($rootScope.Mtoken, VscriptID).delete(
       {},
       function successCallback(callbackdata){
         $scope.MscriptInfo.getList = callbackdata.message;
         $timeout(function () {
-          $scope.Mshow.list = true;
           $rootScope.FgetScriptList();
         }, 500);
         SdelayService.Fdelay();
@@ -132,14 +150,13 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
   $scope.FnewAction = function(){
     $scope.MeditorOptions.mode = '';
     $scope.Mscript = {'script_lang': $scope.MeditorOptions.mode, 'script_type': '', 'is_public': ''};
-    $scope.Mshow.list = false;
     $scope.Mshow.editor = true;
     $scope.Mshow.create = true;
     $scope.Mshow.update = false;
   };
-  $scope.FupdateAction = function(Vscript){
+  $scope.FupdateAction = function(VscriptTd){
+    var Vscript = $scope.FfindScript(VscriptTd);
     $scope.MscriptId = Vscript.script_id;
-    $scope.Mshow.list = false;
     $scope.Mshow.editor = true;
     $scope.Mshow.create = false;
     $scope.Mshow.update = true;
@@ -151,8 +168,8 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
       'is_public': Vscript.is_public
     };
   };
-  $scope.FcloneAction = function(Vscript){
-    $scope.Mshow.list = false;
+  $scope.FcloneAction = function(VscriptTd){
+    var Vscript = $scope.FfindScript(VscriptTd);
     $scope.Mshow.editor = true;
     $scope.Mshow.create = true;
     $scope.Mshow.update = false;
@@ -164,14 +181,17 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
       'is_public': ''
     };
   };
+  $scope.FdeleteAction = function(VscriptTd){
+    $scope.Mshow.delete = true;
+    $scope.MscriptTdDeleted = $scope.FfindScript(VscriptTd);
+  };
   $scope.FbackAction = function(){
-    $scope.Mshow.list = true;
     $scope.Mshow.editor = false;
   };
 
   // 监控区
   $scope.Mshow = {
-    'list': true,
+    'delete': false,
     'editor': false,
     'create': false,
     'update': false
@@ -182,7 +202,9 @@ promise.controller('Cscript', function($scope, $rootScope, $timeout, SscriptServ
   $scope.$watch('Mscript.script_lang', function(newValue, oldValue){
     $scope.MeditorOptions.mode = $scope.Mscript.script_lang;
   });
-
+  $scope.$watchCollection('Mscripts', function(newValue, oldValue){
+    $scope.FscriptsInit();
+  });
 });
 
 promise.controller('CscriptHelper', function($rootScope){

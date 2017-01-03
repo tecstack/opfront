@@ -78,15 +78,31 @@ promise.filter('hostsInitFilter', function($filter){
 promise.filter('scriptsInitFilter', function($filter){
   return function(input, scriptType){
     var output = [];
-    for (var index in input) {
-      if (input[index].script_type === scriptType) {
-        var tempNode = [];
+    var tempNode = [];
+    var index = 0;
+    if (scriptType === 0) {
+      for (index in input) {
+        tempNode = [];
         tempNode.push(input[index].script_name);
         tempNode.push(input[index].script_lang);
         tempNode.push($filter('scriptTypeFilter')(input[index].script_type));
+        tempNode.push($filter('isPublicFilter')(input[index].is_public));
         tempNode.push(input[index].owner_name);
-        tempNode.push(input[index].time_create);
+        tempNode.push(input[index].time_last_edit);
         output.push(tempNode);
+      }
+    } else {
+      for (index in input) {
+        if (input[index].script_type === scriptType) {
+          tempNode = [];
+          tempNode.push(input[index].script_name);
+          tempNode.push(input[index].script_lang);
+          tempNode.push($filter('scriptTypeFilter')(input[index].script_type));
+          tempNode.push($filter('isPublicFilter')(input[index].is_public));
+          tempNode.push(input[index].owner_name);
+          tempNode.push(input[index].time_last_edit);
+          output.push(tempNode);
+        }
       }
     }
     return output;

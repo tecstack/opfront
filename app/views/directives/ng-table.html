@@ -18,11 +18,13 @@
         </div>
       </div>
     </div>
-    <div class="toolbarNode" ng-click="FrefreshAction()">
+    <div class="toolbarNode tip" ng-click="FrefreshAction()">
       <i class="iconfont">&#xe63a;</i>
+      <div class="tipBox">刷新</div>
     </div>
-    <div class="toolbarNode" ng-click="FnewAction()">
+    <div class="toolbarNode tip" ng-click="FnewAction()">
       <i class="iconfont">&#xe623;</i>
+      <div class="tipBox">新增</div>
     </div>
     <div class="toolbarNode reverse" ng-click="FchangePage(Mpages)">&gt;|</div>
     <div class="toolbarNode reverse" ng-click="FchangePage(Mpage+1)">&gt;</div>
@@ -50,12 +52,25 @@
       <td>
         <i class="iconfont" ng-show="node.select">&#xe63d;</i>
       </td>
-      <td ng-repeat="td in node track by $index">{{td}}</td>
+      <td ng-repeat="td in node | limitTo:Mth.length">{{td}}</td>
       <td>
         <div class="actionTd" ng-show="MshowAction">
-          <i class="iconfont" ng-click="FmodifyAction(node)">&#xe64b;</i>
-          <i class="iconfont" ng-click="FdeleteAction(node)">&#xe652;</i>
-          <i class="iconfont" ng-click="FhelpAction(node)">&#xe61e;</i>
+          <i class="iconfont tip" ng-click="FmodifyAction(node)">
+            &#xe64b;
+            <div class="tipBox">修改</div>
+          </i>
+          <i class="iconfont tip" ng-click="FcloneAction(node)">
+            &#xe64f;
+            <div class="tipBox">克隆</div>
+          </i>
+          <i class="iconfont tip" ng-click="FdeleteAction(node)">
+            &#xe652;
+            <div class="tipBox">删除</div>
+          </i>
+          <i class="iconfont tip" ng-click="FhelpAction(node)">
+            &#xe61e;
+            <div class="tipBox">帮助</div>
+          </i>
         </div>
       </td>
     </tr>

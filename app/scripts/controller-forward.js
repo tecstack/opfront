@@ -69,7 +69,7 @@ promise.controller('Cforward', function($scope, $rootScope, $timeout, $interval,
             var node = callbackdata.trails[index];
             var ip = node.ip;
             $scope.Mresult[ip] = node;
-            if (node.sum_ok == 2) {
+            if (node.sum_ok === 2) {
               Vsuccess += 1;
             }
           }
@@ -103,14 +103,14 @@ promise.controller('Cforward', function($scope, $rootScope, $timeout, $interval,
   });
 
   // hosts data
-  $scope.MhostsDatasTh = ['ID','IP','主机名','厂家','型号','组'];;
+  $scope.MhostsDatasTh = ['ID','IP','主机名','厂家','型号','组'];
   $scope.MhostsDatasTd = [];
   $scope.FhostsDatasInit = function(){
     $scope.MhostsDatasTd = $filter('hostsInitFilter')($rootScope.Mhosts);
   };
 
   // script data
-  $scope.MscriptsDatasTh = ['名称','语言','类型','创建者','创建时间'];
+  $scope.MscriptsDatasTh = ['名称','语言','类型','公开','创建人','最后更新时间'];
   $scope.MscriptsDatasTd = [];
   $scope.FscriptsDatasInit = function(){
     $scope.MscriptsDatasTd = $filter('scriptsInitFilter')($rootScope.Mscripts, 2);
@@ -185,10 +185,10 @@ promise.controller('Cforward', function($scope, $rootScope, $timeout, $interval,
   $scope.MscriptShow = {};
   $scope.MscriptSelected = {};
   $scope.FselectScript = function(Vnode){
-    var Vtime = Vnode[4];
+    var Vtime = Vnode[5];
     for (var index in $rootScope.Mscripts) {
       if ($rootScope.Mscripts.hasOwnProperty(index)) {
-        if ($rootScope.Mscripts[index].time_create === Vtime) {
+        if ($rootScope.Mscripts[index].time_last_edit === Vtime) {
           $scope.MscriptShow = $rootScope.Mscripts[index];
           $scope.MmoduleSelected.content.scriptid = $scope.MscriptShow.script_id;
           $scope.MmoduleSelected.content.params = '';
