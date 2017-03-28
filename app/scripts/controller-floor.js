@@ -34,7 +34,7 @@ promise.controller('ChelperTrigger', function($scope,$rootScope){
 // sign
 promise.controller('Csign', function($scope,$rootScope,$cookies,SuserService,SdelayService){
   // 初始化
-  $scope.MisKeep = false;
+  $scope.MisKeep = true;
   // 切换保持登录
   $scope.FtoggleIsKeep = function(){
     $scope.MisKeep = !$scope.MisKeep;

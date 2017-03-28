@@ -109,6 +109,54 @@ promise.filter('scriptsInitFilter', function($filter){
   };
 });
 
+// scenes data init filter
+promise.filter('scenesInitFilter', function($filter){
+  return function(input){
+    // name,type,script,iplist,default_para,exec_time
+    // console.log(input);
+    var output = [];
+    var tempNode = [];
+    var index = 0;
+    for (index in input.forward_scenes) {
+      if (input.forward_scenes.hasOwnProperty(index)) {
+        tempNode = [];
+        tempNode.push(input.forward_scenes[index].scene_name);
+        tempNode.push('Forward');
+        tempNode.push(input.forward_scenes[index].script_name);
+        tempNode.push(input.forward_scenes[index].iplist.length);
+        tempNode.push(input.forward_scenes[index].params);
+        tempNode.push(input.forward_scenes[index].exe_times);
+        output.push(tempNode);
+      }
+    }
+    for (index in input.script_scenes) {
+      if (input.script_scenes.hasOwnProperty(index)) {
+        tempNode = [];
+        tempNode.push(input.script_scenes[index].scene_name);
+        tempNode.push('Python');
+        tempNode.push(input.script_scenes[index].script_name);
+        tempNode.push(input.script_scenes[index].iplist.length);
+        tempNode.push(input.script_scenes[index].params);
+        tempNode.push(input.script_scenes[index].exe_times);
+        output.push(tempNode);
+      }
+    }
+    // for (index in input.shell_scenes) {
+    //   if (input.shell_scenes.hasOwnProperty(index)) {
+    //     tempNode = [];
+    //     tempNode.push(input.shell_scenes[index].scene_name);
+    //     tempNode.push('Shell');
+    //     tempNode.push(input.shell_scenes[index].script_name);
+    //     tempNode.push(input.shell_scenes[index].iplist.length);
+    //     tempNode.push(input.shell_scenes[index].params);
+    //     tempNode.push(input.shell_scenes[index].exe_times);
+    //     output.push(tempNode);
+    //   }
+    // }
+    return output;
+  };
+});
+
 // script_type filter: 1->ansible 2->Forward
 promise.filter('scriptTypeFilter', function(){
   return function(input){

@@ -30,7 +30,8 @@ body {
 	margin: 0;
 	padding: 0;
 	/* typographic: font / line-height / text-align / word-wrap / ... */
-	font-family: "雅痞-简", "Yuppy SC", "Microsoft YaHei", "微软雅黑", sans-serif;
+  /*font-family: "雅痞-简", "Yuppy SC", "Microsoft YaHei", "微软雅黑", sans-serif;*/
+  font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
 	font-size: 18px;
 	/* visual: background / color / transition / list-style / shadows / ... */
 	-webkit-font-smoothing: antialiased;
@@ -145,6 +146,9 @@ table a:hover {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+.signBar>.toolbar>.toolbarNode {
+  width: 100%;
+}
 .signTitle {
   display: block;
   margin-top: 20px;
@@ -154,6 +158,34 @@ table a:hover {
   line-height: 45px;
   text-align: center;
   color: #95A7EE;
+}
+.signLeft {
+  box-sizing: border-box;
+  width: 180px;
+  float: left;
+}
+.signLeft>.toolbar>input {
+  width: 122px;
+}
+.signLeft>.toolbarNode:last-child {
+  width: calc( 100% - 5px );
+  margin-right: 5px;
+}
+.signRight {
+  box-sizing: border-box;
+  width: 90px;
+  float: left;
+}
+.signRight>.toolbar:first-child {
+  height: 80px;
+}
+.signRight .toolbarNode {
+  width: 100%;
+}
+.signRight>.toolbar:first-child>.toolbarNode {
+  height: 75px;
+  line-height: 75px;
+  font-size: 20px;
 }
 .signBg .formContent {
   margin-top: 0;
@@ -636,13 +668,14 @@ table a:hover {
   margin-bottom: 15px;
   border-bottom: solid 1px rgba(98, 104, 125, 1.00);
 }
-.nodeContent {
-
-}
+.nodeContent {}
 .nodeBottom {
   clear: both;
-  line-height: 25px;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: solid 1px rgba(98, 104, 125, 1.00);
   text-align: center;
+  line-height: 25px;
 }
 
 /* Content */

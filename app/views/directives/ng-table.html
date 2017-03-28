@@ -52,7 +52,7 @@
       <td>
         <i class="iconfont" ng-show="node.select">&#xe63d;</i>
       </td>
-      <td ng-repeat="td in node | limitTo:Mth.length">{{td}}</td>
+      <td ng-repeat="td in node | limitTo:Mth.length track by $index">{{td}}</td>
       <td>
         <div class="actionTd" ng-show="MshowAction">
           <i class="iconfont tip" ng-click="FmodifyAction(node)">

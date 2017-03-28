@@ -1,4 +1,5 @@
-/*jshint jquery: true, unused: false, undef:false*/
+/* jshint jquery: true, unused: false, undef:false */
+/* global Chart */
 'use strict';
 
 /**
@@ -12,7 +13,7 @@
 var promise = angular.module('promise');
 
 // angular init
-promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoService, SuserService, SscriptService, SeaterService, SdelayService){
+promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoService, SuserService, SscriptService, SsceneService, SeaterService, SdelayService){
   // charjs 初始设置
   Chart.defaults.global.defaultFontColor = 'RGBA(54, 54, 54, 1.00)';
   Chart.defaults.global.scaleFontColor = 'RGBA(54, 54, 54, 1.00)';
@@ -107,8 +108,24 @@ promise.run(function($rootScope, $timeout, $interval, $filter, $cookies, SinfoSe
   // 方案信息服务
   $rootScope.FgetSceneList = function(){
     SinfoService.FstartLoading();
-    SinfoService.FaddInfo('假设已经同步到了10个方案信息');
-    SinfoService.FstopLoading();
+    SsceneService.FgetList($rootScope.Mtoken).get(
+      {},
+      function successCallback(callbackdata){
+        $rootScope.Mscenes = callbackdata.scenes;
+        $rootScope.MscenesForwardNum = $rootScope.Mscenes.forward_scenes.length;
+        $rootScope.MscenesScriptNum = $rootScope.Mscenes.script_scenes.length;
+        $rootScope.MscenesShellNum = $rootScope.Mscenes.shell_scenes.length;
+        SinfoService.FstopLoading();
+        SinfoService.FaddInfo('已同步场景：' + '[Forward: ' + $rootScope.MscenesForwardNum + '][Script: ' + $rootScope.MscenesScriptNum + '][Shell: ' + $rootScope.MscenesShellNum + ']');
+        SdelayService.Fdelay();
+      },
+      function errorCallback(callbackdata){
+        SinfoService.FstopLoading();
+        SinfoService.FaddInfo('获取场景信息失败:' + callbackdata.message);
+      }
+    );
+
+
   };
 
   // 初始化动作

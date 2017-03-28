@@ -2,7 +2,8 @@
 'use strict';
 
 var promise = angular.module('promise');
-var VbaseUrl = 'http://192.168.182.4';
+// var VbaseUrl = 'http://192.168.182.4';
+var VbaseUrl = 'http://192.168.182.151:8080';
 // var VbaseUrl = 'http://172.16.224.80:88';
 var Vversion = 'v0.0';
 var timeout = 30000;
@@ -405,5 +406,20 @@ promise.factory('SwalkerService', function($resource){
 			});
 			return VwalkerRestApi;
 		},
+	};
+});
+
+promise.factory('SsceneService', function($resource){
+	var Vurl = VbaseUrl+'/api/'+Vversion+'/scene/';
+
+	var FgetList = function(Vtoken){
+		var VsceneRestApi = $resource(Vurl, {}, {
+			'get': {method:'GET', isArray:false, timeout:timeout, headers:{'token': Vtoken, 'Cache-Control': 'max-age=0'}}
+		});
+		return VsceneRestApi;
+	};
+
+	return {
+		'FgetList': FgetList
 	};
 });

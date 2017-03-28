@@ -1,4 +1,5 @@
-/*jshint jquery: true, unused: false, undef:false*/
+/* jshint jquery: true, unused: false, undef:false */
+/* global Chart */
 'use strict';
 
 var promise = angular.module('promise');
